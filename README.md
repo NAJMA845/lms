@@ -21,5 +21,5 @@
 
     # Basic PHP knowledge
     # VS code extensions
-    #Live Server
+    
       
