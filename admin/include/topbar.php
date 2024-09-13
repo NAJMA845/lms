@@ -48,7 +48,7 @@
                     role="button" data-bs-toggle="dropdown" 
                     aria-expanded="false"
                     >
-                    <img src="../assets/images/user.jpeg" class="user-icon" alt="User icon"/>
+                    <img src="<?php echo BASE_URL ?>assets/images/user.jpeg" class="user-icon" alt="User icon"/>
                       Admin
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end">
