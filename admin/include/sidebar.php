@@ -35,10 +35,10 @@
                     <div > 
                         <ul class="navbar-nav ps-3">
                             <li>
-                                <a href="./books/add.php" class="nav-link" ><i class="fas fa-plus me-2"></i> Add New Books</a>
+                                <a href="<?php echo BASE_URL ?>books/add.php" class="nav-link" ><i class="fas fa-plus me-2"></i> Add New Books</a>
                             </li>
                             <li>
-                                <a href="#" class="nav-link"><i class="fas fa-list me-2"></i> Manage All Books</a>
+                                <a href="<?php echo BASE_URL ?>books/index.php" class="nav-link"><i class="fas fa-list me-2"></i> Manage All Books</a>
                             </li>
                     </div>
                   </div>

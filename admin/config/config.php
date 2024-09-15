@@ -6,6 +6,6 @@ if ($_SERVER['HTTP_HOST'] == 'localhost'){
 }
 
 else{
-    define("BASE_URL", "http://localhost/lms/admin/");
-    define("DIR_URL", $_SERVER['DOCUMENT_ROOT'] . "/lms/admin/");
+    define("BASE_URL", "http://lms.com");
+    define("DIR_URL", $_SERVER['DOCUMENT_ROOT']);
 }
