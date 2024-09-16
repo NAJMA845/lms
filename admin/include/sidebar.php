@@ -11,7 +11,7 @@
             </li>
             <li class="nav-item">
               <a class="nav-link active" aria-current="page"  
-              href="#"><i class="fas fa-tachometer-alt me-2"></i> Dashboard </a>
+              href="<?php echo BASE_URL ?>./dashboard.php" ><i class="fas fa-tachometer-alt me-2"></i> Dashboard </a>
             </li>
 
             <li class="nav-item my-0">
@@ -35,10 +35,10 @@
                     <div > 
                         <ul class="navbar-nav ps-3">
                             <li>
-                                <a href="./books/add.php" class="nav-link" ><i class="fas fa-plus me-2"></i> Add New Books</a>
+                                <a href="<?php echo BASE_URL ?>books/add.php" class="nav-link" ><i class="fas fa-plus me-2"></i> Add New Books</a>
                             </li>
                             <li>
-                                <a href="#" class="nav-link"><i class="fas fa-list me-2"></i> Manage All Books</a>
+                                <a href="<?php echo BASE_URL ?>books/index.php" class="nav-link"><i class="fas fa-list me-2"></i> Manage All Books</a>
                             </li>
                     </div>
                   </div>
@@ -47,15 +47,15 @@
               <li class="nav-item">
                 <a class="nav-link sidebar-link" 
                 data-bs-toggle="collapse" 
-                href="#StudentMgmt" 
+                href="#MemberMgmt" 
                 role="button" 
                 aria-expanded="false" 
-                aria-controls="StudentMgmt"
-                > <i class="fas fa-users me-2"></i> Student Management
+                aria-controls="MemberMgmt"
+                > <i class="fas fa-users me-2"></i>  Member Management
                 <span class="right-icon float-end"> 
                     <i class="fas fa-chevron-down"></i></span>
                   </a>
-                  <div class="collapse" id="StudentMgmt">
+                  <div class="collapse" id="MemberMgmt">
                     <div > 
                         <ul class="navbar-nav ps-3">
                             <li>
