@@ -19,7 +19,7 @@ include_once(DIR_URL . "include/sidebar.php");
                               Fill the form
                             </div>
                                     <div class="card-body">
-                                        <form>
+                                        <form method="post" action="<?php echo BASE_URL?>models/book.php">
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="mb-3">
@@ -70,6 +70,8 @@ include_once(DIR_URL . "include/sidebar.php");
                                                             </select>
                                                     </div>
                                                 </div>
+
+                                                    
                         
                                                 <div class="col-md-12">
                                                     <button name="publish" type="submit" class="btn btn-success">
