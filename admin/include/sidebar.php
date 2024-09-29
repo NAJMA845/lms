@@ -35,10 +35,10 @@
                     <div > 
                         <ul class="navbar-nav ps-3">
                             <li>
-                                <a href="<?php echo BASE_URL ?>books/add.php" class="nav-link" ><i class="fas fa-plus me-2"></i> Add New Books</a>
+                                <a href="<?php echo BASE_URL ?>books/add.php" class="nav-link" ><i class="fas fa-plus me-2"></i> Add New </a>
                             </li>
                             <li>
-                                <a href="<?php echo BASE_URL ?>books/index.php" class="nav-link"><i class="fas fa-list me-2"></i> Manage All Books</a>
+                                <a href="<?php echo BASE_URL ?>books/index.php" class="nav-link"><i class="fas fa-list me-2"></i> Manage All</a>
                             </li>
                     </div>
                   </div>
@@ -59,10 +59,10 @@
                     <div > 
                         <ul class="navbar-nav ps-3">
                             <li>
-                                <a href="#" class="nav-link" ><i class="fas fa-plus me-2"></i> Add New Books</a>
+                                <a href="<?php echo BASE_URL ?>students/add.php" class="nav-link" ><i class="fas fa-plus me-2"></i> Add New </a>
                             </li>
                             <li>
-                                <a href="#" class="nav-link"><i class="fas fa-list me-2"></i> Manage All Books</a>
+                                <a href="<?php echo BASE_URL ?>students/index.php" class="nav-link"><i class="fas fa-list me-2"></i> Manage All </a>
                             </li>
                         </ul>
                             
@@ -89,10 +89,10 @@
                                     <div > 
                                         <ul class="navbar-nav ps-3">
                                             <li>
-                                                <a href="#" class="nav-link" ><i class="fas fa-plus me-2"></i> Add New Books</a>
+                                                <a href="<?php echo BASE_URL ?>loans/add.php" class="nav-link" ><i class="fas fa-plus me-2"></i> Add New </a>
                                             </li>
                                             <li>
-                                                <a href="#" class="nav-link"><i class="fas fa-list me-2"></i> Manage All Books</a>
+                                                <a href="<?php echo BASE_URL ?>loans/index.php" class="nav-link"><i class="fas fa-list me-2"></i> Manage All </a>
                                             </li>
                                         </ul>
                                         <li class="nav-item">
@@ -110,10 +110,10 @@
                                                 <div > 
                                                     <ul class="navbar-nav ps-3">
                                                         <li>
-                                                            <a href="#" class="nav-link" ><i class="fas fa-plus me-2"></i>Plans</a>
+                                                            <a href="<?php echo BASE_URL ?>subscriptions/index.php" class="nav-link" ><i class="fas fa-plus me-2"></i>Plans</a>
                                                         </li>
                                                         <li>
-                                                            <a href="#" class="nav-link"><i class="fas fa-list me-2"></i>Purchase History</a>
+                                                            <a href="<?php echo BASE_URL ?>subscriptions/subscrption-purchase-history.php" class="nav-link"><i class="fas fa-list me-2"></i>Purchase History</a>
                                                         </li>
                                                     </ul>
 
