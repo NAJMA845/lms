@@ -10,6 +10,7 @@ include_once(DIR_URL . "include/sidebar.php");
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12">
+                   <?php include_once(DIR_URL . "include/alerts.php"); ?>
                        <h4 class="fw-bold text-uppercase"> Manage Books </h4>
                     </div>
                     <!--Cards-->
