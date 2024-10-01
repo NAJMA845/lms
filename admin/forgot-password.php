@@ -34,7 +34,7 @@
                                         </button>
                                     </form>
                                     <hr/>
-                                    <a href="./index.html" class="card-link link-underline-light text-center">Login Now</a>
+                                    <a href="./index.php" class="card-link link-underline-light text-center">Login Now</a>
                                 </div>
                             </div>
                         </div>
