@@ -25,6 +25,16 @@ function storeBook($conn, $param)
     return $result;
 }
 
+// Function to get all books
+function getBooks($conn)
+{
+    $sql = "select b.*, c.name as cat_name from books b 
+        left join categories c on c.id = b.category_id 
+        order by id desc";
+    $result = $conn->query($sql);
+    return $result;
+}
+
 //Function to get categories
 function getCategories($conn){
     $sql = "select id, name from categories";
