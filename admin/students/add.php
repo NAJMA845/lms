@@ -11,7 +11,7 @@ include_once(DIR_URL . "include/sidebar.php");
         <!--Cards-->
         <div class="row">
             <div class="col-md-12">
-                <h4 class="fw-bold text-uppercase">Add Student</h4>
+                <h4 class="fw-bold text-uppercase">Add Member</h4>
             </div>
 
             <div class="col-md-12">
