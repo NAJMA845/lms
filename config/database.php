@@ -2,7 +2,7 @@
 // Create a connection using MySQLli
 $servername = "localhost";
 $username = "root"; 
-$password = ""; 
+$password = "MEx1233roses._"; 
 $dbname = "smartlib"; 
 
 // Create connection

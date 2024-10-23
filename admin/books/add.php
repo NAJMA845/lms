@@ -1,7 +1,7 @@
 <?php 
-include_once("../config/config.php");
-include_once("../config/database.php");
-include_once(DIR_URL . "models/book.php");
+include_once("../../config/config.php");
+include_once("../../config/database.php");
+include_once("../models/book.php");
 
 
 //Add Book Functionality
@@ -9,7 +9,7 @@ if (isset($_POST['publish'])) {
     $res = storeBook($conn, $_POST);
     if (isset($res['success'])) {
         $_SESSION['success'] = "Book has been created Successfully"; 
-        header("LOCATION:" . BASE_URL . "books");
+        header("LOCATION:" . ADMIN_BASE_URL . "books");
     } else {
         $_SESSION['error'] = $res["error"];//"Something went wrong, please try again."; 
         //header("LOCATION:" . BASE_URL . "books/add.php");
@@ -17,9 +17,9 @@ if (isset($_POST['publish'])) {
 }
 ?>
 <?php
-include_once(DIR_URL . "include/header.php");
-include_once(DIR_URL . "include/topbar.php");
-include_once(DIR_URL . "include/sidebar.php");
+include_once("../../include/header.php");
+include_once("../../include/topbar.php");
+include_once("../../include/sidebar.php");
 ?>
 
         <!--main content start-->
@@ -28,7 +28,7 @@ include_once(DIR_URL . "include/sidebar.php");
                 <!--Cards-->
                 <div class="row dashboard-counts">
                     <div class="col-md-12">
-                    <?php include_once(DIR_URL . "include/alerts.php"); ?>
+                    <?php include_once("../../include/alerts.php"); ?>
                        <h4 class="fw-bold text-uppercase"> Add Book </h4>
                     </div>
                     <div class="col-md-12">
@@ -110,4 +110,4 @@ include_once(DIR_URL . "include/sidebar.php");
                         </div>
         <!--main content end-->
 
-        <?php include_once(DIR_URL . "include/footer.php")?>
+        <?php include_once("../../include/footer.php")?>

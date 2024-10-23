@@ -1,10 +1,10 @@
 
 <?php 
-include_once("./config/config.php");
-include_once("./config/database.php");
-include_once(DIR_URL . "include/header.php");
-include_once(DIR_URL . "include/topbar.php");
-include_once(DIR_URL . "include/sidebar.php");
+include_once("config/config.php");
+include_once("config/database.php");
+include_once("include/header.php");
+include_once("include/topbar.php");
+include_once("include/sidebar.php");
 ?>
 
         <!--main content start-->
@@ -252,4 +252,4 @@ include_once(DIR_URL . "include/sidebar.php");
         </main>
         <!--main content end-->
 
-        <?php include_once(DIR_URL . "include/footer.php")?>
+        <?php include_once("include/footer.php")?>
