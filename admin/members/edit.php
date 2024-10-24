@@ -47,7 +47,7 @@ if ($member->num_rows > 0) {
         <div class="row dashboard-counts">
             <div class="col-md-12">
                 <?php include_once("../../include/alerts.php"); ?>
-                <h4 class="fw-bold text-uppercase"> Edit Members </h4>
+                <h4 class="fw-bold text-uppercase"> Edit Member </h4>
             </div>
             <div class="col-md-12">
                 <div class="card">
