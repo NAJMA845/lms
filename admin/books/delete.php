@@ -1,24 +1,43 @@
 <?php
-include_once("../../config/config.php");
 include_once("../../config/database.php");
 include_once("../models/book.php");
-
-
-//Add Book Functionality
-if (isset($_POST['publish'])) {
-    $res = storeBook($conn, $_POST);
+include_once("../../config/config.php");
+//-----------------------Book edit POST---------------------------//
+if (isset($_POST['delete'])) {
+    $res = deleteBookByGUID($conn, $_POST);
     if (isset($res['success'])) {
-        $_SESSION['success'] = "Book has been created Successfully";
-        header("LOCATION:" . ADMIN_BASE_URL . "books");
+        $_SESSION['success'] = "Book has been deleted Successfully";
+        header("LOCATION:".ADMIN_BASE_URL."books");
     } else {
         $_SESSION['error'] = $res["error"];//"Something went wrong, please try again.";
         //header("LOCATION:" . BASE_URL . "books/add.php");
     }
 }
-
+//---------------------------------------------------------------//
 include_once("../../include/header.php");
 include_once("../../include/topbar.php");
 include_once("../../include/sidebar.php");
+$guid=$_SERVER['QUERY_STRING'];
+$bookName='';
+$isbn='';
+$author='';
+$publicationYear='';
+$category='';
+
+$book = getBookByGUID($conn,$guid);
+if (!isset($book->num_rows)) {
+    $_SESSION['error'] = "Error: " . $conn->error;
+}
+
+if ($book->num_rows > 0) {
+    while ($row = $book->fetch_assoc()) {
+        $bookName=$row['title'];
+        $isbn=$row['isbn'];
+        $author=$row['author'];
+        $publicationYear=$row['publication_year'];
+        $category= $row['category_id'];
+    }
+}
 ?>
 
         <!--main content start-->
@@ -28,29 +47,29 @@ include_once("../../include/sidebar.php");
                 <div class="row dashboard-counts">
                     <div class="col-md-12">
                     <?php include_once("../../include/alerts.php"); ?>
-                       <h4 class="fw-bold text-uppercase"> Add Book </h4>
+                       <h4 class="fw-bold text-uppercase border-danger"> Delete Book </h4>
                     </div>
                     <div class="col-md-12">
                         <div class="card">
-                            <div class="card-header">
-                              Fill the form
-                            </div>
                                     <div class="card-body">
-                                        <form method="post" action="<?php echo ADMIN_BASE_URL?>books/add.php">
+                                        <form method="post" action="<?php echo ADMIN_BASE_URL?>books/delete.php">
+                                            <input type="hidden" name="guid" value="<?php echo $guid ?>" />
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="mb-3">
                                                         <label for="title">Book Name</label>
-                                                        <input type="text" name="title" id="title"
-                                                         class="form-control"  title="Enter the title"  />
+                                                        <input disabled type="text" name="title" id="title"
+                                                         class="form-control"  title="Enter the title"
+                                                        value="<?php echo $bookName ?>"/>
 
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="mb-3">
                                                         <label for="isbn" class="form-label">ISBN Number</label>
-                                                        <input type="text" name="isbn" id="isbn" class="form-control" 
-                                                        required="required" title="Enter the ISBN number"/>
+                                                        <input disabled type="text" name="isbn" id="isbn" class="form-control"
+                                                        required="required" title="Enter the ISBN number"
+                                                               value="<?php echo $isbn ?>"/>
                                                         
                                                     </div>
                                                 </div>
@@ -58,8 +77,9 @@ include_once("../../include/sidebar.php");
                                                 <div class="col-md-6">
                                                     <div class="mb-3">
                                                         <label for="author" class="form-label">Author Name</label>
-                                                        <input type="text" name="author" id="author" 
-                                                        class="form-control" required title="Enter the author's name" />
+                                                        <input disabled type="text" name="author" id="author"
+                                                        class="form-control" required title="Enter the author's name"
+                                                               value="<?php echo $author ?>"/>
 
                                                     </div>
                                                 </div>
@@ -67,9 +87,9 @@ include_once("../../include/sidebar.php");
                                                 <div class="col-md-6">
                                                     <div class="mb-3">
                                                         <label for="publication_year" class="form-label">Publication Year</label>
-                                                        <input type="number" name="publication_year" id="publication_year" 
-                                                        class="form-control" required title="Enter the year of publication" 
-                                                        />
+                                                        <input disabled type="number" name="publication_year" id="publication_year"
+                                                        class="form-control" required title="Enter the year of publication"
+                                                               value="<?php echo $publicationYear ?>"/>
 
                                                     </div>
                                                 </div>
@@ -80,12 +100,18 @@ include_once("../../include/sidebar.php");
                                                         <?php 
                                                         $cats = getCategories($conn);
                                                        ?>
-                                                            <select name="category_id" id="category_id" 
+                                                            <select disabled name="category_id" id="category_id"
                                                             class="form-control" required title="Select the category of the item">
                                                                 <option value="">Please select</option>
-                                                                <?php while ($row = $cats->fetch_assoc()) { ?>
-                                                              <option value="<?php echo $row['id'] ?>"><?php echo $row['name'] ?></option>
-                                                              <?php } ?>
+                                                                <?php
+                                                                while ($row = $cats->fetch_assoc()) {
+                                                                    if($row['id']==$category){
+                                                                        echo "<option value=".$row['id']." selected >".$row['name']."</option>";
+                                                                    }
+                                                                    else{
+                                                                        echo "<option value=".$row['id'].">".$row['name']."</option>";
+                                                                    }
+                                                                    } ?>
                                                             </select>
                                                     </div>
                                                 </div>
@@ -93,8 +119,8 @@ include_once("../../include/sidebar.php");
                                                     
                         
                                                 <div class="col-md-12">
-                                                    <button name="publish" type="submit" class="btn btn-success">
-                                                        Publish
+                                                    <button name="delete" type="submit" class="btn btn-danger">
+                                                        Delete
                                                     </button>
                         
                                                     <button type="reset" class="btn btn-secondary">
@@ -109,6 +135,7 @@ include_once("../../include/sidebar.php");
                         </div>
         <!--main content end-->
 
-        <?php
+<?php
 include_once("../../include/footer.php");
 ?>
+

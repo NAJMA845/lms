@@ -67,10 +67,10 @@ include_once("../../include/sidebar.php");
                                         </td>
                                         <td><?php echo date("d-m-Y h:i A", strtotime($row['created_at'])) ?></td>
                                         <td>
-                                            <a href="#" class="btn btn-primary btn-sm">
+                                            <a href="<?php echo ADMIN_BASE_URL.'/books/edit.php?'.$row['guid'] ?>" class="btn btn-primary btn-sm">
                                                 Edit
                                             </a>
-                                            <a href="#" class="btn btn-danger btn-sm">
+                                            <a href="<?php echo ADMIN_BASE_URL.'/books/delete.php?'.$row['guid'] ?>" class="btn btn-danger btn-sm">
                                                 Delete
                                             </a>
                                         </td>

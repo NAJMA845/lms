@@ -1,8 +1,10 @@
-<?php 
+<?php
+include_once("../../config/utility.php");
 
-//Function to store book
+//store book
 function storeBook($conn, $param)
-{   
+{
+    $guid=generateGUID();
     extract($param);
 
      ## Validation start
@@ -19,19 +21,67 @@ function storeBook($conn, $param)
     ## Validation end
 
     $datetime = date("Y-m-d H:i:s");
-    $sql = "INSERT INTO books (title, author, publication_year, isbn, category_id, created_at)
-        VALUES ('$title', '$author', '$publication_year', '$isbn', $category_id, '$datetime')";
+    $sql = "INSERT INTO books (guid,title, author, publication_year, isbn, category_id, created_at)
+        VALUES ('$guid','$title', '$author', '$publication_year', '$isbn', $category_id, '$datetime')";
     $result['success'] = $conn->query($sql);
     return $result;
 }
 
-// Function to get all books
+//update book
+function updateBookByGUID($conn, $param)
+{
+    extract($param);
+
+    ## Validation start
+    if (empty($title)) {
+        $result = array("error" => "Title is required");
+        return $result;
+    } else if (empty($isbn)) {
+        $result = array("error" => "ISBN is required");
+        return $result;
+    } else if (isIsbnUnique($conn, $isbn)) {
+        $result = array("error" => "ISBN is already registered");
+        return $result;
+    }
+    ## Validation end
+
+    $datetime = date("Y-m-d H:i:s");
+    $sql = "update books 
+    set title='$title',
+        author='$author', 
+        publication_year='$publication_year', 
+        isbn='$isbn', 
+        category_id='$category_id', 
+        updated_at='$datetime' 
+    where guid='$guid'";
+    $result['success'] = $conn->query($sql);
+    return $result;
+}
+
+//get all books
 function getBooks($conn)
 {
     $sql = "select b.*, c.name as cat_name from books b 
         left join categories c on c.id = b.category_id 
         order by id desc";
     $result = $conn->query($sql);
+    return $result;
+}
+
+//get a book by GUID
+function getBookByGUID($conn,$guid)
+{
+    $sql = "select * from books b where b.guid='$guid'";
+    $result = $conn->query($sql);
+    return $result;
+}
+
+//delete a book by GUID
+function deleteBookByGUID($conn,$param)
+{
+    extract($param);
+    $sql = "delete from books where guid='$guid';";
+    $result['success'] = $conn->query($sql);
     return $result;
 }
 
@@ -50,7 +100,7 @@ function isIsbnUnique($conn, $isbn, $id = NULL)
         $sql .= " and id != $id";
     }
     $result = $conn->query($sql);
-    if ($result->num_rows > 0)
+    if ($result->num_rows > 1)
         return true;
     else return false;
 }

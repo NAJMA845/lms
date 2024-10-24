@@ -14,7 +14,7 @@ MySQL - 10.4.28-MariaDB : Database - samrtlib
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 CREATE DATABASE /*!32312 IF NOT EXISTS*/`samrtlib` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */;
 
-USE `samrtlib`;
+USE `smartlib`;
 
 /*Table structure for table `book_loans` */
 
