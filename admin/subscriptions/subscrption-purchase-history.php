@@ -12,9 +12,9 @@ include_once("../../include/sidebar.php");
         <!--Cards-->
         <div class="row dashboard-counts">
             <div class="col-md-12">
-                <h4 class="fw-bold text-uppercase">Purchase History
+                <h4 class="fw-bold text-uppercase">Membership List
                     <button type="button" style="float:right" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#subsModal">
-                        Create Subscription
+                        Create Membership
                     </button>
                 </h4>
             </div>
@@ -22,7 +22,7 @@ include_once("../../include/sidebar.php");
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        Subscription Purchase History
+                        Membership History
                     </div>
                     <div class="card-body">
                         <!--Search form-->

@@ -8,10 +8,46 @@
             <li class="nav-item">
                 <div class="text-secondary text-uppercase fw-bold">Core</div>
             </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page"
-                       href="./subscrption-purchase-history.php"><i class="fas fa-tachometer-alt me-2"></i> Dashboard </a>
-                </li>
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page"
+                   href="./subscrption-purchase-history.php"><i class="fas fa-tachometer-alt me-2"></i> Admin Dashboard </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page"
+                   href="./subscrption-purchase-history.php"><i class="fas fa-tachometer me-2"></i> User Dashboard </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page"
+                   href="./search-books.php"><i class="fas fa-search me-2"></i> Search Books </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page"
+                   href="./reserve-books.php"><i class="fas fa-bookmark me-2"></i> Reserve Books </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link sidebar-link"
+                   data-bs-toggle="collapse"
+                   href="#MultimediaMgmt"
+                   role="button"
+                   aria-expanded="false"
+                   aria-controls="MultimediaMgmt"> <i class="fas fa-headphones me-2"></i> Multimedia Room Management
+                    <span class="right-icon float-end">
+                    <i class="fas fa-chevron-down"></i></span>
+                </a>
+                <div class="collapse" id="MultimediaMgmt">
+                    <div>
+                        <ul class="navbar-nav ps-3">
+                            <li>
+                                <a href="<?php echo ADMIN_BASE_URL ?>multimedia/add.php" class="nav-link"><i
+                                        class="fas fa-plus me-2"></i> Add New </a>
+                            </li>
+                            <li>
+                                <a href="<?php echo ADMIN_BASE_URL ?>multimedia/index.php" class="nav-link"><i
+                                        class="fas fa-list me-2"></i> Manage All</a>
+                            </li>
+                    </div>
+                </div>
+            </li>
             <li class="nav-item my-0">
                 <hr/>
             </li>
@@ -47,39 +83,7 @@
                 <hr/>
             </li>
             <li class="nav-item">
-                <div class="text-secondary text-uppercase fw-bold">User Management</div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link sidebar-link"
-                               data-bs-toggle="collapse"
-                               href="#MemberMgmt"
-                               role="button"
-                               aria-expanded="false"
-                               aria-controls="MemberMgmt">
-                                <i class="fas fa-users me-2"></i> User Management
-                                <span class="right-icon float-end">
-                <i class="fas fa-chevron-down"></i></span>
-                </a>
-                <div class="collapse" id="MemberMgmt">
-                    <div>
-                        <ul class="navbar-nav ps-3">
-                            <li>
-                                <a href="<?php echo ADMIN_BASE_URL ?>users/add.php" class="nav-link"><i
-                                                    class="fas fa-plus me-2"></i> Add New </a>
-                            </li>
-                            <li>
-                                <a href="<?php echo ADMIN_BASE_URL ?>users/index.php" class="nav-link"><i
-                                                    class="fas fa-list me-2"></i> Manage All </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </li>
-            <li class="nav-item my-0">
-                <hr/>
-            </li>
-            <li class="nav-item">
-                <div class="text-secondary text-uppercase fw-bold">Business</div>
+                <div class="text-secondary text-uppercase fw-bold">Library Operation</div>
             </li>
             <li class="nav-item">
                 <a class="nav-link sidebar-link"
@@ -89,7 +93,7 @@
                                aria-expanded="false"
                                aria-controls="BooksLoan"
                             >
-                    <i class="fa-solid fa-book-open me-2"></i> Books Loan
+                    <i class="fa-solid fa-book-open me-2"></i> Books Lending
                                 <span class="right-icon float-end">
                                     <i class="fas fa-chevron-down"></i>
                                 </span>
@@ -108,36 +112,67 @@
                         </ul>
                     </div>
                 </div>
-                        <li class="nav-item">
-                            <a class="nav-link sidebar-link"
+                <li class="nav-item">
+                    <a class="nav-link sidebar-link"
                                            data-bs-toggle="collapse"
                                            href="#subscriptionMgmt"
                                            role="button"
                                            aria-expanded="false"
                                            aria-controls="subscriptionMgmt"
-                                        > <i class="fa-solid fa-rupee-sign me-2 "></i> Subscription
+                                        > <i class="fa-solid fa-user-plus me-2 "></i> Membership
                                 <span class="right-icon float-end">
                                     <i class="fas fa-chevron-down"></i></span>
+                    </a>
+                <div class="collapse" id="subscriptionMgmt">
+                    <div>
+                        <ul class="navbar-nav ps-3">
+                            <li>
+                                <a href="<?php echo ADMIN_BASE_URL ?>subscriptions/index.php"
+                                                           class="nav-link"><i class="fas fa-plus me-2"></i>Membership Plans</a>
+                            </li>
+                            <li>
+                                <a href="<?php echo ADMIN_BASE_URL ?>subscriptions/subscrption-purchase-history.php"
+                                                           class="nav-link"><i class="fas fa-list me-2"></i>Manage Membership</a>
+                            </li>
+                        </ul>
+                        <li class="nav-item my-0">
+                            <hr/>
+                        </li>
+                        <li class="nav-item">
+                            <div class="text-secondary text-uppercase fw-bold">User Management</div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link sidebar-link"
+                                           data-bs-toggle="collapse"
+                                           href="#MemberMgmt"
+                                           role="button"
+                                           aria-expanded="false"
+                                           aria-controls="MemberMgmt">
+                                            <i class="fas fa-users me-2"></i> User Management
+                                            <span class="right-icon float-end">
+                                            <i class="fas fa-chevron-down"></i></span>
                             </a>
-                            <div class="collapse" id="subscriptionMgmt">
+                            <div class="collapse" id="MemberMgmt">
                                 <div>
                                     <ul class="navbar-nav ps-3">
                                         <li>
-                                            <a href="<?php echo ADMIN_BASE_URL ?>subscriptions/index.php"
-                                                           class="nav-link"><i class="fas fa-plus me-2"></i>Plans</a>
+                                            <a href="<?php echo ADMIN_BASE_URL ?>users/add.php" class="nav-link"><i
+                                                                class="fas fa-plus me-2"></i> Add New </a>
                                         </li>
                                         <li>
-                                            <a href="<?php echo ADMIN_BASE_URL ?>subscriptions/subscrption-purchase-history.php"
-                                                           class="nav-link"><i class="fas fa-list me-2"></i>Purchase
-                                                            History</a>
+                                            <a href="<?php echo ADMIN_BASE_URL ?>users/index.php" class="nav-link"><i
+                                                                class="fas fa-list me-2"></i> Manage All </a>
                                         </li>
                                     </ul>
-                                    <li class="nav-item my-0">
-                                        <hr/>
-                                    </li>
-                                    <a class="nav-item">
-                                        <a class="nav-link active" aria-current="page" href="#">
-                                            <i class="fa-solid fa-right-from-bracket me-2"></i>Log Out </a>
                                 </div>
                             </div>
+                        </li>
+                        <li class="nav-item my-0">
+                            <hr/>
+                        </li>
+                        <a class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">
+                                <i class="fa-solid fa-right-from-bracket me-2"></i>Log Out </a>
+                    </div>
+                </div>
                                         <!--off canvas end-->
