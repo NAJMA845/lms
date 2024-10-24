@@ -59,10 +59,10 @@
                     <div > 
                         <ul class="navbar-nav ps-3">
                             <li>
-                                <a href="<?php echo ADMIN_BASE_URL ?>students/add.php" class="nav-link" ><i class="fas fa-plus me-2"></i> Add New </a>
+                                <a href="<?php echo ADMIN_BASE_URL ?>members/add.php" class="nav-link" ><i class="fas fa-plus me-2"></i> Add New </a>
                             </li>
                             <li>
-                                <a href="<?php echo ADMIN_BASE_URL ?>students/index.php" class="nav-link"><i class="fas fa-list me-2"></i> Manage All </a>
+                                <a href="<?php echo ADMIN_BASE_URL ?>members/index.php" class="nav-link"><i class="fas fa-list me-2"></i> Manage All </a>
                             </li>
                         </ul>
                             
