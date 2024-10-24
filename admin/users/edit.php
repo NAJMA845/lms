@@ -1,17 +1,17 @@
 <?php
 include_once("../../config/database.php");
-include_once("../models/members.php");
+include_once("../models/users.php");
 include_once("../../config/config.php");
 
 // Member
 if (isset($_POST['update'])) {
-    $res = updateMemberByGUID($conn, $_POST);
+    $res = updateUserByGUID($conn, $_POST);
     if (isset($res['success'])) {
-        $_SESSION['success'] = "Member has been updated successfully.";
-        header("LOCATION:".ADMIN_BASE_URL."members");
+        $_SESSION['success'] = "User has been updated successfully.";
+        header("LOCATION:".ADMIN_BASE_URL."users");
     } else {
         $_SESSION['error'] = $res["error"]; // Capture error message
-         //header("LOCATION:" . BASE_URL . "members/add.php");
+         //header("LOCATION:" . BASE_URL . "users/add.php");
     }
 }
 
@@ -22,10 +22,13 @@ include_once("../../include/sidebar.php");
 $memberName = '';
 $email = '';
 $phoneNo = '';
+$nicNo = '';
 $address = '';
+$is_admin = '';
+$is_blocked = '';
 
-$id = $_SERVER['QUERY_STRING'];
-$member = getMemberByGUID($conn, $id);
+$guid = $_SERVER['QUERY_STRING'];
+$member = getUserByGUID($conn, $guid);
 if (!isset($member->num_rows)) {
     $_SESSION['error'] = "Error: " . $conn->error;
 }
@@ -34,8 +37,11 @@ if ($member->num_rows > 0) {
     while ($row = $member->fetch_assoc()) {
         $memberName = $row['name'];
         $email = $row['email'];
+        $nicNo = $row['nic_no'];
         $phoneNo = $row['phone_no'];
         $address = $row['address'];
+        $is_admin=$row['is_admin'];
+        $is_blocked=$row['is_blocked'];
     }
 }
 ?>
@@ -47,7 +53,7 @@ if ($member->num_rows > 0) {
         <div class="row dashboard-counts">
             <div class="col-md-12">
                 <?php include_once("../../include/alerts.php"); ?>
-                <h4 class="fw-bold text-uppercase"> Edit Member </h4>
+                <h4 class="fw-bold text-uppercase"> Edit User </h4>
             </div>
             <div class="col-md-12">
                 <div class="card">
@@ -55,12 +61,12 @@ if ($member->num_rows > 0) {
                         Fill the form
                     </div>
                     <div class="card-body">
-                        <form method="post" action="<?php echo ADMIN_BASE_URL?>members/edit.php">
-                            <input type="hidden" name="id" value="<?php echo $id ?>" />
+                        <form method="post" action="<?php echo ADMIN_BASE_URL?>users/edit.php">
+                            <input type="hidden" name="guid" value="<?php echo $guid ?>" />
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <label class="form-label">Full Name</label>
+                                        <label class="form-label">Name in Full</label>
                                         <input type="text" class="form-control" name="name" required value="<?php echo $memberName ?>" />
                                     </div>
                                 </div>
@@ -68,6 +74,12 @@ if ($member->num_rows > 0) {
                                     <div class="mb-3">
                                         <label class="form-label">Email</label>
                                         <input type="email" class="form-control" name="email" required value="<?php echo $email ?>" />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">NIC No</label>
+                                        <input type="text" class="form-control" name="nic_no" required value="<?php echo $nicNo ?>" />
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -80,6 +92,14 @@ if ($member->num_rows > 0) {
                                     <div class="mb-3">
                                         <label class="form-label">Address</label>
                                         <input type="text" class="form-control" name="address" required value="<?php echo $address ?>" />
+                                    </div>
+                                    <div class="mb-3 form-check">
+                                        <input type="checkbox" class="form-check-input" id="is_admin" name="is_admin" <?php echo ($is_admin == 1) ? 'checked' : ''; ?> />
+                                        <label class="form-check-label" for="is_admin">Is Admin ?</label>
+                                    </div>
+                                    <div class="mb-3 form-check">
+                                        <input type="checkbox" class="form-check-input" id="is_blocked" name="is_blocked" <?php echo ($is_blocked == 1) ? 'checked' : ''; ?>/>
+                                        <label class="form-check-label" for="is_blocked">Is Blocked</label>
                                     </div>
                                 </div>
                                 <div class="col-md-12">

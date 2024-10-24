@@ -1,6 +1,6 @@
 /*
 SQLyog Community
-MySQL - 10.4.28-MariaDB : Database - samrtlib
+MySQL - 10.4.28-MariaDB : Database - smartlib
 *********************************************************************
 */
 
@@ -12,7 +12,7 @@ MySQL - 10.4.28-MariaDB : Database - samrtlib
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-CREATE DATABASE /*!32312 IF NOT EXISTS*/`samrtlib` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`smartlib` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */;
 
 USE `smartlib`;
 
@@ -50,13 +50,9 @@ CREATE TABLE `books` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 /*Data for the table `books` */
-
-insert  into `books`(`guid`,`id`,`title`,`author`,`publication_year`,`isbn`,`category_id`,`status`,`created_at`,`updated_at`) values 
-('',1,'DSA ','J.John','1987','13452246',6,1,'2024-09-30 15:19:38',NULL),
-('',3,'IT Text Book','Alex','2001','432187',6,1,'2024-10-01 10:47:22',NULL);
 
 /*Table structure for table `categories` */
 
@@ -74,28 +70,10 @@ CREATE TABLE `categories` (
 /*Data for the table `categories` */
 
 insert  into `categories`(`guiid`,`id`,`name`,`created_at`,`updated_at`) values 
-('',3,'Fiction','2024-09-30 16:29:37',NULL),
-('',4,'Non-Fiction','2024-09-30 16:29:37',NULL),
-('',5,'Science                                                            \r\n','2024-09-30 16:30:39',NULL),
-('',6,'Technology','2024-09-30 16:30:39',NULL);
-
-/*Table structure for table `members` */
-
-DROP TABLE IF EXISTS `members`;
-
-CREATE TABLE `members` (
-  `guid` varchar(50) NOT NULL,
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
-  `phone_no` varchar(15) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
-  `email` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
-  `address` text CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
-/*Data for the table `members` */
+('',3,'Fiction','2024-09-30 21:59:37',NULL),
+('',4,'Non-Fiction','2024-09-30 21:59:37',NULL),
+('',5,'Science                                                            \r\n','2024-09-30 22:00:39',NULL),
+('',6,'Technology','2024-09-30 22:00:39',NULL);
 
 /*Table structure for table `subscription_plans` */
 
@@ -127,6 +105,7 @@ CREATE TABLE `subscriptions` (
   `start_date` date DEFAULT NULL,
   `end_date` date DEFAULT NULL,
   `amount` float(10,2) DEFAULT NULL,
+  `is_expired` bit(1) DEFAULT b'0',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -143,7 +122,9 @@ CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `email` varchar(100) DEFAULT NULL,
+  `nic_no` varchar(50) NOT NULL,
   `phone_no` varchar(20) DEFAULT NULL,
+  `address` varchar(200) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
   `profile_pic` varchar(255) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
@@ -151,10 +132,14 @@ CREATE TABLE `users` (
   `is_admin` bit(1) DEFAULT b'0',
   `reset_code` varchar(50) DEFAULT NULL,
   `reset_at` timestamp NULL DEFAULT NULL,
+  `is_blocked` bit(1) DEFAULT b'0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 /*Data for the table `users` */
+
+insert  into `users`(`guid`,`id`,`name`,`email`,`nic_no`,`phone_no`,`address`,`password`,`profile_pic`,`created_at`,`updated_at`,`is_admin`,`reset_code`,`reset_at`,`is_blocked`) values 
+('6F3F4017-5D77-4367-AB8E-9C9564DB7676',5,'Ishthiyaque Ahmed','ishthi83@gmail.com','831780630V','0715308889','No 45','c2ed9df03d80eac8f392b27548f20851',NULL,'2024-10-24 22:55:11','2024-10-24 23:23:34','',NULL,NULL,'\0');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
