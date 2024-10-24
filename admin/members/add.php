@@ -26,7 +26,7 @@ include_once("../../include/sidebar.php");
         <div class="row dashboard-counts">
             <div class="col-md-12">
                 <?php include_once("../../include/alerts.php"); ?>
-                <h4 class="fw-bold text-uppercase">Add Member</h4>
+                <h4 class="fw-bold text-uppercase">Add Members</h4>
             </div>
             <div class="col-md-12">
                 <div class="card">
