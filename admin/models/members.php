@@ -18,8 +18,8 @@ function storeMember($conn, $param)
     // Validation end
 
     $datetime = date("Y-m-d H:i:s");
-    $sql = "INSERT INTO members (guid, name, email, phone, address, created_at)
-            VALUES ('$guid', '$name', '$email', '$phone', '$address', '$datetime')";
+    $sql = "INSERT INTO members (guid, name, phone_no, email, address, created_at)
+            VALUES ('$guid', '$name', '$phone_no','$email', '$address', '$datetime')";
     $result['success'] = $conn->query($sql);
     return $result;
 }
@@ -34,7 +34,7 @@ function updateMemberByGUID($conn, $param)
         return array("error" => "Name is required");
     } else if (empty($email)) {
         return array("error" => "Email is required");
-    } else if (!isEmailUnique($conn, $email, $guid)) {
+    } else if (!isEmailUnique($conn, $email)) {
         return array("error" => "Email is already registered");
     }
     // Validation end
@@ -42,8 +42,8 @@ function updateMemberByGUID($conn, $param)
     $datetime = date("Y-m-d H:i:s");
     $sql = "UPDATE members 
             SET name = '$name',
-                email = '$email', 
-                phone = '$phone', 
+                phone_no = '$phone_no',
+                email = '$email',  
                 address = '$address', 
                 updated_at = '$datetime' 
             WHERE guid = '$guid'";
@@ -61,8 +61,9 @@ function getMembers($conn)
 // Get a member by GUID
 function getMemberByGUID($conn, $guid)
 {
-    $sql = "SELECT * FROM members WHERE guid = '$guid'";
-    return $conn->query($sql);
+    $sql = "select * from members where guid='$guid'";
+    $result = $conn->query($sql);
+    return $result;
 }
 
 // Delete a member by GUID
