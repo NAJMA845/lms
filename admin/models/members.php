@@ -85,3 +85,4 @@ function isEmailUnique($conn, $email, $id = NULL)
     return $conn->query($sql)->num_rows == 0;
 }
 ?>
+

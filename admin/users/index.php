@@ -1,9 +1,9 @@
 <?php
 include_once("../../config/config.php");
 include_once("../../config/database.php");
-include_once("../models/members.php");
+include_once("../models/users.php");
 
-$members = getMembers($conn);
+$members = getUsers($conn);
 if (!isset($members->num_rows)) {
     $_SESSION['error'] = "Error: " . $conn->error;
 }
@@ -18,12 +18,12 @@ include_once("../../include/sidebar.php");
         <div class="row">
             <div class="col-md-12">
                 <?php include_once("../../include/alerts.php"); ?>
-                <h4 class="fw-bold text-uppercase">Manage Members</h4>
+                <h4 class="fw-bold text-uppercase">Manage Users</h4>
             </div>
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        All Members
+                        All Users
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -31,7 +31,7 @@ include_once("../../include/sidebar.php");
                                 <thead class="table-dark">
                                     <tr>
                                         <th scope="col">#</th>
-                                        <th scope="col">Full Name</th>
+                                        <th scope="col">Name in Full</th>
                                         <th scope="col">Email</th>
                                         <th scope="col">Phone No</th>
                                         <th scope="col">Address</th>
@@ -53,14 +53,14 @@ include_once("../../include/sidebar.php");
                                         <td><?php echo $row['address'] ?></td>
                                         <td><?php echo date("d-m-Y h:i A", strtotime($row['created_at'])) ?></td>
                                         <td>
-                                            <a href="<?php echo ADMIN_BASE_URL.'/members/edit.php?id='.$row['id'] ?>" class="btn btn-primary btn-sm">Edit</a>
-                                            <a href="<?php echo ADMIN_BASE_URL.'/members/delete.php?id='.$row['id'] ?>" class="btn btn-danger btn-sm">Delete</a>
+                                            <a href="<?php echo ADMIN_BASE_URL.'/users/edit.php?'.$row['guid'] ?>" class="btn btn-primary btn-sm">Edit</a>
+                                            <a href="<?php echo ADMIN_BASE_URL.'/users/delete.php?'.$row['guid'] ?>" class="btn btn-danger btn-sm">Delete</a>
                                         </td>
                                     </tr>
                                     <?php
                                         }
                                     } else {
-                                        echo "<tr><td colspan='7'>No members found.</td></tr>";
+                                        echo "<tr><td colspan='7'>No users found.</td></tr>";
                                     }
                                     ?>
                                 </tbody>

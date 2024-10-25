@@ -17,13 +17,14 @@ if (isset($_POST['delete'])) {
 include_once("../../include/header.php");
 include_once("../../include/topbar.php");
 include_once("../../include/sidebar.php");
-$guid=$_SERVER['QUERY_STRING'];
+
 $bookName='';
 $isbn='';
 $author='';
 $publicationYear='';
 $category='';
 
+$guid=$_SERVER['QUERY_STRING'];
 $book = getBookByGUID($conn,$guid);
 if (!isset($book->num_rows)) {
     $_SESSION['error'] = "Error: " . $conn->error;

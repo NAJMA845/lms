@@ -13,7 +13,7 @@ include_once("../../include/sidebar.php");
 
         <div class="row dashboard-counts">
             <div class="col-md-12">
-                <h4 class="fw-bold text-uppercase">Subscription Plan</h4>
+                <h4 class="fw-bold text-uppercase">Membership Plan</h4>
             </div>
 
             <div class="col-md-8">
