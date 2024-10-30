@@ -35,12 +35,14 @@ if (!isset($member->num_rows)) {
 
 if ($member->num_rows > 0) {
     while ($row = $member->fetch_assoc()) {
+        $regNo = $row['id'];
         $memberName = $row['name'];
         $email = $row['email'];
         $nicNo = $row['nic_no'];
         $phoneNo = $row['phone_no'];
         $address = $row['address'];
         $is_admin=$row['is_admin'];
+        $is_member=$row['is_member'];
         $is_blocked=$row['is_blocked'];
     }
 }
@@ -64,6 +66,12 @@ if ($member->num_rows > 0) {
                         <form method="post" action="<?php echo ADMIN_BASE_URL?>users/edit.php">
                             <input type="hidden" name="guid" value="<?php echo $guid ?>" />
                             <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Registration No</label>
+                                        <input type="text" class="form-control" name="reg_no" required value="<?php echo $regNo ?>" disabled />
+                                    </div>
+                                </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label class="form-label">Name in Full</label>
@@ -96,6 +104,10 @@ if ($member->num_rows > 0) {
                                     <div class="mb-3 form-check">
                                         <input type="checkbox" class="form-check-input" id="is_admin" name="is_admin" <?php echo ($is_admin == 1) ? 'checked' : ''; ?> />
                                         <label class="form-check-label" for="is_admin">Is Admin ?</label>
+                                    </div>
+                                    <div class="mb-3 form-check">
+                                        <input type="checkbox" class="form-check-input" id="is_member" name="is_member" <?php echo ($is_member == 1) ? 'checked' : ''; ?> />
+                                        <label class="form-check-label" for="is_member">Is Member ?</label>
                                     </div>
                                     <div class="mb-3 form-check">
                                         <input type="checkbox" class="form-check-input" id="is_blocked" name="is_blocked" <?php echo ($is_blocked == 1) ? 'checked' : ''; ?>/>
