@@ -31,6 +31,7 @@ include_once("../../include/sidebar.php");
                                 <thead class="table-dark">
                                     <tr>
                                         <th scope="col">#</th>
+                                        <th scope="col">Registration No</th>
                                         <th scope="col">Name in Full</th>
                                         <th scope="col">Email</th>
                                         <th scope="col">Phone No</th>
@@ -47,6 +48,7 @@ include_once("../../include/sidebar.php");
                                     ?>
                                     <tr>
                                         <th scope="row"><?php echo $i++ ?></th>
+                                        <td><?php echo $row['id'] ?></td>
                                         <td><?php echo $row['name'] ?></td>
                                         <td><?php echo $row['email'] ?></td>
                                         <td><?php echo $row['phone_no'] ?></td>

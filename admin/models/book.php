@@ -5,8 +5,28 @@ include_once("../../config/utility.php");
 function storeBook($conn, $param)
 {
     $guid=generateGUID();
-    extract($param);
+    $pdf_name=null;
+    if (isset($_FILES['pdf']) && $_FILES['pdf']['error'] == 0) {
+        // Specify the directory to store the uploaded file
+        $upload_dir = '../../resources/';
+        // Generate a unique file name
+        $pdf_name = uniqid() . '_' . basename($_FILES['pdf']['name']);
+        $pdf_path = $upload_dir . $pdf_name;
 
+        // Check if the file is a PDF
+        $file_type = mime_content_type($_FILES['pdf']['tmp_name']);
+        if ($file_type !== 'application/pdf') {
+            echo "Please upload a valid PDF file.";
+            exit;
+        }
+
+        // Move the file to the specified directory
+        if (!move_uploaded_file($_FILES['pdf']['tmp_name'], $pdf_path)) {
+            echo "File upload failed.";
+            exit;
+        }
+    }
+    extract($param);
      ## Validation start
      if (empty($title)) {
         $result = array("error" => "Title is required");
@@ -18,11 +38,13 @@ function storeBook($conn, $param)
         $result = array("error" => "ISBN is already registered");
         return $result;
     }
+
+    
     ## Validation end
 
     $datetime = date("Y-m-d H:i:s");
-    $sql = "INSERT INTO books (guid,title, author, publication_year, isbn, category_id, created_at)
-        VALUES ('$guid','$title', '$author', '$publication_year', '$isbn', $category_id, '$datetime')";
+    $sql = "INSERT INTO books (guid,title, author, publication_year, isbn, category_id, created_at,pdf_url)
+        VALUES ('$guid','$title', '$author', '$publication_year', '$isbn', $category_id, '$datetime','$pdf_name')";
     $result['success'] = $conn->query($sql);
     return $result;
 }
@@ -30,6 +52,27 @@ function storeBook($conn, $param)
 //update book
 function updateBookByGUID($conn, $param)
 {
+    $pdf_name=null;
+    if (isset($_FILES['pdf']) && $_FILES['pdf']['error'] == 0) {
+        // Specify the directory to store the uploaded file
+        $upload_dir = '../../resources/';
+        // Generate a unique file name
+        $pdf_name = uniqid() . '_' . basename($_FILES['pdf']['name']);
+        $pdf_path = $upload_dir . $pdf_name;
+
+        // Check if the file is a PDF
+        $file_type = mime_content_type($_FILES['pdf']['tmp_name']);
+        if ($file_type !== 'application/pdf') {
+            echo "Please upload a valid PDF file.";
+            exit;
+        }
+
+        // Move the file to the specified directory
+        if (!move_uploaded_file($_FILES['pdf']['tmp_name'], $pdf_path)) {
+            echo "File upload failed.";
+            exit;
+        }
+    }
     extract($param);
 
     ## Validation start
@@ -44,16 +87,29 @@ function updateBookByGUID($conn, $param)
         return $result;
     }
     ## Validation end
-
     $datetime = date("Y-m-d H:i:s");
-    $sql = "update books 
-    set title='$title',
+    if($pdf_name){
+        $sql = "update books 
+        set title='$title',
+            author='$author', 
+            publication_year='$publication_year', 
+            isbn='$isbn', 
+            category_id='$category_id', 
+            updated_at='$datetime',
+            pdf_url= '$pdf_name'
+        where guid='$guid'";
+    }
+    else{
+        $sql = "update books 
+        set title='$title',
         author='$author', 
         publication_year='$publication_year', 
         isbn='$isbn', 
         category_id='$category_id', 
-        updated_at='$datetime' 
+        updated_at='$datetime'
     where guid='$guid'";
+    }
+    
     $result['success'] = $conn->query($sql);
     return $result;
 }

@@ -57,7 +57,7 @@ if ($book->num_rows > 0) {
                               Fill the form
                             </div>
                                     <div class="card-body">
-                                        <form method="post" action="<?php echo ADMIN_BASE_URL?>books/edit.php">
+                                        <form method="post" action="<?php echo ADMIN_BASE_URL?>books/edit.php"  enctype="multipart/form-data">
                                             <input type="hidden" name="guid" value="<?php echo $guid ?>" />
                                             <div class="row">
                                                 <div class="col-md-6">
@@ -101,25 +101,16 @@ if ($book->num_rows > 0) {
                         
                                                 <div class="col-md-6">
                                                     <div class="mb-3">
-                                                        <label for="category_id" class="form-label">Category</label>
+                                                        <label for="category_id" class="form-label">Upload PDF</label>
                                                         <?php 
                                                         $cats = getCategories($conn);
                                                        ?>
-                                                            <select name="category_id" id="category_id" 
-                                                            class="form-control" required title="Select the category of the item">
-                                                                <option value="">Please select</option>
-                                                                <?php
-                                                                while ($row = $cats->fetch_assoc()) {
-                                                                    if($row['id']==$category){
-                                                                        echo "<option value=".$row['id']." selected >".$row['name']."</option>";
-                                                                    }
-                                                                    else{
-                                                                        echo "<option value=".$row['id'].">".$row['name']."</option>";
-                                                                    }
-                                                                    } ?>
-                                                            </select>
+                                                       <br>
+                                                            <input type="file" name="pdf" id="pdf" accept="application/pdf">
+                                                            
                                                     </div>
                                                 </div>
+
 
                                                     
                         

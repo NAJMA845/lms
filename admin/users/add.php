@@ -70,8 +70,12 @@ include_once("../../include/sidebar.php");
                                         <label class="form-check-label" for="is_admin">Is Admin ?</label>
                                     </div>
                                     <div class="mb-3 form-check">
+                                        <input type="checkbox" class="form-check-input" id="is_member" name="is_member" />
+                                        <label class="form-check-label" for="is_member">Is Member ?</label>
+                                    </div>
+                                    <div class="mb-3 form-check">
                                         <input type="checkbox" class="form-check-input" id="is_blocked" name="is_blocked" />
-                                        <label class="form-check-label" for="is_blocked">Is Blocked</label>
+                                        <label class="form-check-label" for="is_blocked">Is Blocked ?</label>
                                     </div>
                                 </div>
 

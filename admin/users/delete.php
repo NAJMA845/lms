@@ -32,6 +32,7 @@ if (!isset($member->num_rows)) {
 
 if ($member->num_rows > 0) {
     while ($row = $member->fetch_assoc()) {
+        $regNo = $row['id'];
         $memberName = $row['name'];
         $email = $row['email'];
         $nicNo = $row['nic_no'];
@@ -55,6 +56,14 @@ if ($member->num_rows > 0) {
                         <form method="post" action="<?php echo ADMIN_BASE_URL ?>users/delete.php">
                             <input type="hidden" name="guid" value="<?php echo $guid ?>" />
                             <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="name">Reg No</label>
+                                        <input disabled type="text" name="reg_no" id="reg_no"
+                                               class="form-control" title=""
+                                               value="<?php echo $regNo ?>" />
+                                    </div>
+                                </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="name">Name in Full</label>

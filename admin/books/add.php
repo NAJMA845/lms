@@ -36,7 +36,7 @@ include_once("../../include/sidebar.php");
                               Fill the form
                             </div>
                                     <div class="card-body">
-                                        <form method="post" action="<?php echo ADMIN_BASE_URL?>books/add.php">
+                                        <form method="post" action="<?php echo ADMIN_BASE_URL?>books/add.php" enctype="multipart/form-data">
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="mb-3">
@@ -89,8 +89,40 @@ include_once("../../include/sidebar.php");
                                                             </select>
                                                     </div>
                                                 </div>
+                                                <div class="col-md-6">
+                                                    <div class="mb-3">
+                                                        <label for="category_id" class="form-label">Upload PDF</label>
+                                                        <?php 
+                                                        $cats = getCategories($conn);
+                                                       ?>
+                                                       <br>
+                                                            <input type="file" name="pdf" id="pdf" accept="application/pdf">
+                                                            
+                                                    </div>
+                                                </div>
 
-                                                    
+                                                <div class="col-md-12">
+                                    <h5 class="mt-4">Book Copies</h5>
+                                    <table class="table table-bordered" id="copiesTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Copy Number</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Initial empty row to add new copies -->
+                                            <tr>
+                                                <td><input type="text" name="copies[]" class="form-control" placeholder="Enter copy number" /></td>
+                                                <td>
+                                                    <button type="button" class="btn btn-primary" onclick="editRow(this)">Edit</button>
+                                                    <button type="button" class="btn btn-danger" onclick="deleteRow(this)">Delete</button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <button type="button" class="btn btn-secondary" onclick="addRow()">Add Copy</button>
+                                </div>
                         
                                                 <div class="col-md-12">
                                                     <button name="publish" type="submit" class="btn btn-success">
@@ -107,6 +139,38 @@ include_once("../../include/sidebar.php");
                                 </div>
                             </div>
                         </div>
+                        <script>
+function addRow() {
+    const table = document.getElementById("copiesTable").getElementsByTagName('tbody')[0];
+    const newRow = table.insertRow();
+    
+    // Copy Number Field
+    const copyCell = newRow.insertCell(0);
+    const copyInput = document.createElement("input");
+    copyInput.type = "text";
+    copyInput.name = "copies[]";
+    copyInput.className = "form-control";
+    copyInput.placeholder = "Enter copy number";
+    copyCell.appendChild(copyInput);
+
+    // Action Buttons
+    const actionCell = newRow.insertCell(1);
+    actionCell.innerHTML = `
+        <button type="button" class="btn btn-primary" onclick="editRow(this)">Edit</button>
+        <button type="button" class="btn btn-danger" onclick="deleteRow(this)">Delete</button>`;
+}
+
+function editRow(button) {
+    const row = button.closest('tr');
+    const input = row.cells[0].getElementsByTagName('input')[0];
+    input.focus();
+}
+
+function deleteRow(button) {
+    const row = button.closest('tr');
+    row.remove();
+}
+</script>
         <!--main content end-->
 
         <?php
