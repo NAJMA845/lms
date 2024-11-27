@@ -121,9 +121,11 @@ include_once("../../include/sidebar.php");
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <button type="button" class="btn btn-secondary" onclick="addRow()">Add Copy</button>
+                                    <div class="d-flex justify-content-end mt-2">
+                                          <button type="button" class="btn btn-secondary btn-sm" onclick="addRow()">Add Copy</button>
+                                     </div>
                                 </div>
-                        
+                                
                                                 <div class="col-md-12">
                                                     <button name="publish" type="submit" class="btn btn-success">
                                                         Publish
