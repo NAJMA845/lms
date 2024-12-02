@@ -43,7 +43,6 @@ include_once("../../include/sidebar.php");
                                                         <label for="title">Book Name</label>
                                                         <input type="text" name="title" id="title"
                                                          class="form-control"  title="Enter the title"  />
-
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
