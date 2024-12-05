@@ -1,53 +1,24 @@
 <?php
+include_once("../../config/config.php");
 include_once("../../config/database.php");
 include_once("../models/book.php");
-include_once("../../config/config.php");
 
-//-----------------------Book edit POST---------------------------//
+
+//Add Book Functionality
 if (isset($_POST['publish'])) {
-    $res = updateBookByGUID($conn, $_POST);
+    $res = storeBook($conn, $_POST);
     if (isset($res['success'])) {
-        $_SESSION['success'] = "Book has been edited Successfully";
-        header("LOCATION:".ADMIN_BASE_URL."books");
+        $_SESSION['success'] = "Book has been created Successfully";
+        header("LOCATION:" . ADMIN_BASE_URL . "books");
     } else {
         $_SESSION['error'] = $res["error"];//"Something went wrong, please try again.";
         //header("LOCATION:" . BASE_URL . "books/add.php");
     }
 }
-//---------------------------------------------------------------//
+
 include_once("../../include/header.php");
 include_once("../../include/topbar.php");
 include_once("../../include/sidebar.php");
-
-$bookName='';
-$isbn='';
-$author='';
-$publicationYear='';
-$category='';
-
-$guid=$_SERVER['QUERY_STRING'];
-$book = getBookByGUID($conn,$guid);
-if (!isset($book->num_rows)) {
-    $_SESSION['error'] = "Error: " . $conn->error;
-}
-
-if ($book->num_rows > 0) {
-    while ($row = $book->fetch_assoc()) {
-        $bookName=$row['title'];
-        $isbn=$row['isbn'];
-        $author=$row['author'];
-        $publicationYear=$row['publication_year'];
-        $category= $row['category_id'];
-    }
-}
-
-$book_copies = getBookCopiesByGUID($conn,$guid);
-if ($book_copies->num_rows > 0) {
-    while ($row = $book_copies->fetch_assoc()) {
-        $book_guid=$row['book_guid'];
-        $copy_no=$row['copy_no'];
-    }
-}
 ?>
 
         <!--main content start-->
@@ -57,7 +28,7 @@ if ($book_copies->num_rows > 0) {
                 <div class="row dashboard-counts">
                     <div class="col-md-12">
                     <?php include_once("../../include/alerts.php"); ?>
-                       <h4 class="fw-bold text-uppercase"> Edit Book </h4>
+                       <h4 class="fw-bold text-uppercase"> Add Book </h4>
                     </div>
                     <div class="col-md-12">
                         <div class="card">
@@ -65,15 +36,13 @@ if ($book_copies->num_rows > 0) {
                               Fill the form
                             </div>
                                     <div class="card-body">
-                                        <form method="post" action="<?php echo ADMIN_BASE_URL?>books/edit.php"  enctype="multipart/form-data">
-                                            <input type="hidden" name="guid" value="<?php echo $guid ?>" />
+                                        <form method="post" action="<?php echo ADMIN_BASE_URL?>books/add.php" enctype="multipart/form-data">
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="mb-3">
                                                         <label for="title">Book Name</label>
                                                         <input type="text" name="title" id="title"
-                                                         class="form-control"  title="Enter the title"
-                                                        value="<?php echo $bookName ?>"/>
+                                                         class="form-control"  title="Enter the title"  />
 
                                                     </div>
                                                 </div>
@@ -81,8 +50,7 @@ if ($book_copies->num_rows > 0) {
                                                     <div class="mb-3">
                                                         <label for="isbn" class="form-label">ISBN Number</label>
                                                         <input type="text" name="isbn" id="isbn" class="form-control" 
-                                                        required="required" title="Enter the ISBN number"
-                                                               value="<?php echo $isbn ?>"/>
+                                                        required="required" title="Enter the ISBN number"/>
                                                         
                                                     </div>
                                                 </div>
@@ -91,8 +59,7 @@ if ($book_copies->num_rows > 0) {
                                                     <div class="mb-3">
                                                         <label for="author" class="form-label">Author Name</label>
                                                         <input type="text" name="author" id="author" 
-                                                        class="form-control" required title="Enter the author's name"
-                                                               value="<?php echo $author ?>"/>
+                                                        class="form-control" required title="Enter the author's name" />
 
                                                     </div>
                                                 </div>
@@ -101,12 +68,27 @@ if ($book_copies->num_rows > 0) {
                                                     <div class="mb-3">
                                                         <label for="publication_year" class="form-label">Publication Year</label>
                                                         <input type="number" name="publication_year" id="publication_year" 
-                                                        class="form-control" required title="Enter the year of publication"
-                                                               value="<?php echo $publicationYear ?>"/>
+                                                        class="form-control" required title="Enter the year of publication" 
+                                                        />
 
                                                     </div>
                                                 </div>
                         
+                                                <div class="col-md-6">
+                                                    <div class="mb-3">
+                                                        <label for="category_id" class="form-label">Category</label>
+                                                        <?php 
+                                                        $cats = getCategories($conn);
+                                                       ?>
+                                                            <select name="category_id" id="category_id" 
+                                                            class="form-control" required title="Select the category of the item">
+                                                                <option value="">Please select</option>
+                                                                <?php while ($row = $cats->fetch_assoc()) { ?>
+                                                              <option value="<?php echo $row['id'] ?>"><?php echo $row['name'] ?></option>
+                                                              <?php } ?>
+                                                            </select>
+                                                    </div>
+                                                </div>
                                                 <div class="col-md-6">
                                                     <div class="mb-3">
                                                         <label for="category_id" class="form-label">Upload PDF</label>
@@ -119,8 +101,7 @@ if ($book_copies->num_rows > 0) {
                                                     </div>
                                                 </div>
 
-    <!-- <grid> -->
-    <div class="col-md-12">
+                                                <div class="col-md-12">
                                     <h5 class="mt-4">Book Copies</h5>
                                     <table class="table table-bordered" id="copiesTable">
                                         <thead>
@@ -140,11 +121,8 @@ if ($book_copies->num_rows > 0) {
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <div class="d-flex justify-content-end mt-2">
-                                          <button type="button" class="btn btn-secondary btn-sm" onclick="addRow()">Add Copy</button>
-                                     </div>
+                                    <button type="button" class="btn btn-secondary" onclick="addRow()">Add Copy</button>
                                 </div>
-                                                    
                         
                                                 <div class="col-md-12">
                                                     <button name="publish" type="submit" class="btn btn-success">
@@ -161,9 +139,40 @@ if ($book_copies->num_rows > 0) {
                                 </div>
                             </div>
                         </div>
+                        <script>
+function addRow() {
+    const table = document.getElementById("copiesTable").getElementsByTagName('tbody')[0];
+    const newRow = table.insertRow();
+    
+    // Copy Number Field
+    const copyCell = newRow.insertCell(0);
+    const copyInput = document.createElement("input");
+    copyInput.type = "text";
+    copyInput.name = "copies[]";
+    copyInput.className = "form-control";
+    copyInput.placeholder = "Enter copy number";
+    copyCell.appendChild(copyInput);
+
+    // Action Buttons
+    const actionCell = newRow.insertCell(1);
+    actionCell.innerHTML = `
+        <button type="button" class="btn btn-primary" onclick="editRow(this)">Edit</button>
+        <button type="button" class="btn btn-danger" onclick="deleteRow(this)">Delete</button>`;
+}
+
+function editRow(button) {
+    const row = button.closest('tr');
+    const input = row.cells[0].getElementsByTagName('input')[0];
+    input.focus();
+}
+
+function deleteRow(button) {
+    const row = button.closest('tr');
+    row.remove();
+}
+</script>
         <!--main content end-->
 
-<?php
+        <?php
 include_once("../../include/footer.php");
 ?>
-

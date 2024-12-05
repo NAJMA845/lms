@@ -4,6 +4,8 @@ include_once("../../config/utility.php");
 //store book
 function storeBook($conn, $param)
 {
+
+
     $guid=generateGUID();
     $pdf_name=null;
     if (isset($_FILES['pdf']) && $_FILES['pdf']['error'] == 0) {
@@ -45,7 +47,18 @@ function storeBook($conn, $param)
     $datetime = date("Y-m-d H:i:s");
     $sql = "INSERT INTO books (guid,title, author, publication_year, isbn, category_id, created_at,pdf_url)
         VALUES ('$guid','$title', '$author', '$publication_year', '$isbn', $category_id, '$datetime','$pdf_name')";
-    $result['success'] = $conn->query($sql);
+        $result['success']=$conn->query($sql);
+
+    $sql = "INSERT INTO book_copies (book_guid,copy_no) VALUES";   
+    foreach ($param['copies'] as $copy) {
+        
+        $sql.= "('$guid','$copy'),";
+    }
+    if (strlen($sql) > 2) {
+        $sql = substr($sql, 0, -1);
+        $result['success']=$conn->query($sql);
+    }
+    
     return $result;
 }
 
@@ -128,6 +141,15 @@ function getBooks($conn)
 function getBookByGUID($conn,$guid)
 {
     $sql = "select * from books b where b.guid='$guid'";
+    $result = $conn->query($sql);
+    return $result;
+}
+
+//get a book by GUID
+function getBookCopiesByGUID($conn,$guid)
+{
+    $sql = "select * from book_copies b where book_guid='$guid'";
+
     $result = $conn->query($sql);
     return $result;
 }

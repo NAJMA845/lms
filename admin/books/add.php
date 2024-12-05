@@ -101,25 +101,25 @@ include_once("../../include/sidebar.php");
                                                 </div>
 
                                                 <div class="col-md-12">
-                                    <h5 class="mt-4">Book Copies</h5>
-                                    <table class="table table-bordered" id="copiesTable">
-                                        <thead>
-                                            <tr>
-                                                <th>Copy Number</th>
-                                                <th>Actions</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <!-- Initial empty row to add new copies -->
-                                            <tr>
-                                                <td><input type="text" name="copies[]" class="form-control" placeholder="Enter copy number" /></td>
-                                                <td>
-                                                    <button type="button" class="btn btn-primary" onclick="editRow(this)">Edit</button>
-                                                    <button type="button" class="btn btn-danger" onclick="deleteRow(this)">Delete</button>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                                        <h5 class="mt-4">Book Copies</h5>
+                                                        <table class="table table-bordered" id="copiesTable">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Copy Number</th>
+                                                                    <th>Actions</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <!-- Initial empty row to add new copies -->
+                                                                <tr>
+                                                                    <td><input type="text" name="copies[]" class="form-control" placeholder="Enter copy number" /></td>
+                                                                    <td>
+                                                                        <button type="button" class="btn btn-primary" onclick="editRow(this)">Edit</button>
+                                                                        <button type="button" class="btn btn-danger" onclick="deleteRow(this)">Delete</button>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
                                     <div class="d-flex justify-content-end mt-2">
                                           <button type="button" class="btn btn-secondary btn-sm" onclick="addRow()">Add Copy</button>
                                      </div>
