@@ -5,8 +5,8 @@ include_once("../../config/utility.php");
 include_once("../../include/header.php");
 include_once("../../include/topbar.php");
 include_once("../../include/sidebar.php");
-include_once("../../include/plan_manager.php");
-include_once("../../include/form_validator.php");
+include_once("../models/plan_manager.php");
+include_once("../models/form_validator.php");
 
 $planManager = new PlanManager($conn);
 $errors = [];
