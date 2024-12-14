@@ -53,7 +53,8 @@ if (!$plan) {
                 <h4 class="fw-bold text-uppercase">Edit Membership Plan</h4>
             </div>
 
-            <div class="col-md-8">
+            <!-- Updated column layout for side-by-side form fields -->
+            <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
                         Edit Plan Details
@@ -74,7 +75,8 @@ if (!$plan) {
 
                         <form method="post" action="">
                             <div class="row">
-                                <div class="col-md-12">
+                                <!-- Title and Amount Side by Side -->
+                                <div class="col-md-6">
                                     <div class="mb-3">
                                         <label class="form-label">Title</label>
                                         <input type="text" 
@@ -90,7 +92,7 @@ if (!$plan) {
                                     </div>
                                 </div>
 
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <div class="mb-3">
                                         <label class="form-label">Amount</label>
                                         <input type="number" 
@@ -107,7 +109,8 @@ if (!$plan) {
                                     </div>
                                 </div>
 
-                                <div class="col-md-12">
+                                <!-- Duration Side by Side with other fields -->
+                                <div class="col-md-6">
                                     <div class="mb-3">
                                         <label class="form-label">Duration (months)</label>
                                         <select class="form-control <?php echo isset($errors['duration']) ? 'is-invalid' : ''; ?>" 
@@ -130,12 +133,11 @@ if (!$plan) {
                                         <?php endif; ?>
                                     </div>
                                 </div>
-
-                                <div class="col-md-12">
+                            </div>
+                                <div class="col-md-6">
                                     <button type="submit" name="submit" class="btn btn-success">Update Plan</button>
                                     <a href="plans.php" class="btn btn-secondary">Cancel</a>
                                 </div>
-                            </div>
                         </form>
                     </div>
                 </div>
