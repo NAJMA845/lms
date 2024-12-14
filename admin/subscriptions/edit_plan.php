@@ -40,7 +40,7 @@ $plan = $planManager->getPlanById($plan_id);
 
 // Redirect if plan not found
 if (!$plan) {
-    header("Location: plans.php");
+    header("Location:../subscriptions/index.php");
     exit;
 }
 ?>
