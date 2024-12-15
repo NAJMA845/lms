@@ -24,7 +24,7 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link active" aria-current="page"
-                   href="./reserve-books.php"><i class="fas fa-bookmark me-2"></i> Reserve Books </a>
+                   href="./reserve-books.php"><i class="fas fa-bookmark me-2"></i>  Reserve Books </a>
             </li>
             <li class="nav-item my-0">
                 <hr/>
