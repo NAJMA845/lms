@@ -32,22 +32,20 @@ include_once("../../include/sidebar.php");
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <!-- Example Row -->
                                     <tr>
                                         <td>001</td>
                                         <td>Student</td>
                                         <td>1.5</td>
                                         <td>15.00</td>
                                         <td>
-                                            <button class="btn btn-primary btn-sm">
+                                            <button class="btn btn-primary">
                                                  Edit
                                             </button>
-                                            <button class="btn btn-danger btn-sm">
+                                            <button class="btn btn-danger ">
                                                 Delete
                                             </button>
                                         </td>
                                     </tr>
-                                    <!-- Additional rows should be generated dynamically with PHP -->
                                 </tbody>
                             </table>
                         </div>
