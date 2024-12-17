@@ -137,13 +137,14 @@ CREATE TABLE `users` (
   `reset_code` varchar(50) DEFAULT NULL,
   `reset_at` timestamp NULL DEFAULT NULL,
   `is_blocked` bit(1) DEFAULT b'0',
+  `is_default` bit(1) DEFAULT b'0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 /*Data for the table `users` */
 
-insert  into `users`(`guid`,`id`,`name`,`email`,`nic_no`,`phone_no`,`address`,`password`,`profile_pic`,`created_at`,`updated_at`,`is_admin`,`reset_code`,`reset_at`,`is_blocked`) values 
-('6F3F4017-5D77-4367-AB8E-9C9564DB7676',5,'Ishthiyaque Ahmed','ishthi83@gmail.com','831780630V','0715308889','No 45','c2ed9df03d80eac8f392b27548f20851',NULL,'2024-10-24 22:55:11','2024-10-24 23:23:34','',NULL,NULL,'\0');
+insert  into `users`(`guid`,`id`,`name`,`email`,`nic_no`,`phone_no`,`address`,`password`,`profile_pic`,`created_at`,`updated_at`,`is_admin`,`reset_code`,`reset_at`,`is_blocked`,`is_default`) values 
+('6F3F4017-5D77-4367-AB8E-9C9564DB7676',5,'Ishthiyaque Ahmed','ishthi83@gmail.com','831780630V','0715308889','No 45','c2ed9df03d80eac8f392b27548f20851',NULL,'2024-10-24 22:55:11','2024-10-24 23:23:34','',NULL,NULL,'\0','\1');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

@@ -24,15 +24,8 @@ include_once("../../include/sidebar.php");
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <label for="memberID" class="form-label">Member ID</label>
-                                        <input type="text" name="memberID" id="memberID" class="form-control" placeholder="Enter Member ID" required>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label for="roomNumber" class="form-label">Room Number</label>
-                                        <input type="text" name="roomNumber" id="roomNumber" class="form-control" placeholder="Enter Room Number" required>
+                                        <label for="memberID" class="form-label">NIC</label>
+                                        <input type="text" name="memberID" id="memberID" class="form-control" placeholder="Enter NIC No" required>
                                     </div>
                                 </div>
 
@@ -57,7 +50,7 @@ include_once("../../include/sidebar.php");
 
                                 <div class="col-md-12 text-start">
                                     <button type="submit" class="btn btn-success">
-                                        <i class="fas fa-save"></i> Add Late Fee
+                                        <i class="fas fa-save"></i> Reserve
                                     </button>
                                     <button type="reset" class="btn btn-secondary">
                                         <i class="fas fa-redo"></i> Reset

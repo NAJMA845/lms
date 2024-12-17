@@ -25,7 +25,7 @@ include_once("../../include/sidebar.php");
                                 <thead class="table-dark">
                                     <tr>
                                         <th>Booking ID</th>
-                                        <th>Member ID</th>
+                                        <th>NIC No</th>
                                         <th>Room Number</th>
                                         <th>Booking Date</th>
                                         <th>Time Slot</th>

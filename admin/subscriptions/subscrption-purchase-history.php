@@ -52,7 +52,7 @@ $sql = "SELECT s.*, u.name as student_name, sp.title as plan_name, sp.amount
 $result = $conn->query($sql);
 
 // Fetch all active users for dropdown
-$users_sql = "SELECT id, name FROM users WHERE is_blocked = 0 ORDER BY name";
+$users_sql = "SELECT id, name FROM users WHERE is_blocked = 0  AND is_default=0 ORDER BY name";
 $users_result = $conn->query($users_sql);
 
 // Fetch all active plans for dropdown
@@ -166,7 +166,7 @@ $plans_result = $conn->query($plans_sql);
                     <div class="row">
                         <div class="col-md-12">
                             <div class="mb-3">
-                                <label class="form-label">Select Student</label>
+                                <label class="form-label">Select User</label>
                                 <select name="student_id" class="form-control" required>
                                     <option value="">Please select</option>
                                     <?php while($user = $users_result->fetch_assoc()) { ?>
