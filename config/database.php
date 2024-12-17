@@ -4,7 +4,7 @@ $username = 'root';
 $password = ''; // No password for root
 $database = 'smartlib';
 
-$conn = new mysqli($host, $username, $password, $database, $port);
+$conn = new mysqli($host, $username, $password, $database);
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
