@@ -1,14 +1,11 @@
 <?php
-// Create a connection using MySQLli
-$servername = "localhost";
-$username = "root"; 
-$password = "";
-$dbname = "smartlib"; 
+$host = '127.0.0.1'; // Use '127.0.0.1' instead of 'localhost' for consistency with phpMyAdmin
+$username = 'root';
+$password = ''; // No password for root
+$database = 'smartlib';
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli($host, $username, $password, $database, $port);
 
-// Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }

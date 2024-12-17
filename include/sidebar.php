@@ -18,9 +18,9 @@
                 <a class="nav-link active" aria-current="page"
                    href="./subscrption-purchase-history.php"><i class="fas fa-tachometer me-2"></i> User Dashboard </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link active" aria-current="page"
-                   href="./search-books.php"><i class="fas fa-search me-2"></i> Search Books </a>
+            <li>
+                <a href="<?php echo ADMIN_BASE_URL ?>search-book/search-books.php" class="nav-link"><i
+                class="fas fa-search me-2"></i> Search Books </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link active" aria-current="page"
@@ -207,4 +207,4 @@
                         <i class="fa-solid fa-right-from-bracket me-2"></i>Log Out </a>
                     </div>
                 </div>
-                                        <!--off canvas end-->
+                                        <!--off canvas end--> paste this code
