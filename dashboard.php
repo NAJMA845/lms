@@ -14,7 +14,7 @@ include_once("include/sidebar.php");
                 <!--Cards-->
                 <div class="row dashboard-counts">
                     <div class="col-md-12">
-                       <h4 class="fw-bold text-uppercase"> Dashboard </h4>
+                       <h4 class="fw-bold text-uppercase"> Admin Dashboard </h4>
                        <p>Statictis of the our LMS !</p>
                     </div>
                     <div class="col-md-3">

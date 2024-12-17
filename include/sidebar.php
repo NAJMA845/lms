@@ -11,12 +11,12 @@
             <div class="admin" style="display: block;">
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page"
-                       href="./subscrption-purchase-history.php"><i class="fas fa-tachometer-alt me-2"></i> Admin Dashboard </a>
+                       href="./dashboard.php"><i class="fas fa-tachometer-alt me-2"></i> Admin Dashboard </a>
                 </li>
             </div>
             <li class="nav-item">
                 <a class="nav-link active" aria-current="page"
-                   href="./subscrption-purchase-history.php"><i class="fas fa-tachometer me-2"></i> User Dashboard </a>
+                   href="./user-dashboard.php"><i class="fas fa-tachometer me-2"></i> User Dashboard </a>
             </li>
             <li>
                 <a class="nav-link sidebar-link"
