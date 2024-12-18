@@ -27,7 +27,7 @@ include_once("../../include/sidebar.php");
                                         <label for="memberType" class="form-label">Member Type</label>
                                         <select id="memberType" name="memberType" class="form-control" required>
                                             <option value="">Select Member Type</option>
-                                            <option value="student">Student</option>
+                                            <option value="student">User</option>
                                             <option value="guest">Guest</option>
                                         </select>
                                     </div>
