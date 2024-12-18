@@ -108,7 +108,8 @@ $plans_result = $conn->query($plans_sql);
                                 <thead class="table-dark">
                                     <tr>
                                         <th scope="col">#</th>
-                                        <th scope="col">Student Name</th>
+                                        <th scope="col">User Name</th>
+                                        <th scope="col">Amount</th>
                                         <th scope="col">Plan</th>
                                         <th scope="col">Start Date</th>
                                         <th scope="col">End Date</th>
