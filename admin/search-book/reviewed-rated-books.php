@@ -49,7 +49,7 @@ include_once("../../include/sidebar.php");
                                 <!-- Rating Field -->
                                 <div class="col-md-6">
                                      <div class="mb-3">
-                                        <label class="form-label">Rating</label><br><br>
+                                        <label class="form-label">Rating</label><br>
                                         <div class="btn-group" role="group" aria-label="Star Rating">
                                             <button type="button" class="btn btn-outline-secondary" data-value="1">★</button>
                                             <button type="button" class="btn btn-outline-secondary" data-value="2">★</button>
