@@ -11,7 +11,7 @@ include_once("../../include/sidebar.php");
         <!-- Manage Multimedia Room Bookings Section -->
         <div class="row">
             <div class="col-md-12">
-                <h4 class="fw-bold text-uppercase">Manage Multimedia Room Bookings</h4>
+                <h4 class="fw-bold text-uppercase">Multimedia Room Booking Hub</h4>
             </div>
 
             <div class="col-md-12">
@@ -26,7 +26,6 @@ include_once("../../include/sidebar.php");
                                     <tr>
                                         <th>Booking ID</th>
                                         <th>NIC No</th>
-                                        <th>Room Number</th>
                                         <th>Booking Date</th>
                                         <th>Time Slot</th>
                                         <th>Actions</th>
@@ -36,8 +35,7 @@ include_once("../../include/sidebar.php");
                                     
                                     <tr>
                                         <td>001</td>
-                                        <td>MB2023</td>
-                                        <td>RM01</td>
+                                        <td>20004567234</td>
                                         <td>2024-12-15</td>
                                         <td>9:00 AM - 11:00 AM</td>
                                         <td>
@@ -51,8 +49,7 @@ include_once("../../include/sidebar.php");
                                     </tr>
                                     <tr>
                                         <td>002</td>
-                                        <td>MB2024</td>
-                                        <td>RM02</td>
+                                        <td>19945633567</td>
                                         <td>2024-12-16</td>
                                         <td>11:30 AM - 1:30 PM</td>
                                         <td>
