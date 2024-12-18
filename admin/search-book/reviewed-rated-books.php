@@ -61,12 +61,14 @@ include_once("../../include/sidebar.php");
                                     </div>
                                 </div>
                             </div>
-                            
-                            <!-- Submit Button -->
-                            <div class="row">
-                            <div class="col-md-12">
-                                    <button type="submit" name="submit" class="btn btn-success">Save</button>
-                                    <button type="reset" class="btn btn-secondary">Cancel</button>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Rating</label>
+                                <div class="stars" id="starRating">
+                                    <span data-value="1" class="star">★</span>
+                                    <span data-value="2" class="star">★</span>
+                                    <span data-value="3" class="star">★</span>
+                                    <span data-value="4" class="star">★</span>
+                                    <span data-value="5" class="star">★</span>
                                 </div>
                             </div>
                         </form>
@@ -74,49 +76,137 @@ include_once("../../include/sidebar.php");
                 </div>
             </div>
         </div>
+    </div>
+</main>
 
-      <!-- Table Section -->
-<div class="row">
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered table-striped">
-                        <thead class="table-dark">
-                            <tr>
-                                <th>#</th>
-                                <th>ISBN</th>
-                                <th>Book Title</th>
-                                <th>Review</th>
-                                <th>Rating</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>1234567890</td>
-                                <td>Sample Book 1</td>
-                                <td>Amazing read!</td>
-                                <td>⭐⭐⭐⭐⭐</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>0987654321</td>
-                                <td>Sample Book 2</td>
-                                <td>Very informative.</td>
-                                <td>⭐⭐⭐⭐</td>
-                            </tr>
-                        </tbody>
-                    </table>
+        <!-- Table Section -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>#</th>
+                                        <th>ISBN</th>
+                                        <th>Book Title</th>
+                                        <th>Review</th>
+                                        <th>Rating</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>1234567890</td>
+                                        <td>Sample Book 1</td>
+                                        <td>Amazing read!</td>
+                                        <td>⭐⭐⭐⭐⭐</td>
+                                        <td class="status-available"><span class="badge text-bg-success">Available</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-warning">Edit</button>
+                                            <button class="btn btn-sm btn-danger">Delete</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>0987654321</td>
+                                        <td>Sample Book 2</td>
+                                        <td>Very informative.</td>
+                                        <td>⭐⭐⭐⭐</td>
+                                        <td class="status-reserved"><span class="badge text-bg-warning">Reserved</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-warning">Edit</button>
+                                            <button class="btn btn-sm btn-danger">Delete</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>1122334455</td>
+                                        <td>Sample Book 3</td>
+                                        <td>Decent read but could be better.</td>
+                                        <td>⭐⭐⭐</td>
+                                        <td class="status-loan"><span class="badge text-bg-primary">Loaned</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-warning">Edit</button>
+                                            <button class="btn btn-sm btn-danger">Delete</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>4</td>
+                                        <td>2233445566</td>
+                                        <td>Sample Book 4</td>
+                                        <td>Not very engaging.</td>
+                                        <td>⭐⭐</td>
+                                        <td class="status-overdue"><span class="badge text-bg-danger">Overdue</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-warning">Edit</button>
+                                            <button class="btn btn-sm btn-danger">Delete</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-</div>
 </main>
 <!-- Main Content End -->
 
 
 <?php include_once("../../include/footer.php"); ?>
 
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const stars = document.querySelectorAll(".star");
+    const ratingInput = document.getElementById("ratingInput");
+
+    stars.forEach((star) => {
+        star.addEventListener("click", () => {
+            const rating = star.getAttribute("data-value");
+            ratingInput.value = rating;
+
+            // Highlight stars based on the clicked rating
+            stars.forEach((s) => {
+                s.classList.remove("filled");
+                if (s.getAttribute("data-value") <= rating) {
+                    s.classList.add("filled");
+                }
+            });
+        });
+
+        // Hover effect (optional)
+        star.addEventListener("mouseover", () => {
+            const hoverRating = star.getAttribute("data-value");
+            stars.forEach((s) => {
+                s.classList.remove("filled");
+                if (s.getAttribute("data-value") <= hoverRating) {
+                    s.classList.add("filled");
+                }
+            });
+        });
+
+        star.addEventListener("mouseout", () => {
+            const rating = ratingInput.value;
+            stars.forEach((s) => {
+                s.classList.remove("filled");
+                if (s.getAttribute("data-value") <= rating) {
+                    s.classList.add("filled");
+                }
+            });
+        });
+    });
+});
+
+document.querySelector("form").addEventListener("submit", function (e) {
+    const rating = document.getElementById("ratingInput").value;
+    if (rating === "0") {
+        e.preventDefault();
+        alert("Please give a star rating before submitting your feedback.");
+    }
+});
+</script>
