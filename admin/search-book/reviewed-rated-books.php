@@ -48,18 +48,18 @@ include_once("../../include/sidebar.php");
                                 
                                 <!-- Rating Field -->
                                 <div class="col-md-6">
-                                    <div class="mb-3">
+                                     <div class="mb-3">
                                         <label class="form-label">Rating</label><br><br>
                                         <div class="btn-group" role="group" aria-label="Star Rating">
-                                            <button type="button" class="btn btn-outline-primary" data-value="1">★</button>
-                                            <button type="button" class="btn btn-outline-primary" data-value="2">★</button>
-                                            <button type="button" class="btn btn-outline-primary" data-value="3">★</button>
-                                            <button type="button" class="btn btn-outline-primary" data-value="4">★</button>
-                                            <button type="button" class="btn btn-outline-primary" data-value="5">★</button>
+                                            <button type="button" class="btn btn-outline-secondary" data-value="1">★</button>
+                                            <button type="button" class="btn btn-outline-secondary" data-value="2">★</button>
+                                            <button type="button" class="btn btn-outline-secondary" data-value="3">★</button>
+                                            <button type="button" class="btn btn-outline-secondary" data-value="4">★</button>
+                                            <button type="button" class="btn btn-outline-secondary" data-value="5">★</button>
                                         </div>
                                         <input type="hidden" name="rating" id="ratingInput" value="0">
                                     </div>
-                                </div>
+                               </div>
                                 <div class="col-md-12">
                                     <button type="submit" name="submit" class="btn btn-success">Save</button>
                                     <button type="reset" class="btn btn-secondary">Cancel</button>
