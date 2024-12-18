@@ -6,7 +6,10 @@ include_once("../../include/header.php");
 include_once("../../include/topbar.php");
 include_once("../../include/sidebar.php");
 
-// Handle form submission for new plan
+// Initialize variables
+$message = '';
+$status = '';
+
 if (isset($_POST['submit'])) {
     $guid = generateGUID();
     $title = $conn->real_escape_string($_POST['title']);
@@ -17,9 +20,11 @@ if (isset($_POST['submit'])) {
             VALUES ('$guid', '$title', $amount, $duration)";
     
     if ($conn->query($sql)) {
-        echo "<script>alert('Plan added successfully!');</script>";
+        $message = 'Plan added successfully!';
+        $status = 'success';
     } else {
-        echo "<script>alert('Error adding plan: " . $conn->error . "');</script>";
+        $message = 'Error adding plan: ' . $conn->error;
+        $status = 'error';
     }
 }
 
@@ -28,7 +33,8 @@ if (isset($_GET['delete'])) {
     $id = intval($_GET['delete']);
     $sql = "DELETE FROM subscription_plans WHERE id = $id";
     if ($conn->query($sql)) {
-        echo "<script>alert('Plan deleted successfully!');</script>";
+        $message = 'Plan deleted successfully!';
+        $status = 'success';
     }
 }
 
@@ -37,7 +43,8 @@ if (isset($_GET['toggle'])) {
     $id = intval($_GET['toggle']);
     $sql = "UPDATE subscription_plans SET status = NOT status WHERE id = $id";
     if ($conn->query($sql)) {
-        echo "<script>alert('Plan status updated successfully!');</script>";
+        $message = 'Plan status updated successfully!';
+        $status = 'success';
     }
 }
 
@@ -46,7 +53,7 @@ $sql = "SELECT * FROM subscription_plans ORDER BY created_at DESC";
 $result = $conn->query($sql);
 ?>
 
-<!--Main content start-->
+<!-- Main content start -->
 <main class="mt-1 pt-3">
     <div class="container-fluid">
         <div class="row dashboard-counts">
@@ -159,5 +166,20 @@ $result = $conn->query($sql);
         </div>
     </div>
 </main>
+
+<!-- Toastify Notification Script -->
+<script>
+    <?php if (isset($message)): ?>
+        Toastify({
+            text: "<?php echo $message; ?>",
+            duration: 3000, // Duration in ms
+            backgroundColor: "<?php echo $status == 'success' ? '#4caf50' : '#f44336'; ?>", // Green for success, red for error
+            close: true,
+            gravity: "top", // Position: top or bottom
+            position: "right", // Position: left, center, or right
+            stopOnFocus: true
+        }).showToast();
+    <?php endif; ?>
+</script>
 
 <?php include_once("../../include/footer.php"); ?>
