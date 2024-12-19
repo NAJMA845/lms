@@ -27,7 +27,7 @@ include_once("../../include/sidebar.php");
                                         <th scope="col">#</th>
                                         <th scope="col">Copy ID</th>
                                         <th scope="col">Book Name</th>
-                                        <th scope="col">Student Name</th>
+                                        <th scope="col">Membership Number</th>
                                         <th scope="col">Loan Date</th>
                                         <th scope="col">Return Date</th>
                                         <th scope="col">Status</th>
@@ -40,7 +40,7 @@ include_once("../../include/sidebar.php");
                                         <th scope="row">1</th>
                                         <td>Copy ID 1</td>
                                         <td>Book Title 1</td>
-                                        <td>User Name 1</td>
+                                        <td>5056</td>
                                         <td>01-01-2024</td>
                                         <td>01-02-2024</td>
                                         <td><span class="badge text-bg-warning">Overdue</span></td>
@@ -51,7 +51,7 @@ include_once("../../include/sidebar.php");
                                         <th scope="row">1</th>
                                         <td>Copy ID 2</td>
                                         <td>Book Title 1</td>
-                                        <td>User Name 2</td>
+                                        <td>0241</td>
                                         <td>02-01-2024</td>
                                         <td>01-02-2024</td>
                                         <td><span class="badge text-bg-success">Returned</span></td>
@@ -62,7 +62,7 @@ include_once("../../include/sidebar.php");
                                         <th scope="row">2</th>
                                         <td>Copy ID 1</td>
                                         <td>Book Title 2</td>
-                                        <td>User Name 3</td>
+                                        <td>7926</td>
                                         <td>02-01-2024</td>
                                         <td>02-02-2024</td>
                                         <td><span class="badge text-bg-success">Returned</span></td>
