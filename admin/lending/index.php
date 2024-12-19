@@ -25,6 +25,7 @@ include_once("../../include/sidebar.php");
                                 <thead class="table-dark">
                                     <tr>
                                         <th scope="col">#</th>
+                                        <th scope="col">Copy ID</th>
                                         <th scope="col">Book Name</th>
                                         <th scope="col">Student Name</th>
                                         <th scope="col">Loan Date</th>
@@ -37,6 +38,7 @@ include_once("../../include/sidebar.php");
                                     <!-- Replace with dynamic rows as needed -->
                                     <tr>
                                         <th scope="row">1</th>
+                                        <td>Copy ID 1</td>
                                         <td>Book Title 1</td>
                                         <td>User Name 1</td>
                                         <td>01-01-2024</td>
@@ -44,14 +46,27 @@ include_once("../../include/sidebar.php");
                                         <td><span class="badge text-bg-warning">Overdue</span></td>
                                         <td>01-01-2024 10:00 AM</td>
                                     </tr>
+
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td>Copy ID 2</td>
+                                        <td>Book Title 1</td>
+                                        <td>User Name 2</td>
+                                        <td>02-01-2024</td>
+                                        <td>01-02-2024</td>
+                                        <td><span class="badge text-bg-success">Returned</span></td>
+                                        <td>02-01-2024 11:00 AM</td>
+                                    </tr>
+
                                     <tr>
                                         <th scope="row">2</th>
+                                        <td>Copy ID 1</td>
                                         <td>Book Title 2</td>
-                                        <td>Student Name 2</td>
+                                        <td>User Name 3</td>
                                         <td>02-01-2024</td>
                                         <td>02-02-2024</td>
                                         <td><span class="badge text-bg-success">Returned</span></td>
-                                        <td>02-01-2024 11:00 AM</td>
+                                        <td>02-01-2024 02:00 PM</td>
                                     </tr>
                                     <!-- Add more rows as needed -->
                                 </tbody>
