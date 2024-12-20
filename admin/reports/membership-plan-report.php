@@ -107,7 +107,13 @@ $recentReports = [
                                             <td><?php echo $report['title']; ?></td>
                                             <td><?php echo $report['amount']; ?></td>
                                             <td><?php echo $report['duration']; ?></td>
-                                            <td><?php echo $report['status']; ?></td>
+                                            <td>
+                                                <span class="badge bg-<?php echo $report['status'] == 'Active' ? 'success' : 'secondary'; ?>">
+                                                    <?php echo $report['status']; ?>
+                                                </span>
+                                                
+                                               
+                                            </td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>
