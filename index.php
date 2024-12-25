@@ -23,6 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($result->num_rows > 0) {
       $user=$result->fetch_assoc();
       $_SESSION['user_email'] = $user['email'];
+      $_SESSION['user_type'] = $user['is_admin'];
       header('Location: dashboard.php');
     } else {
         echo "Invalid email or password.";
