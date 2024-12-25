@@ -1,4 +1,39 @@
+<?php
+include_once("config/config.php");
+$conn = new mysqli(SERVER_NAME, USERNAME, PASSWORD, DATABASE);
 
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Check if form is submitted
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $hashed_password = md5($password);
+
+    $sql = "SELECT * FROM users WHERE email = ? AND password = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ss", $email, $hashed_password); // Bind email and hashed password
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+      $user=$result->fetch_assoc();
+      $_SESSION['user_email'] = $user['email'];
+      header('Location: dashboard.php');
+    } else {
+        echo "Invalid email or password.";
+    }
+
+        $stmt->close();
+        $conn->close();
+    }
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,20 +58,22 @@
                             <div class="card-body">
                               <h1 class="card-title text-uppercase fw-bold">Smartlib</h1>
                               <p class="card-text">Enter email and password to login</p>
-                              <form action="./dashboard.php">
+                              <form action="index.php" method="POST">
                                 <div class="mb-3">
                                   <label for="exampleInputEmail1" 
                                   class="form-label">Email address</label>
                                   <input type="email" 
                                   class="form-control" 
                                   id="exampleInputEmail1" 
-                                  aria-describedby="emailHelp">
+                                  aria-describedby="emailHelp" 
+                                  name="email">
                                 <div class="mb-3">
                                   <label for="exampleInputPassword1" 
                                   class="form-label">Password</label>
                                   <input type="password" 
                                   class="form-control" 
-                                  id="exampleInputPassword1">
+                                  id="exampleInputPassword1" 
+                                  name="password">
                                 </div>
                                 <button type="submit" 
                                 class="btn btn-primary">Login Now</button>

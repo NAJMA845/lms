@@ -48,18 +48,26 @@
                     role="button" data-bs-toggle="dropdown" 
                     aria-expanded="false"
                     >
-                    <img src="<?php echo BASE_URL ?>assets/images/user.jpeg" class="user-icon" alt="User icon"/>
-                      Admin
+                    <img src="<?php echo BASE_URL ?>assets/images/user.jpeg" class="user-icon" alt="User icon"/> 
+                      <?php echo $_SESSION['user_email'] ?>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end">
                       <li><a class="dropdown-item" href="#">My Profile</a></li>
                       <li><a class="dropdown-item" href="#">Change Password</a></li>
                       <li><hr class="dropdown-divider"></li>
-                      <li><a class="dropdown-item" href="#">Log Out</a></li>
+                      <li><a class="dropdown-item"  href="javascript:void(0);" onclick="confirmLogout()">Log Out</a></li>
                     </ul>
                   </li>
                 </ul>
               </div>
             </div>
         </nav>
+        <script>
+          function confirmLogout() {
+            if (confirm("Are you sure you want to log out?")) {
+              window.location.href = "logout.php"; // Redirect to logout page if confirmed
+            }
+          }
+        </script>
+
         <!--Top navbar end-->

@@ -7,7 +7,7 @@ if ($_SERVER['HTTP_HOST'] == 'localhost'){
 
     define("SERVER_NAME", "localhost");
     define("USERNAME", "root");
-    define("PASSWORD", "MEx1233roses._");
+    define("PASSWORD", "");
     define("DATABASE", "smartlib");
 }
 

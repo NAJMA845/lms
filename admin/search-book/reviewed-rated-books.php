@@ -50,14 +50,14 @@ include_once("../../include/sidebar.php");
                                 <div class="col-md-6">
                                      <div class="mb-3">
                                         <label class="form-label">Rating</label><br>
-                                        <div class="btn-group" role="group" aria-label="Star Rating">
-                                            <button type="button" class="btn btn-outline-secondary" data-value="1">★</button>
-                                            <button type="button" class="btn btn-outline-secondary" data-value="2">★</button>
-                                            <button type="button" class="btn btn-outline-secondary" data-value="3">★</button>
-                                            <button type="button" class="btn btn-outline-secondary" data-value="4">★</button>
-                                            <button type="button" class="btn btn-outline-secondary" data-value="5">★</button>
+                                        <div class="star-rating">
+                                            <!-- Radio buttons for each star -->
+                                            <input type="radio" id="star5" name="rating" value="5"><label for="star5" class="star">★</label>
+                                            <input type="radio" id="star4" name="rating" value="4"><label for="star4" class="star">★</label>
+                                            <input type="radio" id="star3" name="rating" value="3"><label for="star3" class="star">★</label>
+                                            <input type="radio" id="star2" name="rating" value="2"><label for="star2" class="star">★</label>
+                                            <input type="radio" id="star1" name="rating" value="1"><label for="star1" class="star">★</label>
                                         </div>
-                                        <input type="hidden" name="rating" id="ratingInput" value="0">
                                     </div>
                                </div>
                                 <div class="col-md-12">
@@ -114,4 +114,17 @@ include_once("../../include/sidebar.php");
 
 
             <?php include_once("../../include/footer.php"); ?>
+
+
+            <script>
+    // JavaScript to capture the selected rating
+    const stars = document.querySelectorAll('input[name="rating"]');
+
+    stars.forEach(star => {
+      star.addEventListener('change', () => {
+        const selectedRating = document.querySelector('input[name="rating"]:checked').value;
+        console.log(`Selected Rating: ${selectedRating} stars`);
+      });
+    });
+  </script>
 

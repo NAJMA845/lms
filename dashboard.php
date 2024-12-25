@@ -1,8 +1,12 @@
-
 <?php
-include_once("config/utility.php");
 include_once("config/config.php");
-include_once("config/database.php");
+
+if (!isset($_SESSION['user_email'])) {
+    header('Location: index.php');
+
+}
+
+include_once("config/utility.php");
 include_once("include/header.php");
 include_once("include/topbar.php");
 include_once("include/sidebar.php");
