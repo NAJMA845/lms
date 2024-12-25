@@ -49,8 +49,10 @@ body {
     top: var(--topNavbarHeight) !important;
     /*height: calc(100% - var(--offcanvas-width)) !important;*/
   }
-
+  
   main {
     margin-left: var(--offcanvas-width);
   }
+
+
 }
