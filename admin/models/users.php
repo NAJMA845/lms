@@ -66,7 +66,7 @@ function updateUserByGUID($conn, $param)
 // Get all users
 function getUsers($conn)
 {
-    $sql = "SELECT * FROM users where id>10000 ORDER BY id DESC";
+    $sql = "SELECT * FROM users where is_default=0 ORDER BY id DESC";
     return $conn->query($sql);
 }
 

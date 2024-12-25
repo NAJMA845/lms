@@ -65,7 +65,7 @@
         <script>
           function confirmLogout() {
             if (confirm("Are you sure you want to log out?")) {
-              window.location.href = "logout.php"; // Redirect to logout page if confirmed
+              window.location.href = "/lms/logout.php"; // Redirect to logout page if confirmed
             }
           }
         </script>

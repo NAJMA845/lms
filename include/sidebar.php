@@ -48,13 +48,13 @@
                 <hr/>
             </li>
             <?php 
-            if($_SESSION['user_type']=="1"){
+            if($_SESSION['user_type']==1){
                 include_once("admin-area.php"); 
             }
 
             ?>
                 <a class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">
+                    <a class="nav-link active" aria-current="page" href="javascript:void(0);" onclick="confirmLogout()">
                         <i class="fa-solid fa-right-from-bracket me-2"></i>Log Out </a>
                     </div>
                 </div>
