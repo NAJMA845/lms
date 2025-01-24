@@ -11,6 +11,7 @@ include_once("../../include/sidebar.php");
         <!-- Manage Multimedia Room Bookings Section -->
         <div class="row">
             <div class="col-md-12">
+                <?php include_once("../../include/alerts.php"); ?>
                 <h4 class="fw-bold text-uppercase">Multimedia Room Booking Hub</h4>
             </div>
 

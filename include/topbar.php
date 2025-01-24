@@ -24,24 +24,13 @@
               </button>
               <div class="collapse navbar-collapse" 
               id="navbarSupportedContent">
-              <form class="d-flex ms-auto" role="search">
-                <div class="input-group my-3 my-lg-0 ">
-                    <input 
-                    type="text" 
-                    class="form-control"
-                     placeholder="Search..." 
-                    aria-describedby="button-addon2"
-                    />
-                    <button class="btn btn-outline-secondary btn-primary text-white" 
-                            type="button" 
-                            id="button-addon2"
-                            aria-label="Search">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                    </button>
+
+                  <div class="input-group my-3 my-lg-0 ">
+
+
 
                   </div>
-              </form>
-              
+
                 <ul class="navbar-nav mb-2 mb-lg-0">
                   <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" 

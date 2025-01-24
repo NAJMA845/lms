@@ -11,6 +11,7 @@ include_once("../../include/sidebar.php");
         <!-- Manage Late Fee Section -->
         <div class="row">
             <div class="col-md-12">
+                <?php include_once("../../include/alerts.php"); ?>
                 <h4 class="fw-bold text-uppercase">Manage Late Fees</h4>
             </div>
 

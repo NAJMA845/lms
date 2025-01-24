@@ -1,7 +1,7 @@
 <?php
 include_once("../../config/config.php");
-include_once("../../config/database.php");
-include_once("../models/book.php");
+//include_once("../../config/database.php");
+include_once("../../models/book.php");
 
 
 //Add Book Functionality

@@ -1,6 +1,6 @@
 <?php
 include_once("../../config/config.php");
-include_once("../../config/database.php");
+//include_once("../../config/database.php");
 include_once("../../config/utility.php");
 include_once("../../include/header.php");
 include_once("../../include/topbar.php");
@@ -58,6 +58,7 @@ $result = $conn->query($sql);
     <div class="container-fluid">
         <div class="row dashboard-counts">
             <div class="col-md-12">
+                <?php include_once("../../include/alerts.php"); ?>
                 <h4 class="fw-bold text-uppercase">Membership Plan</h4>
             </div>
 

@@ -4,8 +4,6 @@ include_once("../../config/utility.php");
 //store book
 function storeBook($conn, $param)
 {
-
-
     $guid=generateGUID();
     $pdf_name=null;
     if (isset($_FILES['pdf']) && $_FILES['pdf']['error'] == 0) {
@@ -48,18 +46,23 @@ function storeBook($conn, $param)
     $sql = "INSERT INTO books (guid,title, author, publication_year, isbn, category_id, created_at,pdf_url)
         VALUES ('$guid','$title', '$author', '$publication_year', '$isbn', $category_id, '$datetime','$pdf_name')";
         $result['success']=$conn->query($sql);
+        $result['guid']=$guid;
 
-    $sql = "INSERT INTO book_copies (book_guid,copy_no) VALUES";   
-    foreach ($param['copies'] as $copy) {
-        
-        $sql.= "('$guid','$copy'),";
+    if (isset($param['copies'])) {
+        if ($param['copies']) {
+            $sql = "INSERT INTO book_copies (book_guid,copy_no,created_at,updated_at) VALUES";
+            foreach ($param['copies'] as $copies) {
+
+                $sql.= "('$guid','$copies','$datetime','$datetime'),";
+            }
+            if (strlen($sql) > 2) {
+                $sql = substr($sql, 0, -1);
+                $result['success']=$conn->query($sql);
+            }
+        }
     }
-    if (strlen($sql) > 2) {
-        $sql = substr($sql, 0, -1);
-        $result['success']=$conn->query($sql);
-    }
-    
-    return $result;
+
+  return $result;
 }
 
 //update book
@@ -136,11 +139,11 @@ function getBooks($conn)
     $result = $conn->query($sql);
     return $result;
 }
-
 //get a book by GUID
 function getBookByGUID($conn,$guid)
 {
-    $sql = "select * from books b where b.guid='$guid'";
+    $sql = "select b.guid,b.id,b.title,b.author,b.publication_year,b.isbn,b.status,b.pdf_url,b.category_id,c.name 
+    from books b,categories c where b.category_id=c.id and b.guid='$guid'";
     $result = $conn->query($sql);
     return $result;
 }

@@ -1,5 +1,5 @@
 <?php
-$host = '127.0.0.1'; // Use '127.0.0.1' instead of 'localhost' for consistency with phpMyAdmin
+$host = 'localhost'; // Use '127.0.0.1' instead of 'localhost' for consistency with phpMyAdmin
 $username = 'root';
 $password = ''; // No password for root
 $database = 'smartlib';

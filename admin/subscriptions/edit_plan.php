@@ -1,6 +1,6 @@
 <?php
 include_once("../../config/config.php");
-include_once("../../config/database.php");
+//include_once("../../config/database.php");
 include_once("../../config/utility.php");
 include_once("../../include/header.php");
 include_once("../../include/topbar.php");

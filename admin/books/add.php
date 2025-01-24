@@ -1,7 +1,7 @@
 <?php
 include_once("../../config/config.php");
-include_once("../../config/database.php");
-include_once("../models/book.php");
+//include_once("../../config/database.php");
+include_once("../../models/book.php");
 
 
 //Add Book Functionality
@@ -33,7 +33,7 @@ include_once("../../include/sidebar.php");
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header">
-                              Fill the form
+                              Add book content
                             </div>
                                     <div class="card-body">
                                         <form method="post" action="<?php echo ADMIN_BASE_URL?>books/add.php" enctype="multipart/form-data">
@@ -62,13 +62,12 @@ include_once("../../include/sidebar.php");
 
                                                     </div>
                                                 </div>
-                        
+
                                                 <div class="col-md-6">
                                                     <div class="mb-3">
-                                                        <label for="publication_year" class="form-label">Publication Year</label>
-                                                        <input type="number" name="publication_year" id="publication_year" 
-                                                        class="form-control" required title="Enter the year of publication" 
-                                                        />
+                                                        <label for="publication_year" class="form-label">Published Year</label>
+                                                        <input type="text" name="publication_year" id="publication_year"
+                                                               class="form-control" required title="Enter the published year" />
 
                                                     </div>
                                                 </div>
@@ -99,32 +98,25 @@ include_once("../../include/sidebar.php");
                                                             
                                                     </div>
                                                 </div>
-
                                                 <div class="col-md-12">
+                                                    <div class="d-flex justify-content-between align-items-center">
                                                         <h5 class="mt-4">Book Copies</h5>
-                                                        <table class="table table-bordered" id="copiesTable">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Copy Number</th>
-                                                                    <th>Actions</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <!-- Initial empty row to add new copies -->
-                                                                <tr>
-                                                                    <td><input type="text" name="copies[]" class="form-control" placeholder="Enter copy number" /></td>
-                                                                    <td>
-                                                                        <button type="button" class="btn btn-primary" onclick="editRow(this)">Edit</button>
-                                                                        <button type="button" class="btn btn-danger" onclick="deleteRow(this)">Delete</button>
-                                                                    </td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                    <div class="d-flex justify-content-end mt-2">
-                                          <button type="button" class="btn btn-secondary btn-sm" onclick="addRow()">Add Copy</button>
-                                     </div>
-                                </div>
-                                
+                                                        <button  type="button" class="btn btn-primary btn-sm right" onclick="addRow();">Add Copy</button>
+                                                    </div>
+                                                    <table class="table table-bordered" id="copiesTable">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>Copy Number</th>
+                                                            <th>Actions</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+
+
+                                                        </tbody>
+                                                    </table>
+
+                                                </div>
                                                 <div class="col-md-12">
                                                     <button name="publish" type="submit" class="btn btn-success">
                                                         Publish
@@ -140,38 +132,6 @@ include_once("../../include/sidebar.php");
                                 </div>
                             </div>
                         </div>
-                        <script>
-function addRow() {
-    const table = document.getElementById("copiesTable").getElementsByTagName('tbody')[0];
-    const newRow = table.insertRow();
-    
-    // Copy Number Field
-    const copyCell = newRow.insertCell(0);
-    const copyInput = document.createElement("input");
-    copyInput.type = "text";
-    copyInput.name = "copies[]";
-    copyInput.className = "form-control";
-    copyInput.placeholder = "Enter copy number";
-    copyCell.appendChild(copyInput);
-
-    // Action Buttons
-    const actionCell = newRow.insertCell(1);
-    actionCell.innerHTML = `
-        <button type="button" class="btn btn-primary" onclick="editRow(this)">Edit</button>
-        <button type="button" class="btn btn-danger" onclick="deleteRow(this)">Delete</button>`;
-}
-
-function editRow(button) {
-    const row = button.closest('tr');
-    const input = row.cells[0].getElementsByTagName('input')[0];
-    input.focus();
-}
-
-function deleteRow(button) {
-    const row = button.closest('tr');
-    row.remove();
-}
-</script>
         <!--main content end-->
 
         <?php

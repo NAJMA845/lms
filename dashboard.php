@@ -33,7 +33,7 @@ include_once("include/sidebar.php");
                     <div class="col-md-3">
                         <div class="card">
                             <div class="card-body text-center">
-                              <h6 class="card-title text-uppercase">total students</h6>
+                              <h6 class="card-title text-uppercase">total active members</h6>
                               <h1>60</h1>
                               <a href="#" class="card-link link-underline-light text-center">View More</a>
                             </div>
@@ -42,8 +42,8 @@ include_once("include/sidebar.php");
                     <div class="col-md-3">
                         <div class="card">
                             <div class="card-body text-center">
-                              <h6 class="card-title text-uppercase">total revenue</h6>
-                              <h1>125,000</h1>
+                              <h6 class="card-title text-uppercase">total book out</h6>
+                              <h1>30</h1>
                               <a href="#" class="card-link link-underline-light text-center">View More</a>
                             </div>
                         </div>
@@ -51,9 +51,9 @@ include_once("include/sidebar.php");
                     <div class="col-md-3">
                         <div class="card">
                             <div class="card-body text-center">
-                              <h6 class="card-title text-uppercase">total book loan</h6>
-                              <h1>30</h1>
-                              <a href="#" class="card-link link-underline-light text-center">View More</a>
+                                <h6 class="card-title text-uppercase">total books not returned</h6>
+                                <h1>30</h1>
+                                <a href="#" class="card-link link-underline-light text-center">View More</a>
                             </div>
                         </div>
                     </div>
@@ -73,7 +73,7 @@ include_once("include/sidebar.php");
                             type="button" 
                             role="tab" 
                             aria-controls="recent-students-tab-pane"  
-                            aria-selected="true">New Students</button>                    
+                            aria-selected="true">New Members</button>
                         </li>
                         <li class="nav-item" role="presentation">
                             <button class="nav-link text-uppercase" 
@@ -83,17 +83,7 @@ include_once("include/sidebar.php");
                                 type="button" 
                                 role="tab" 
                                 aria-controls="recent-loans-tab-pane" 
-                                aria-selected="false">Recent Loans</button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link text-uppercase" 
-                                id="recent-subs-tab" 
-                                data-bs-toggle="tab" 
-                                data-bs-target="#recent-subs-tab-pane" 
-                                type="button" 
-                                role="tab" 
-                                aria-controls="recent-subs-tab-pane" 
-                                aria-selected="false">New Subscription</button>
+                                aria-selected="false">Recent Lendings</button>
                         </li>
                     </ul>
             

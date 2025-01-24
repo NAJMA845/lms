@@ -1,7 +1,8 @@
 <?php
-include_once("../../config/database.php");
-include_once("../models/book.php");
 include_once("../../config/config.php");
+//include_once("../../config/database.php");
+include_once("../../models/book.php");
+
 
 //-----------------------Book edit POST---------------------------//
 if (isset($_POST['publish'])) {
@@ -42,12 +43,6 @@ if ($book->num_rows > 0) {
 }
 
 $book_copies = getBookCopiesByGUID($conn,$guid);
-if ($book_copies->num_rows > 0) {
-    while ($row = $book_copies->fetch_assoc()) {
-        $book_guid=$row['book_guid'];
-        $copy_no=$row['copy_no'];
-    }
-}
 ?>
 
         <!--main content start-->
@@ -62,7 +57,7 @@ if ($book_copies->num_rows > 0) {
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header">
-                              Fill the form
+                              Add book content
                             </div>
                                     <div class="card-body">
                                         <form method="post" action="<?php echo ADMIN_BASE_URL?>books/edit.php"  enctype="multipart/form-data">
@@ -93,20 +88,36 @@ if ($book_copies->num_rows > 0) {
                                                         <input type="text" name="author" id="author" 
                                                         class="form-control" required title="Enter the author's name"
                                                                value="<?php echo $author ?>"/>
-
                                                     </div>
                                                 </div>
-                        
                                                 <div class="col-md-6">
                                                     <div class="mb-3">
-                                                        <label for="publication_year" class="form-label">Publication Year</label>
-                                                        <input type="number" name="publication_year" id="publication_year" 
-                                                        class="form-control" required title="Enter the year of publication"
-                                                               value="<?php echo $publicationYear ?>"/>
-
+                                                        <label for="category_id" class="form-label">Category</label>
+                                                        <?php
+                                                        $cats = getCategories($conn);
+                                                        ?>
+                                                        <select name="category_id" id="category_id"
+                                                                class="form-control" required title="Select the category of the item">
+                                                            <option value="">Please select</option>
+                                                            <?php while ($row = $cats->fetch_assoc()) {
+                                                                // Check if the current category matches the desired value
+                                                                $selected = ($row['id'] == $category) ? 'selected' : '';
+                                                                ?>
+                                                                <option value="<?php echo $row['id'] ?>" <?php echo $selected; ?>>
+                                                                    <?php echo $row['name']; ?>
+                                                                </option>
+                                                            <?php } ?>
+                                                        </select>
                                                     </div>
                                                 </div>
-                        
+                                                <div class="col-md-6">
+                                                    <div class="mb-3">
+                                                        <label for="publication_year" class="form-label">Published Year</label>
+                                                        <input type="text" name="publication_year" id="publication_year"
+                                                               class="form-control" required title="Enter the published year"
+                                                               value="<?php echo $publicationYear ?>"/>
+                                                    </div>
+                                                </div>
                                                 <div class="col-md-6">
                                                     <div class="mb-3">
                                                         <label for="category_id" class="form-label">Upload PDF</label>
@@ -121,7 +132,10 @@ if ($book_copies->num_rows > 0) {
 
     <!-- <grid> -->
     <div class="col-md-12">
-                                    <h5 class="mt-4">Book Copies</h5>
+        <div class="d-flex justify-content-between align-items-center">
+            <h5 class="mt-4">Book Copies</h5>
+            <button  type="button" class="btn btn-primary btn-sm right" onclick="addRow('<?php echo $guid; ?>');">Add Copy</button>
+        </div>
                                     <table class="table table-bordered" id="copiesTable">
                                         <thead>
                                             <tr>
@@ -130,29 +144,33 @@ if ($book_copies->num_rows > 0) {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <!-- Initial empty row to add new copies -->
+                                            <?php
+                                        if ($book_copies->num_rows > 0) {
+                                            while ($row = $book_copies->fetch_assoc()) {
+                                                $book_guid=$row['book_guid'];
+                                                $copy_no=$row['copy_no'];
+                                                ?>
                                             <tr>
-                                                <td><input type="text" name="copies[]" class="form-control" placeholder="Enter copy number" /></td>
+                                                <td><input readonly guid="<?php echo  $book_guid;?>" copy_no="<?php echo $copy_no;?>" type="text" class="form-control" name="copies[]" value="<?php echo $copy_no;?>"></td>
                                                 <td>
-                                                    <button type="button" class="btn btn-primary" onclick="editRow(this)">Edit</button>
-                                                    <button type="button" class="btn btn-danger" onclick="deleteRow(this)">Delete</button>
+                                                    <button type="button" class="btn btn-primary" onclick="toggleEdit(this)">Edit</button>
+                                                    <button type="button" class="btn btn-danger" onclick="showDeleteConfirmation(this)">Delete</button>
                                                 </td>
                                             </tr>
+                                        <?php
+                                            }
+                                        }
+                                        ?>
+
                                         </tbody>
                                     </table>
-                                    <div class="d-flex justify-content-end mt-2">
-                                          <button type="button" class="btn btn-secondary btn-sm" onclick="addRow()">Add Copy</button>
-                                     </div>
+
                                 </div>
                                                     
                         
                                                 <div class="col-md-12">
                                                     <button name="publish" type="submit" class="btn btn-success">
                                                         Publish
-                                                    </button>
-                        
-                                                    <button type="reset" class="btn btn-secondary">
-                                                        Cancel
                                                     </button>
                                                 </div>
                                             </div>

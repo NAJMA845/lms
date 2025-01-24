@@ -1,7 +1,7 @@
 <?php
 include_once("../../config/config.php");
-include_once("../../config/database.php");
-include_once("../models/users.php");
+//include_once("../../config/database.php");
+include_once("../../models/users.php");
 
 // Add Member Functionality
 if (isset($_POST['submit'])) {

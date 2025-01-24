@@ -11,6 +11,7 @@ include_once("../../include/sidebar.php");
         <!--Cards-->
         <div class="row dashboard-counts">
             <div class="col-md-12">
+                <?php include_once("../../include/alerts.php"); ?>
                 <h4 class="fw-bold text-uppercase">View All Borrowing</h4>
             </div>
 
@@ -43,7 +44,7 @@ include_once("../../include/sidebar.php");
                                         <td>5056</td>
                                         <td>01-01-2024</td>
                                         <td>01-02-2024</td>
-                                        <td><span class="badge text-bg-warning">Overdue</span></td>
+                                        <td><span class="badge text-bg-danger">Overdue</span></td>
                                         <td>01-01-2024 10:00 AM</td>
                                     </tr>
 

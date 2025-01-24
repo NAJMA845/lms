@@ -1,5 +1,5 @@
 <?php
-include_once("../../config/database.php");
+//include_once("../../config/database.php");
 include_once("../models/book.php");
 include_once("../../config/config.php");
 //-----------------------Book edit POST---------------------------//
