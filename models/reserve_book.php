@@ -28,7 +28,33 @@ function storeReserveBook($conn, $param)
     while ($row = $result->fetch_assoc()) {
         $book[] = $row['book_guid'];
     }
-    $stmt->close(); // Close statement after fetching results
+    $stmt->close();
+    $bookGuid=$book[0];
+    // Get total number of copies for this book_guid
+    $copyCountSQL = "SELECT COUNT(*) as total_copies FROM book_copies WHERE book_guid = ?";
+    $stmt = $conn->prepare($copyCountSQL);
+    $stmt->bind_param("s", $bookGuid);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $copyData = $result->fetch_assoc();
+    $totalCopies = $copyData['total_copies'];
+    $stmt->close();
+
+    // Count how many reservations exist for this book_guid on the given date
+    $reservationCountSQL = "SELECT COUNT(*) as reserved_count FROM book_reservation WHERE book_guid = ? AND reservation_date = ?";
+    $stmt = $conn->prepare($reservationCountSQL);
+    $stmt->bind_param("ss", $bookGuid, $reservedOn);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $reservationData = $result->fetch_assoc();
+    $reservedCount = $reservationData['reserved_count'];
+    $stmt->close();
+
+    // Check if reservation count exceeds available copies
+    if ($reservedCount >= $totalCopies) {
+        return array("error" => "All copies of this book are already reserved for the selected date.");
+    }
+
 
     // Check existing reservations for the member
     $sqlCheck = "SELECT created_at FROM book_reservation 
@@ -43,7 +69,7 @@ function storeReserveBook($conn, $param)
     while ($row = $result->fetch_assoc()) {
         $reservations[] = $row['created_at'];
     }
-    $stmt->close(); // Close statement after fetching results
+    $stmt->close();
 
     // Validation: Max 2 reservations allowed
     if (count($reservations) >= 2) {
@@ -62,7 +88,7 @@ function storeReserveBook($conn, $param)
     $sqlInsert = "INSERT INTO book_reservation (guid, book_guid, member_id, copy_no, reservation_date) 
                   VALUES (?, ?, ?, ?,?)";
     $stmt = $conn->prepare($sqlInsert);
-    $stmt->bind_param("sssss", $guid, $book[0], $membershipNo, $copyNo, $reservedOn);
+    $stmt->bind_param("sssss", $guid, $bookGuid, $membershipNo, $copyNo, $reservedOn);
     $success = $stmt->execute();
     $stmt->close();
 

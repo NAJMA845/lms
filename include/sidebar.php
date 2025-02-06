@@ -51,7 +51,7 @@
                     <ul class="navbar-nav ps-3">
                         <li>
                             <a href="<?php echo BASE_URL ?>review-book/review-book.php" class="nav-link">
-                                <i class="fas fa-star me-2"></i> Give New Review
+                                <i class="fas fa-plus me-2"></i> Give New Review
                             </a>
                         </li>
                         <li>
@@ -68,7 +68,7 @@
                    role="button"
                    aria-expanded="false"
                    aria-controls="ReserveBooksOptions">
-                    <i class="fas fa-star me-2"></i> Reserve Books
+                    <i class="fas fa-book me-2"></i> Reserve Books
                     <span class="right-icon float-end">
                         <i class="fas fa-chevron-down"></i>
                     </span>
@@ -77,7 +77,7 @@
                     <ul class="navbar-nav ps-3">
                         <li>
                             <a href="<?php echo BASE_URL ?>reserve-book/reserve-book.php" class="nav-link">
-                                <i class="fas fa-star me-2"></i> Reserve Book
+                                <i class="fas fa-plus me-2"></i> Reserve Book
                             </a>
                         </li>
                         <li>
