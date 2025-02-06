@@ -1,5 +1,22 @@
 <?php
 include_once("../config/config.php");
+include_once("../models/reserve_book.php");
+
+//Add  Functionality
+if (isset($_POST['reserve'])) {
+
+    if($_SESSION['user_type']==0){
+        $_POST['membershipNo']=$_SESSION['id'];
+    }
+    $res = storeReserveBook($conn, $_POST);
+    if (isset($res['success'])) {
+        $_SESSION['success'] = "Book reservation is successfully done";
+        header("LOCATION:" . BASE_URL . "reserve-book/index.php");
+    } else {
+        $_SESSION['error'] = $res["error"];//"Something went wrong, please try again.";
+    }
+}
+
 include_once("../include/header.php");
 include_once("../include/topbar.php");
 include_once("../include/sidebar.php");
@@ -11,6 +28,7 @@ include_once("../include/sidebar.php");
         <!-- Book Reservation Section -->
         <div class="row">
             <div class="col-md-12">
+                <?php include_once("../include/alerts.php"); ?>
                 <h4 class="fw-bold text-uppercase">Book Reservation</h4>
             </div>
 
@@ -20,13 +38,13 @@ include_once("../include/sidebar.php");
                         <span>Fill the form</span>
                     </div>
                     <div class="card-body">
-                        <form method="post" action="processBookReservation.php">
+                        <form method="post" action="<?php echo BASE_URL?>reserve-book/reserve-book.php">
                             <div class="row">
 
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="copyNo" class="form-label">Copy No</label>
-                                        <input type="text" name="copy_no" id="copyNo" class="form-control" placeholder="Enter Copy No" value="<?php echo isset($_GET['copy_no']) ? $_GET['copy_no'] : ''; ?>" required>
+                                        <input type="text" name="copyNo" id="copyNo" class="form-control" placeholder="Enter Copy No" value="<?php echo isset($_GET['copy_no']) ? $_GET['copy_no'] : ''; ?>" required>
                                     </div>
 
 
@@ -35,7 +53,7 @@ include_once("../include/sidebar.php");
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="reserveOn" class="form-label">Reserve On</label>
-                                        <input type="date" name="reserve_on" id="reserveOn" class="form-control" required>
+                                        <input type="date" name="reservedOn" id="reservedOn" class="form-control" required>
                                     </div>
                                     <div class="mb-3">
                                         <?php
@@ -43,7 +61,7 @@ include_once("../include/sidebar.php");
                                         // for non admin, the membership no will be from the login session
                                         if($_SESSION['user_type']=="1"){ ?>
                                             <label for="membershipNo" class="form-label">Membership No</label>
-                                            <input type="text" name="membership_no" id="membershipNo" class="form-control" placeholder="Enter Membership No" required>
+                                            <input type="text" name="membershipNo" id="membershipNo" class="form-control" placeholder="Enter Membership No" required>
                                             <?php
                                         }
                                         ?>
@@ -52,7 +70,7 @@ include_once("../include/sidebar.php");
 
 
                                 <div class="col-md-12 text-start">
-                                    <button type="submit" class="btn btn-success">
+                                    <button type="submit" class="btn btn-success" name="reserve">
                                         <i class="fas fa-save"></i> Reserve
                                     </button>
                                     <button type="reset" class="btn btn-secondary">
