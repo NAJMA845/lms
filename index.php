@@ -22,6 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $user = $result->fetch_assoc();
         $_SESSION['user_email'] = $user['email'];
         $_SESSION['user_type'] = $user['is_admin'];
+        $_SESSION['id'] = $user['id'];
         header('Location: dashboard.php');
         exit();
     } else {

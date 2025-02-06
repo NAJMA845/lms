@@ -41,26 +41,45 @@ if(isset($_POST)){
     }
 }
 function returnBook($id,$copyId,$membershipNo,$currentDate,$conn){
-    $sql="
+
+    $conn->begin_transaction(); // Start transaction
+    try {
+        $sql = "
             update book_tran 
             set returned_date=?,updated_at=?
             where id=? 
             ";
-    $statment = $conn->prepare($sql);
-    $statment->bind_param("ssi",$currentDate,$currentDate,$id);
-    if($statment->execute()){
-        $status="success";
-        $info="Returned successfully!";
-    }
-    else{
-        $status="error";
-        $info="Error when updating. Check the log!";
-    }
+        $stmt1 = $conn->prepare($sql);
+        $stmt1->bind_param("ssi", $currentDate, $currentDate, $id);
+        $stmt1->execute();
 
-    echo json_encode([
-        "status" => $status,
-        "info" => $info
-    ]);
+        $sql = "update book_copies
+        set status='Available'
+        where copy_no=?";
+        $stmt2 = $conn->prepare($sql);
+        $stmt2->bind_param("s", $copyId);
+        $stmt2->execute();
+
+        $conn->commit();
+        $status = "success";
+        $info = "Returned successfully!";
+        echo json_encode([
+            "status" => $status,
+            "info" => $info
+        ]);
+    } catch (Exception $e) {
+        $conn->rollback();
+        $status = "error";
+        $info = "Error when updating. Check the log!";
+        echo json_encode([
+            "status" => $status,
+            "info" => $info
+        ]);
+    } finally {
+    // Close the prepared statements
+    $stmt1->close();
+    $stmt2->close();
+    }
 }
 
 function borrowBook($copyId, $membershipNo, $currentDate, $conn) {
@@ -100,29 +119,43 @@ function borrowBook($copyId, $membershipNo, $currentDate, $conn) {
     }
 
     // Check subscription
-    $query = "SELECT subsciption_active FROM users WHERE id = ?";
+    $query = "SELECT subscription_active FROM users WHERE id = ?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("s", $membershipNo);
     $stmt->execute();
     $result = $stmt->get_result();
 
     if ($row = $result->fetch_assoc()) {
-        if ($row['subsciption_active'] == 0) {
+        if ($row['subscription_active'] == 0) {
             echo json_encode(["status" => "error", "info" => "Subscription is expired. Renew your subscription."]);
             return;
         }
     }
+    $conn->begin_transaction(); // Start transaction
+    try {
+        // Insert borrowing record
+        $sql = "INSERT INTO book_tran (copy_id, member_id, borrowed_date, created_at, updated_at) VALUES (?, ?, ?, ?, ?)";
+        $stmt1 = $conn->prepare($sql);
+        $stmt1->bind_param("sssss", $copyId, $membershipNo, $currentDate, $currentDate, $currentDate);
+        $stmt1->execute();
 
-    // Insert borrowing record
-    $sql = "INSERT INTO book_tran (copy_id, member_id, borrowed_date, created_at, updated_at) VALUES (?, ?, ?, ?, ?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sssss", $copyId, $membershipNo, $currentDate, $currentDate, $currentDate);
-
-    if ($stmt->execute()) {
+        $sql = "update book_copies
+        set status='Unavailable'
+        where copy_no=?";
+        $stmt2 = $conn->prepare($sql);
+        $stmt2->bind_param("s", $copyId);
+        $stmt2->execute();
+        // Commit the transaction if both queries succeed
+        $conn->commit();
         echo json_encode(["status" => "success", "info" => "Borrowed successfully!"]);
-    } else {
+     } catch (Exception $e) {
+    // Rollback the transaction if any query fails
+        $conn->rollback();
         echo json_encode(["status" => "error", "info" => "Error when updating. Check the log!"]);
+    } finally {
+        // Close the prepared statements
+        $stmt1->close();
+        $stmt2->close();
     }
 }
-
 ?>
