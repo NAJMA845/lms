@@ -1,5 +1,17 @@
 <?php 
 include_once("../../config/config.php");
+include_once("../../models/media_room.php");
+
+//Add  Functionality
+if (isset($_POST['reserve'])) {
+    $res = storeMultimedia($conn, $_POST);
+    if (isset($res['success'])) {
+        $_SESSION['success'] = "Multimedia Room booked Successfully";
+        header("LOCATION:" . ADMIN_BASE_URL . "multimedia");
+    } else {
+        $_SESSION['error'] = $res["error"];//"Something went wrong, please try again.";
+    }
+}
 include_once("../../include/header.php");
 include_once("../../include/topbar.php");
 include_once("../../include/sidebar.php");
@@ -11,6 +23,7 @@ include_once("../../include/sidebar.php");
         <!-- Add Multimedia Room Booking Section -->
         <div class="row">
             <div class="col-md-12">
+                <?php include_once("../../include/alerts.php"); ?>
                 <h4 class="fw-bold text-uppercase">Add Multimedia Room Booking</h4>
             </div>
 
@@ -20,12 +33,12 @@ include_once("../../include/sidebar.php");
                         <span>Fill the form</span>
                     </div>
                     <div class="card-body">
-                        <form method="post" action="processRoomBooking.php">
+                        <form method="post" action="<?php echo ADMIN_BASE_URL?>multimedia/add.php">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="memberID" class="form-label">NIC</label>
-                                        <input type="text" name="memberID" id="memberID" class="form-control" placeholder="Enter NIC No" required>
+                                        <input type="text" name="nicNo" id="memberID" class="form-control" placeholder="Enter NIC No" required>
                                     </div>
                                 </div>
 
@@ -49,8 +62,8 @@ include_once("../../include/sidebar.php");
                                 </div>
 
                                 <div class="col-md-12 text-start">
-                                    <button type="submit" class="btn btn-success">
-                                        <i class="fas fa-save"></i> Reserve
+                                    <button type="submit" class="btn btn-success" value="reserve" name="reserve">
+                                        <i class="fas fa-save"></i>Reserve
                                     </button>
                                     <button type="reset" class="btn btn-secondary">
                                         <i class="fas fa-redo"></i> Reset

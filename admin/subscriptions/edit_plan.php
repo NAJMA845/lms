@@ -1,12 +1,11 @@
 <?php
 include_once("../../config/config.php");
-//include_once("../../config/database.php");
 include_once("../../config/utility.php");
 include_once("../../include/header.php");
 include_once("../../include/topbar.php");
 include_once("../../include/sidebar.php");
-include_once("../models/plan_manager.php");
-include_once("../models/form_validator.php");
+include_once("../../models/plan_manager.php");
+include_once("../../models/form_validator.php");
 
 $planManager = new PlanManager($conn);
 $errors = [];
@@ -96,7 +95,7 @@ if (!$plan) {
                                     <div class="mb-3">
                                         <label class="form-label">Amount</label>
                                         <input type="number" 
-                                               step="0.01" 
+                                               step="50"
                                                class="form-control <?php echo isset($errors['amount']) ? 'is-invalid' : ''; ?>" 
                                                name="amount" 
                                                value="<?php echo htmlspecialchars($plan['amount']); ?>" 

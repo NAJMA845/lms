@@ -1,34 +1,9 @@
 <?php
 include_once("../../config/config.php");
-//include_once("../../config/database.php");
 include_once("../../config/utility.php");
 include_once("../../include/header.php");
 include_once("../../include/topbar.php");
 include_once("../../include/sidebar.php");
-
-// Handle new subscription creation
-if (isset($_POST['submit'])) {
-    $guid = generateGUID();
-    $member_id = intval($_POST['student_id']);
-    $plan_id = intval($_POST['plan_id']);
-    
-    // Get plan details
-    $plan_query = "SELECT amount, duration FROM subscription_plans WHERE id = $plan_id";
-    $plan_result = $conn->query($plan_query);
-    $plan = $plan_result->fetch_assoc();
-    
-    $start_date = date('Y-m-d');
-    $end_date = date('Y-m-d', strtotime("+{$plan['duration']} months"));
-    
-    $sql = "INSERT INTO subscriptions (guid, member_id, plan_id, start_date, end_date, amount) 
-            VALUES ('$guid', $member_id, $plan_id, '$start_date', '$end_date', {$plan['amount']})";
-    
-    if ($conn->query($sql)) {
-        echo "<script>alert('Subscription created successfully!');</script>";
-    } else {
-        echo "<script>alert('Error creating subscription: " . $conn->error . "');</script>";
-    }
-}
 
 // Fetch subscriptions with search functionality
 $where = "1=1";
@@ -43,7 +18,8 @@ if (isset($_GET['search'])) {
     }
 }
 
-$sql = "SELECT s.*, u.name as student_name, sp.title as plan_name, sp.amount 
+$sql = "SELECT u.guid,u.name as member_name,u.id as membership_no, 
+       sp.title as plan_name, s.start_date,s.end_date,u.subscription_active,u.is_blocked 
         FROM subscriptions s 
         JOIN users u ON s.member_id = u.id 
         JOIN subscription_plans sp ON s.plan_id = sp.id 
@@ -52,10 +28,9 @@ $sql = "SELECT s.*, u.name as student_name, sp.title as plan_name, sp.amount
 $result = $conn->query($sql);
 
 // Fetch all active users for dropdown
-$users_sql = "SELECT id, name FROM users WHERE is_blocked = 0  AND is_default=0 ORDER BY name";
+$users_sql = "SELECT id, name,nic_no FROM users WHERE is_blocked = 0  AND is_default<>1 and subscription_active <>1 ORDER BY created_at desc";
 $users_result = $conn->query($users_sql);
 
-// Fetch all active plans for dropdown
 $plans_sql = "SELECT id, title, amount FROM subscription_plans WHERE status = 1 ORDER BY title";
 $plans_result = $conn->query($plans_sql);
 ?>
@@ -107,12 +82,14 @@ $plans_result = $conn->query($plans_sql);
                             <table id="data-table" class="table table-responsive table-striped">
                                 <thead class="table-dark">
                                     <tr>
+                                        <th scope="col" hidden="hidden">id</th>
                                         <th scope="col">#</th>
-                                        <th scope="col">User Name</th>
-                                        <th scope="col">Amount</th>
+                                        <th scope="col">Member Name</th>
+                                        <th scope="col">Membership No</th>
                                         <th scope="col">Plan</th>
                                         <th scope="col">Start Date</th>
                                         <th scope="col">End Date</th>
+                                        <th scope="col">Subscription</th>
                                         <th scope="col">Status</th>
                                     </tr>
                                 </thead>
@@ -121,27 +98,35 @@ $plans_result = $conn->query($plans_sql);
                                     if ($result->num_rows > 0) {
                                         $counter = 1;
                                         while($row = $result->fetch_assoc()) {
-                                            $is_expired = strtotime($row['end_date']) < time();
+                                            $subscription = $row['subscription_active'] == 1;
+                                            $blocked = $row['is_blocked'] == 1;
+
                                     ?>
                                     <tr>
+                                        <td hidden="hidden"><?php echo htmlspecialchars($row['guid']); ?></td>
                                         <th scope="row"><?php echo $counter++; ?></th>
-                                        <td><?php echo htmlspecialchars($row['student_name']); ?></td>
+                                        <td><?php echo htmlspecialchars($row['member_name']); ?></td>
+                                        <td><?php echo htmlspecialchars($row['membership_no']); ?></td>
                                         <td>
                                             <span class="badge text-bg-info me-1"><?php echo htmlspecialchars($row['plan_name']); ?></span>
-                                            <?php echo number_format($row['amount'], 2); ?>
                                         </td>
                                         <td><?php echo date('d-m-Y', strtotime($row['start_date'])); ?></td>
                                         <td><?php echo date('d-m-Y', strtotime($row['end_date'])); ?></td>
                                         <td>
-                                            <span class="badge text-bg-<?php echo $is_expired ? 'danger' : 'success'; ?>">
-                                                <?php echo $is_expired ? 'Expired' : 'Active'; ?>
+                                            <span class="badge text-bg-<?php echo $subscription ? 'success':'danger' ; ?>">
+                                                <?php echo $subscription ? 'Active' : 'Expired'; ?>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span class="badge text-bg-<?php echo $blocked ? 'danger' : 'success'; ?>">
+                                                <?php echo $blocked ? 'Blocked' : 'Active'; ?>
                                             </span>
                                         </td>
                                     </tr>
                                     <?php 
                                         }
                                     } else {
-                                        echo "<tr><td colspan='6' class='text-center'>No subscriptions found</td></tr>";
+                                        echo "<tr><td colspan='9' class='text-center'>No subscriptions found</td></tr>";
                                     }
                                     ?>
                                 </tbody>
@@ -163,16 +148,16 @@ $plans_result = $conn->query($plans_sql);
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form method="post">
+                <form method="post" action="<?php echo BASE_URL?>/models/subscription.php">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="mb-3">
                                 <label class="form-label">Select User</label>
-                                <select name="student_id" class="form-control" required>
+                                <select name="member_id" class="form-control" required>
                                     <option value="">Please select</option>
                                     <?php while($user = $users_result->fetch_assoc()) { ?>
                                         <option value="<?php echo $user['id']; ?>">
-                                            <?php echo htmlspecialchars($user['name']); ?>
+                                            <?php echo htmlspecialchars($user['nic_no']." - ".$user['name']); ?>
                                         </option>
                                     <?php } ?>
                                 </select>
@@ -194,7 +179,7 @@ $plans_result = $conn->query($plans_sql);
                         </div>
 
                         <div class="col-md-12">
-                            <button type="submit" name="submit" class="btn btn-success">Save</button>
+                            <button type="submit" name="submit-membership" class="btn btn-success">Save</button>
                             <button type="reset" class="btn btn-secondary">Cancel</button>
                         </div>
                     </div>

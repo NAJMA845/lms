@@ -17,7 +17,7 @@
                        aria-expanded="false"
                        aria-controls="BooksLoan"
                     >
-                        <i class="fa-solid fa-book-open me-2"></i> Burrowing & Returning
+                        <i class="fa-solid fa-book-open me-2"></i> Borrowing & Returning
                         <span class="right-icon float-end">
                                     <i class="fas fa-chevron-down"></i>
                                 </span>
@@ -52,7 +52,7 @@
                             <ul class="navbar-nav ps-3">
                                 <li>
                                     <a href="<?php echo ADMIN_BASE_URL ?>subscriptions/index.php"
-                                       class="nav-link"><i class="fas fa-plus me-2"></i>Membership Plans</a>
+                                       class="nav-link"><i class="fas fa-list me-2"></i>Membership Plans</a>
                                 </li>
                                 <li>
                                     <a href="<?php echo ADMIN_BASE_URL ?>subscriptions/subscrption-purchase-history.php"

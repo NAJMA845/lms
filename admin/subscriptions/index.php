@@ -147,10 +147,9 @@ $result = $conn->query($sql);
                                         <label class="form-label">Duration (months)</label>
                                         <select class="form-control" name="duration" required>
                                             <option value="">Please select</option>
-                                            <option value="1">1 month</option>
-                                            <option value="3">3 months</option>
                                             <option value="6">6 months</option>
                                             <option value="12">12 months</option>
+                                            <option value="24">24 months</option>
                                         </select>
                                     </div>
                                 </div>
