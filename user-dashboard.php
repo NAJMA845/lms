@@ -11,7 +11,8 @@ include_once("include/sidebar.php");
 <main class="mt-1 pt-3">
     <div class="container-fluid">
         <!--Dashboard Header-->
-        <div class="row dashboard-header">
+
+        <div class="row dashboard-counts">
             <div class="col-md-12">
                 <h4 class="fw-bold text-uppercase"> User Dashboard </h4>
                 <p>Welcome to your personalized LMS Dashboard!</p>
@@ -82,16 +83,6 @@ include_once("include/sidebar.php");
                             aria-controls="reading-history-tab-pane" 
                             aria-selected="false">Reading History</button>
                     </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link text-uppercase" 
-                            id="subscriptions-tab" 
-                            data-bs-toggle="tab" 
-                            data-bs-target="#subscriptions-tab-pane" 
-                            type="button" 
-                            role="tab" 
-                            aria-controls="subscriptions-tab-pane" 
-                            aria-selected="false">Subscription</button>
-                    </li>
                 </ul>
         
                 <!--Tab Content-->
@@ -156,43 +147,6 @@ include_once("include/sidebar.php");
                                     <td>Database Systems</td>
                                     <td>15-10-2023</td>
                                     <td>30-10-2023</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-        
-                    <!--Subscription Content-->
-                    <div class="tab-pane fade" 
-                        id="subscriptions-tab-pane" 
-                        role="tabpanel" 
-                        aria-labelledby="subscriptions-tab">
-                        <table class="table">
-                            <thead class="table-dark">
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Plan Name</th>
-                                    <th scope="col">Amount</th>
-                                    <th scope="col">Start Date</th>
-                                    <th scope="col">End Date</th>
-                                    <th scope="col">Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>Gold Membership</td>
-                                    <td>Rs. 1500</td>
-                                    <td>01-01-2023</td>
-                                    <td>31-12-2023</td>
-                                    <td><span class="badge text-bg-success">Active</span></td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>Silver Membership</td>
-                                    <td>Rs. 1000</td>
-                                    <td>01-01-2022</td>
-                                    <td>31-12-2022</td>
-                                    <td><span class="badge text-bg-danger">Expired</span></td>
                                 </tr>
                             </tbody>
                         </table>
