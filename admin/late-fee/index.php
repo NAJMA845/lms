@@ -1,18 +1,20 @@
-<?php 
+<?php
 include_once("../../config/config.php");
 include_once("../../include/header.php");
 include_once("../../include/topbar.php");
 include_once("../../include/sidebar.php");
+
+$query = "SELECT * FROM late_fees";
+$result = mysqli_query($conn, $query);
 ?>
 
 <!-- Main content start -->
 <main class="mt-1 pt-3">
     <div class="container-fluid">
-        <!-- Manage Late Fee Section -->
         <div class="row">
             <div class="col-md-12">
-                <?php include_once("../../include/alerts.php"); ?>
                 <h4 class="fw-bold text-uppercase">Manage Late Fees</h4>
+                <?php include_once("../../include/alerts.php"); ?>
             </div>
 
             <div class="col-md-12">
@@ -33,20 +35,24 @@ include_once("../../include/sidebar.php");
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>001</td>
-                                        <td>Student</td>
-                                        <td>1.5</td>
-                                        <td>15.00</td>
-                                        <td>
-                                            <button class="btn btn-primary">
-                                                 Edit
-                                            </button>
-                                            <button class="btn btn-danger ">
-                                                Delete
-                                            </button>
-                                        </td>
-                                    </tr>
+                                    <?php
+                                    if ($result) {
+                                        while ($row = mysqli_fetch_assoc($result)) {
+                                            echo "<tr>";
+                                            echo "<td>" . $row['id'] . "</td>";
+                                            echo "<td>" . ucfirst($row['member_type']) . "</td>";
+                                            echo "<td>" . $row['late_fee_per_day'] . "</td>";
+                                            echo "<td>" . $row['max_fee'] . "</td>";
+                                            echo "<td>
+                                                  <a href='edit.php?id=" . $row['id'] . "' class='btn btn-primary'></i> Edit</a>
+                                                  <a href='delete.php?id=" . $row['id'] . "' class='btn btn-danger ' onclick='return confirm(\"Are you sure?\")'></i> Delete</a>
+                                                  </td>";
+                                            echo "</tr>";
+                                        }
+                                    } else {
+                                        echo "<tr><td colspan='5'>No records found</td></tr>";
+                                    }
+                                    ?>
                                 </tbody>
                             </table>
                         </div>

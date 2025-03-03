@@ -86,10 +86,7 @@ include_once("../include/sidebar.php");
             </div>
 
             <!-- Main Content End -->
-
-
             <?php include_once("../include/footer.php"); ?>
-
 
 <script>
     // JavaScript to capture the selected rating

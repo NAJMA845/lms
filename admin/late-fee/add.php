@@ -1,8 +1,31 @@
-<?php 
+<?php
+ob_start(); // Start output buffering
 include_once("../../config/config.php");
 include_once("../../include/header.php");
 include_once("../../include/topbar.php");
 include_once("../../include/sidebar.php");
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $member_type = mysqli_real_escape_string($conn, $_POST['memberType']);
+    $late_fee_per_day = floatval($_POST['lateFeePerDay']);
+    $max_fee = floatval($_POST['maxFee']);
+
+    // Insert the new late fee record into the database
+    $insert_query = "INSERT INTO late_fees (member_type, late_fee_per_day, max_fee) 
+                     VALUES ('$member_type', $late_fee_per_day, $max_fee)";
+
+    if (mysqli_query($conn, $insert_query)) {
+        $_SESSION['success'] = "Late fee added successfully!";
+        header("Location: index.php"); // Redirect to the manage page
+        exit();
+    } else {
+        $_SESSION['error'] = "Error adding late fee: " . mysqli_error($conn);
+        header("Location: index.php"); // Redirect back to the manage page
+        exit();
+    }
+}
+
+ob_end_flush(); // End output buffering
 ?>
 
 <!-- Main content start -->
@@ -20,7 +43,7 @@ include_once("../../include/sidebar.php");
                         <span>Fill the form</span>
                     </div>
                     <div class="card-body">
-                        <form method="post" action="processLateFee.php">
+                        <form method="post" action="add.php">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="mb-3">

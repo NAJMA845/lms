@@ -132,46 +132,7 @@ $total_overdue = mysqli_fetch_assoc($total_overdue_result)['count'];
                                         <td>{$member['name']}</td>
                                         <td>{$member['email']}</td>
                                         <td>{$member['created_at']}</td>
-                                        <td><span class='badge " . ($member['is_active'] ? "text-bg-success" : "text-bg-danger") . "'>" . ($member['is_active'] ? "Active" : "Inactive") . "</span></td>
-                                    </tr>";
-                                }
-                                ?>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <!-- Recent Lending Content -->
-                    <div class="tab-pane fade" 
-                        id="recent-loans-tab-pane" 
-                        role="tabpanel" 
-                        aria-labelledby="recent-loans-tab">
-                        <table class="table">
-                            <thead class="table-dark">
-                                <tr>
-                                    <th>#</th>
-                                    <th>Book Name</th>
-                                    <th>Student Name</th>
-                                    <th>Borrow Date</th>
-                                    <th>Due Date</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                $recent_loans_query = "SELECT bb.id, b.title AS book_name, u.name AS student_name, bb.borrow_date, bb.due_date, bb.status 
-                                    FROM borrowed_books bb 
-                                    JOIN books b ON bb.book_id = b.id 
-                                    JOIN users u ON bb.user_id = u.id 
-                                    ORDER BY bb.borrow_date DESC LIMIT 5";
-                                $recent_loans_result = mysqli_query($conn, $recent_loans_query);
-                                while ($loan = mysqli_fetch_assoc($recent_loans_result)) {
-                                    echo "<tr>
-                                        <th>{$loan['id']}</th>
-                                        <td>{$loan['book_name']}</td>
-                                        <td>{$loan['student_name']}</td>
-                                        <td>{$loan['borrow_date']}</td>
-                                        <td>{$loan['due_date']}</td>
-                                        <td><span class='badge " . ($loan['status'] == 'Borrowed' ? "text-bg-success" : "text-bg-warning") . "'>{$loan['status']}</span></td>
+                                        <td><span class='badge " . ($member['is_active'] ? "text-bg-success" : "text-bg-secondary") . "'>" . ($member['is_active'] ? "Active" : "Default") . "</span></td>
                                     </tr>";
                                 }
                                 ?>
