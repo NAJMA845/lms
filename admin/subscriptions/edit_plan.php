@@ -1,11 +1,11 @@
 <?php
-include_once("../../config/config.php");
-include_once("../../config/utility.php");
-include_once("../../include/header.php");
-include_once("../../include/topbar.php");
-include_once("../../include/sidebar.php");
-include_once("../../models/plan_manager.php");
-include_once("../../models/form_validator.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/config/config.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/config/utility.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/include/header.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/include/topbar.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/include/sidebar.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/models/plan_manager.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/models/form_validator.php");
 
 $planManager = new PlanManager($conn);
 $errors = [];
@@ -145,4 +145,4 @@ if (!$plan) {
     </div>
 </main>
 
-<?php include_once("../../include/footer.php"); ?>
+<?php include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/include/footer.php"); ?>

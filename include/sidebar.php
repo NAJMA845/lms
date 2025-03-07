@@ -11,7 +11,7 @@
             
             <li class="nav-item">
                 <a class="nav-link active" aria-current="page"
-                   href="./user-dashboard.php"><i class="fas fa-tachometer me-2"></i> User Dashboard </a>
+                   href="<?php echo BASE_URL ?>user-dashboard.php"><i class="fas fa-tachometer me-2"></i> User Dashboard </a>
             </li>
             <li>
                 <a class="nav-link sidebar-link"
@@ -42,18 +42,18 @@
                    role="button"
                    aria-expanded="false"
                    aria-controls="ReviewBooksOptions">
-                    <i class="fas fa-star me-2"></i> Give Reviews to Books
+                    <i class="fas fa-star me-2"></i> Book Reviews
                     <span class="right-icon float-end">
                         <i class="fas fa-chevron-down"></i>
                     </span>
                 </a>
                 <div class="collapse" id="ReviewBooksOptions">
                     <ul class="navbar-nav ps-3">
-                        <li>
-                            <a href="<?php echo BASE_URL ?>review-book/review-book.php" class="nav-link">
-                                <i class="fas fa-plus me-2"></i> Give New Review
-                            </a>
-                        </li>
+<!--                        <li>-->
+<!--                            <a href="--><?php //echo BASE_URL ?><!--review-book/review-book.php" class="nav-link">-->
+<!--                                <i class="fas fa-plus me-2"></i> Give New Review-->
+<!--                            </a>-->
+<!--                        </li>-->
                         <li>
                             <a href="<?php echo BASE_URL ?>review-book/view-reviews.php" class="nav-link"><i
                                     class="fas fa-list me-2"></i> View Reviews </a>

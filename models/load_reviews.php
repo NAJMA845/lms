@@ -1,6 +1,6 @@
 <?php
 header('Content-Type: application/json');
-include_once("../config/config.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/config/config.php");
 
 
 function getReviewsByPage($conn, $limit, $offset) {

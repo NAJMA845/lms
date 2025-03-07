@@ -1,9 +1,9 @@
 <?php
-include_once("../../config/config.php");
-include_once("../../config/utility.php");
-include_once("../../include/header.php");
-include_once("../../include/topbar.php");
-include_once("../../include/sidebar.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/config/config.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/config/utility.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/include/header.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/include/topbar.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/include/sidebar.php");
 
 // Fetch subscriptions with search functionality
 $where = "1=1";
@@ -189,4 +189,4 @@ $plans_result = $conn->query($plans_sql);
     </div>
 </div>
 
-<?php include_once("../../include/footer.php"); ?>
+<?php include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/include/footer.php"); ?>

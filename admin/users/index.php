@@ -1,15 +1,15 @@
 <?php
-include_once("../../config/config.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/config/config.php");
 //include_once("../../config/database.php");
-include_once("../../models/users.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/models/users.php");
 
 $members = getUsers($conn);
 if (!isset($members->num_rows)) {
     $_SESSION['error'] = "Error: " . $conn->error;
 }
-include_once("../../include/header.php");
-include_once("../../include/topbar.php");
-include_once("../../include/sidebar.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/include/header.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/include/topbar.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/include/sidebar.php");
 ?>
 
 <!--main content start-->
@@ -76,4 +76,4 @@ include_once("../../include/sidebar.php");
 </main>
 <!--main content end-->
 
-<?php include_once("../../include/footer.php") ?>
+<?php include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/include/footer.php") ?>

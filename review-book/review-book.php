@@ -1,7 +1,7 @@
 <?php
-include_once("../config/config.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/config/config.php");
 //include_once("../config/database.php");
-include_once("../models/review_book.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/models/review_book.php");
 
 //Add reviews functionality
 if (isset($_POST['submit'])) {

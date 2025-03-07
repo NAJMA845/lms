@@ -137,8 +137,13 @@
 
                 xhr.onload = function () {
                     if (xhr.status === 200) {
-
+                        if (xhr.responseText === "success") {
+                            alert("Updated successfully");
+                        } else {
+                            alert("Duplicate entry found.");
+                        }
                     } else {
+                        alert("Update failed: " +xhr.responseText);
                     }
                 };
                 input.readOnly = true; // Disable the input after updating

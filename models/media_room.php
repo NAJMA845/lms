@@ -1,5 +1,5 @@
 <?php
-include_once("../../config/utility.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/config/utility.php");
 
 //store book
 function storeMultimedia($conn, $param)

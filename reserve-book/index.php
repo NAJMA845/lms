@@ -1,14 +1,14 @@
 <?php
-include_once("../config/config.php");
-include_once("../models/reserve_book.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/config/config.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/models/reserve_book.php");
 
 $reservations = getAllReservations($conn);
 if (!isset($reservations->num_rows)) {
     $_SESSION['error'] = "Error: " . $conn->error;
 }
-include_once("../include/header.php");
-include_once("../include/topbar.php");
-include_once("../include/sidebar.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/include/header.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/include/topbar.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/include/sidebar.php");
 ?>
 
 <!--main content start-->
@@ -33,6 +33,11 @@ include_once("../include/sidebar.php");
                                         <th scope="col">ISBN</th>
                                         <th scope="col">Author</th>
                                         <th scope="col">Reserved Date</th>
+                                        <?php
+                                        if ($_SESSION['user_type']=="1"){
+                                            echo '<th scope="col">Reserved By</th>';
+                                        }
+                                        ?>
                                         <th scope="col"></th>
                                     </tr>
                                 </thead>
@@ -48,9 +53,15 @@ include_once("../include/sidebar.php");
                                         <td><?php echo $row['isbn'] ?></td>
                                         <td><?php echo $row['author'] ?></td>
                                         <td><?php echo $row['reservation_date'] ?></td>
-                                        <td>
-                                            <a href="<?php echo BASE_URL.'reserve-book/delete-reservation.php?'.$row['guid'] ?>" class="btn btn-danger btn-sm">Delete</a>
-                                        </td>
+                                        <?php
+                                        if ($_SESSION['user_type']=="1"){?>
+                                            <td><?php echo $row['member_id'] ?></td>
+                                            <?php
+                                        }
+                                        ?>
+<!--                                        <td>-->
+<!--                                            <a href="--><?php //echo BASE_URL.'reserve-book/delete-reservation.php?'.$row['guid'] ?><!--" class="btn btn-danger btn-sm">Delete</a>-->
+<!--                                        </td>-->
                                     </tr>
                                     <?php
                                         }
@@ -69,4 +80,4 @@ include_once("../include/sidebar.php");
 </main>
 <!--main content end-->
 
-<?php include_once("../include/footer.php") ?>
+<?php include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/include/footer.php") ?>

@@ -1,6 +1,6 @@
 <?php
-include_once("../config/config.php");
-include_once("../config/utility.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/config/config.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/config/utility.php");
 // Handle new subscription creation
 if (isset($_POST['submit-membership']) ){
     $member_id = intval($_POST['member_id']);

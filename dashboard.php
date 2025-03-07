@@ -1,35 +1,25 @@
 <?php
-include_once("config/config.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/config/config.php");
 
 if (!isset($_SESSION['user_email'])) {
     header('Location: index.php');
-    exit();
 }
-
-include_once("config/utility.php");
-include_once("include/header.php");
-include_once("include/topbar.php");
-include_once("include/sidebar.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/include/header.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/include/topbar.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/include/sidebar.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/models/book.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/models/users.php");
 
 // Fetch total books
-$total_books_query = "SELECT COUNT(*) AS count FROM books";
-$total_books_result = mysqli_query($conn, $total_books_query);
-$total_books = mysqli_fetch_assoc($total_books_result)['count'];
+$total_books = getTotalBooks($conn);
 
 // Fetch total active members
-$total_members_query = "SELECT COUNT(*) AS count FROM users WHERE is_active = 1";
-$total_members_result = mysqli_query($conn, $total_members_query);
-$total_members = mysqli_fetch_assoc($total_members_result)['count'];
 
-// Fetch total books borrowed
-$total_borrowed_query = "SELECT COUNT(*) AS count FROM borrowed_books WHERE status = 'Borrowed'";
-$total_borrowed_result = mysqli_query($conn, $total_borrowed_query);
-$total_borrowed = mysqli_fetch_assoc($total_borrowed_result)['count'];
+$total_members = getActiveMembers($conn);
+$total_borrowed = getTotalBorrowedBooks($conn);
 
 // Fetch total overdue books
-$total_overdue_query = "SELECT COUNT(*) AS count FROM borrowed_books WHERE due_date < CURDATE() AND status = 'Borrowed'";
-$total_overdue_result = mysqli_query($conn, $total_overdue_query);
-$total_overdue = mysqli_fetch_assoc($total_overdue_result)['count'];
+$total_overdue = getTotalOverdueBooks($conn);
 ?>
 
 <!-- Main Content Start -->
@@ -124,7 +114,10 @@ $total_overdue = mysqli_fetch_assoc($total_overdue_result)['count'];
                             </thead>
                             <tbody>
                                 <?php
-                                $new_members_query = "SELECT id, name, email, created_at, is_active FROM users ORDER BY created_at DESC LIMIT 5";
+                                $new_members_query = "SELECT id, name, email, created_at,is_blocked 
+                                FROM users 
+                                where is_default=0
+                                ORDER BY created_at DESC LIMIT 5";
                                 $new_members_result = mysqli_query($conn, $new_members_query);
                                 while ($member = mysqli_fetch_assoc($new_members_result)) {
                                     echo "<tr>
@@ -132,7 +125,7 @@ $total_overdue = mysqli_fetch_assoc($total_overdue_result)['count'];
                                         <td>{$member['name']}</td>
                                         <td>{$member['email']}</td>
                                         <td>{$member['created_at']}</td>
-                                        <td><span class='badge " . ($member['is_active'] ? "text-bg-success" : "text-bg-secondary") . "'>" . ($member['is_active'] ? "Active" : "Default") . "</span></td>
+                                        <td><span class='badge " . ($member['is_blocked'] ? "text-bg-secondary" : "text-bg-success") . "'>" . ($member['is_blocked'] ? "Blocked" : "Active") . "</span></td>
                                     </tr>";
                                 }
                                 ?>
@@ -144,6 +137,6 @@ $total_overdue = mysqli_fetch_assoc($total_overdue_result)['count'];
         </div>
     </div>
 </main>
-<?php include_once("include/footer.php"); ?>
+<?php include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/include/footer.php"); ?>
 
 

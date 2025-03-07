@@ -1,7 +1,7 @@
 <?php
 //include_once("../../config/database.php");
-include_once("../../models/users.php");
-include_once("../../config/config.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/models/users.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/config/config.php");
 
 // Member
 if (isset($_POST['update'])) {
@@ -15,9 +15,9 @@ if (isset($_POST['update'])) {
     }
 }
 
-include_once("../../include/header.php");
-include_once("../../include/topbar.php");
-include_once("../../include/sidebar.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/include/header.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/include/topbar.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/include/sidebar.php");
 
 $memberName = '';
 $email = '';
@@ -128,4 +128,4 @@ if ($member->num_rows > 0) {
 </main>
 <!--main content end-->
 
-<?php include_once("../../include/footer.php"); ?>
+<?php include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/include/footer.php"); ?>

@@ -1,5 +1,5 @@
 <?php
-include_once("../config/utility.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/config/utility.php");
 
 // Store member
 function writeReviewToBook($conn, $param)

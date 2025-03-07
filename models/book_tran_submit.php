@@ -1,5 +1,5 @@
 <?php
-include_once("../config/config.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/config/config.php");
 
 if(isset($_POST)){
     $copyId= $_POST['bookNo'];
@@ -135,7 +135,7 @@ function borrowBook($copyId, $membershipNo, $currentDate, $conn) {
 
     // Check if all copies of this book_guid are reserved on the borrowing date
     $query = "SELECT COUNT(*) AS reserved_count 
-              FROM book_reservations 
+              FROM book_reservation 
               WHERE book_guid = ? AND reservation_date = ?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("ss", $bookGuid, $currentDate);

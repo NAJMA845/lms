@@ -1,8 +1,8 @@
 <?php
 
 
-include_once("../config/config.php");
-include_once("../config/database.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/config/config.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/config/database.php");
 
 if (!isset($_SESSION['user_email'])) {
     header('Location: index.php');

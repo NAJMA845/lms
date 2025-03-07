@@ -1,5 +1,5 @@
 <?php
-include_once("../config/config.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/config/config.php");
 
 if(isset($_POST['bookNo']) && isset($_POST['check'])){
     $copyId=$_POST['bookNo'];
@@ -27,5 +27,51 @@ if(isset($_POST['bookNo']) && isset($_POST['check'])){
     }
     $stmt->close();
     $conn->close();
+}
+
+function getBookTran($conn,$user_id=null)
+{
+    if($user_id == null)
+        $sql = "SELECT 
+        copy_id, 
+        title,
+        member_id,
+        borrowed_date,
+        IFNULL(returned_date, '') AS returned_date,
+        CASE 
+            WHEN returned_date IS NOT NULL THEN 'Returned' 
+            WHEN returned_date IS NULL AND DATEDIFF(CURDATE(), borrowed_date) <= 14 THEN 'Borrowed'
+            WHEN returned_date IS NULL AND DATEDIFF(CURDATE(), borrowed_date) > 14 THEN 'Overdue'
+        END AS STATUS
+        FROM 
+            book_tran bt 
+        left JOIN 
+            book_copies bc ON bt.copy_id = bc.copy_no 
+        left JOIN 
+            books bk ON bc.book_guid = bk.guid
+        order by borrowed_date desc";
+    else
+        $sql = "SELECT 
+        copy_id, 
+        title,
+        member_id,
+        borrowed_date,
+         IFNULL(returned_date, '') AS returned_date,
+        CASE 
+            WHEN returned_date IS NOT NULL THEN 'Returned' 
+            WHEN returned_date IS NULL AND DATEDIFF(CURDATE(), borrowed_date) <= 14 THEN 'Borrowed'
+            WHEN returned_date IS NULL AND DATEDIFF(CURDATE(), borrowed_date) > 14 THEN 'Overdue'
+        END AS STATUS
+        FROM 
+            book_tran bt 
+        left JOIN 
+            book_copies bc ON bt.copy_id = bc.copy_no 
+        left JOIN 
+            books bk ON bc.book_guid = bk.guid
+        where member_id='$user_id'
+        order by borrowed_date desc";
+
+    $result = $conn->query($sql);
+    return $result;
 }
 ?>

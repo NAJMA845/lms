@@ -1,5 +1,5 @@
 <?php
-include_once("config/config.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/config/config.php");
 
 // Check connection
 if ($conn->connect_error) {
@@ -23,7 +23,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['user_email'] = $user['email'];
         $_SESSION['user_type'] = $user['is_admin'];
         $_SESSION['id'] = $user['id'];
-        header('Location: dashboard.php');
+        $_SESSION['active_status'] = $user['is_blocked'];
+        if( $_SESSION['user_type']=="1")
+            header('Location: dashboard.php');
+        else
+            header('Location: user-dashboard.php');
         exit();
     } else {
         $_SESSION['error'] = "Invalid email or password.";

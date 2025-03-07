@@ -1,7 +1,7 @@
 <?php
-include_once("../../config/config.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/config/config.php");
 //include_once("../../config/database.php");
-include_once("../../models/book.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/models/book.php");
 
 
 //-----------------------Book edit POST---------------------------//
@@ -16,9 +16,9 @@ if (isset($_POST['publish'])) {
     }
 }
 //---------------------------------------------------------------//
-include_once("../../include/header.php");
-include_once("../../include/topbar.php");
-include_once("../../include/sidebar.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/include/header.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/include/topbar.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/include/sidebar.php");
 
 $bookName='';
 $isbn='';
@@ -166,8 +166,7 @@ $book_copies = getBookCopiesByGUID($conn,$guid);
                                     </table>
 
                                 </div>
-                                                    
-                        
+
                                                 <div class="col-md-12">
                                                     <button name="publish" type="submit" class="btn btn-success">
                                                         Publish
@@ -182,6 +181,6 @@ $book_copies = getBookCopiesByGUID($conn,$guid);
         <!--main content end-->
 
 <?php
-include_once("../../include/footer.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/include/footer.php");
 ?>
 

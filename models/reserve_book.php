@@ -1,5 +1,5 @@
 <?php
-include_once("../config/utility.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/config/utility.php");
 
 //store book
 function storeReserveBook($conn, $param)
@@ -102,7 +102,7 @@ function storeReserveBook($conn, $param)
 //get all books
 function getAllReservations($conn)
 {
-    $sql = "SELECT br.guid,b.title,b.isbn,b.author,reservation_date 
+    $sql = "SELECT br.guid,b.title,b.isbn,b.author,reservation_date,br.member_id
             FROM book_reservation br JOIN books b
             ON br.book_guid=b.guid 
             ORDER BY reservation_date";

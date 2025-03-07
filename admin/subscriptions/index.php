@@ -1,10 +1,10 @@
 <?php
-include_once("../../config/config.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/config/config.php");
 //include_once("../../config/database.php");
-include_once("../../config/utility.php");
-include_once("../../include/header.php");
-include_once("../../include/topbar.php");
-include_once("../../include/sidebar.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/config/utility.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/include/header.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/include/topbar.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/include/sidebar.php");
 
 // Initialize variables
 $message = '';
@@ -182,4 +182,4 @@ $result = $conn->query($sql);
     <?php endif; ?>
 </script>
 
-<?php include_once("../../include/footer.php"); ?>
+<?php include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/include/footer.php"); ?>

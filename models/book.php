@@ -1,5 +1,5 @@
 <?php
-include_once("../../config/utility.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/config/utility.php");
 
 //store book
 function storeBook($conn, $param)
@@ -184,4 +184,57 @@ function isIsbnUnique($conn, $isbn, $id = NULL)
     if ($result->num_rows > 1)
         return true;
     else return false;
+}
+
+function getTotalBooks($conn)
+{
+    $sql = "SELECT COUNT(*) AS total_books FROM books";
+    $result = $conn->query($sql);
+
+    if ($result) {
+        $row = $result->fetch_assoc();
+        return $row['total_books'];
+    }
+    //If result has issue, return 0
+    return 0;
+}
+
+//Get total borrowed books if member_id not supplied, otherwise it will get memberwise
+function getTotalBorrowedBooks($conn,$user_id=null)
+{
+    if($user_id == null)
+        $sql = "SELECT COUNT(*) AS total_books FROM book_tran where returned_date is null";
+    else
+        $sql = "SELECT COUNT(*) AS total_books FROM book_tran where member_id='$user_id' and returned_date is null";
+
+    $result = $conn->query($sql);
+
+    if ($result) {
+        $row = $result->fetch_assoc();
+        return $row['total_books'];
+    }
+    //If result has issue, return 0
+    return 0;
+}
+
+function getTotalOverdueBooks($conn,$user_id=null)
+{
+    if($user_id == null)
+        $sql = "SELECT COUNT(*) AS overdue_books
+                FROM book_tran
+                WHERE returned_date IS NULL 
+                AND borrowed_date <= DATE_SUB(NOW(), INTERVAL 14 DAY)";
+    else
+        $sql = "SELECT COUNT(*) AS overdue_books
+                FROM book_tran
+                WHERE member_id='$user_id' and returned_date IS NULL 
+                AND borrowed_date <= DATE_SUB(NOW(), INTERVAL 14 DAY)";
+    $result = $conn->query($sql);
+
+    if ($result) {
+        $row = $result->fetch_assoc();
+        return $row['overdue_books'];
+    }
+    //If result has issue, return 0
+    return 0;
 }

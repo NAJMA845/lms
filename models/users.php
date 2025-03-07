@@ -1,5 +1,5 @@
 <?php
-include_once("../../config/utility.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/config/utility.php");
 
 // Store member
 function storeUser($conn, $param)
@@ -84,5 +84,18 @@ function deleteUserByGUID($conn, $param)
     $sql = "DELETE FROM users WHERE guid = '$guid'";
     $result['success'] = $conn->query($sql);
     return $result;
+}
+
+function getActiveMembers($conn)
+{
+    $sql = "SELECT count(*) as active_members  FROM users WHERE is_member =1";
+    $result = $conn->query($sql);
+
+    if ($result) {
+        $row = $result->fetch_assoc();
+        return $row['active_members'];
+    }
+    //If result has issue, return 0
+    return 0;
 }
 ?>

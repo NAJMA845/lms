@@ -1,7 +1,7 @@
 <?php
-include_once("../config/config.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/config/config.php");
 //include_once("../config/database.php");
-include_once("../models/review_book.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/models/review_book.php");
 
 //$reviews = getReviews($conn);
 //if (!isset($reviews->num_rows)) {
@@ -10,9 +10,9 @@ include_once("../models/review_book.php");
 $limit = isset($_GET['limit']) ? intval($_GET['limit']) : 100;
 $offset = isset($_GET['offset']) ? intval($_GET['offset']) : 0;
 
-include_once("../include/header.php");
-include_once("../include/topbar.php");
-include_once("../include/sidebar.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/include/header.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/include/topbar.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/include/sidebar.php");
 ?>
 
 <!--main content start-->
@@ -154,4 +154,4 @@ include_once("../include/sidebar.php");
     loadReviews();
 </script>
 
-<?php include_once("../include/footer.php") ?>
+<?php include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/include/footer.php") ?>

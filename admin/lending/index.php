@@ -1,8 +1,13 @@
 <?php 
-include_once("../../config/config.php");
-include_once("../../include/header.php");
-include_once("../../include/topbar.php");
-include_once("../../include/sidebar.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/config/config.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/models/book_tran.php");
+$book_trans = getBookTran($conn);
+if (!isset($book_trans->num_rows)) {
+    $_SESSION['error'] = "Error: " . $conn->error;
+}
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/include/header.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/include/topbar.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/include/sidebar.php");
 ?>
 
 <!--Main content start-->
@@ -32,44 +37,39 @@ include_once("../../include/sidebar.php");
                                         <th scope="col">Loan Date</th>
                                         <th scope="col">Return Date</th>
                                         <th scope="col">Status</th>
-                                        <th scope="col">Created At</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <!-- Replace with dynamic rows as needed -->
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>Copy ID 1</td>
-                                        <td>Book Title 1</td>
-                                        <td>5056</td>
-                                        <td>01-01-2024</td>
-                                        <td>01-02-2024</td>
-                                        <td><span class="badge text-bg-danger">Overdue</span></td>
-                                        <td>01-01-2024 10:00 AM</td>
-                                    </tr>
+                                <?php
+                                if ($book_trans->num_rows > 0) {
+                                    $i = 1;
+                                    while ($row = $book_trans->fetch_assoc()) {
+                                        ?>
+                                        <tr>
+                                            <th scope="row"><?php echo $i++ ?></th>
+                                            <td><?php echo $row['copy_id'] ?></td>
+                                            <td><?php echo $row['title'] ?></td>
+                                            <td><?php echo $row['member_id'] ?></td>
+                                            <td><?php echo $row['borrowed_date'] ?></td>
+                                            <td><?php echo $row['returned_date'] ?></td>
+                                            <?php
+                                            if($row['STATUS']=="Borrowed"){
+                                                echo '<td class="text-bg-info">Borrowed</td>';
+                                            }else if (($row['STATUS']=="Returned")){
+                                                echo '<td class="text-bg-success">Returned</td>';
+                                            }
+                                            else{
+                                                echo '<td class="text-bg-danger">Overdue</td>';
+                                            }
+                                            ?>
 
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>Copy ID 2</td>
-                                        <td>Book Title 1</td>
-                                        <td>0241</td>
-                                        <td>02-01-2024</td>
-                                        <td>01-02-2024</td>
-                                        <td><span class="badge text-bg-success">Returned</span></td>
-                                        <td>02-01-2024 11:00 AM</td>
-                                    </tr>
-
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>Copy ID 1</td>
-                                        <td>Book Title 2</td>
-                                        <td>7926</td>
-                                        <td>02-01-2024</td>
-                                        <td>02-02-2024</td>
-                                        <td><span class="badge text-bg-success">Returned</span></td>
-                                        <td>02-01-2024 02:00 PM</td>
-                                    </tr>
-                                    <!-- Add more rows as needed -->
+                                        </tr>
+                                        <?php
+                                    }
+                                } else {
+                                    echo "<tr><td colspan='6'>No transaction found.</td></tr>";
+                                }
+                                ?>
                                 </tbody>
                             </table>
                         </div>
@@ -81,7 +81,7 @@ include_once("../../include/sidebar.php");
 </main>
 <!--Main content end-->
 
-<?php include_once("../../include/footer.php")?>
+<?php include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/include/footer.php")?>
 
 
 
