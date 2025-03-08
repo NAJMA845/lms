@@ -133,12 +133,12 @@ function borrowBook($copyId, $membershipNo, $currentDate, $conn) {
         return;
     }
 
-    // Check if all copies of this book_guid are reserved on the borrowing date
+    // Check if all copies of this book_guid are reserved on the borrowing date, except for the member
     $query = "SELECT COUNT(*) AS reserved_count 
               FROM book_reservation 
-              WHERE book_guid = ? AND reservation_date = ?";
+              WHERE book_guid = ? AND reservation_date = ? AND member_id!=?";
     $stmt = $conn->prepare($query);
-    $stmt->bind_param("ss", $bookGuid, $currentDate);
+    $stmt->bind_param("ssi", $bookGuid, $currentDate,$_SESSION['id']);
     $stmt->execute();
     $result = $stmt->get_result();
     $reservedCount = 0;
