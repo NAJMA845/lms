@@ -37,6 +37,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/include/sidebar.php");
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <span>Fill the form</span>
                     </div>
+
                     <div class="card-body">
                         <form method="post" action="<?php echo BASE_URL?>reserve-book/reserve-book.php">
                             <div class="row">

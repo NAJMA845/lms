@@ -30,6 +30,20 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/include/sidebar.php");
                     <div class="card-header">
                         All Books
                     </div>
+                    <div class="card">
+
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="isbn" class="form-label">Keyword</label>
+                                    <input type="text" id="isbn" class="form-control" placeholder="Enter Title or ISBN or Author or Category">
+                                </div>
+                                <div class="col-md-4 d-flex align-items-end">
+                                    <button id="search-btn" class="btn btn-primary w-100">Search</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <table id="data-table" class="table table-responsive table-striped" style="width:100%">
@@ -104,10 +118,18 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/include/sidebar.php");
 
     // Function to fetch and append books
     function loadBooks() {
+
+        let url=''
         if (loading) return;
         loading = true;
-
-        fetch(`../../models/load_books.php?limit=${limit}&offset=${offset}`)
+        // if( keyword=='')
+        //     url=`../../models/load_books.php?limit=${limit}&offset=${offset}`
+        // else{
+        //
+        // }
+        let isbn = document.querySelector("#isbn").value.trim();
+        url=`../../models/load_books.php?limit=${limit}&offset=${offset}&keyword=${isbn}`
+        fetch(url)
             .then((response) => response.json())
             .then((data) => {
                 if (data.length > 0) {
@@ -141,6 +163,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/include/sidebar.php");
 
                     offset += limit; // Update the offset for the next load
                     loading = false; // Allow new requests
+
                 } else {
                     // No more data to load
                     loading = false;
@@ -152,8 +175,17 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/include/sidebar.php");
             });
     }
 
+    function loadBooksByFilter(){
+        const tbody = document.querySelector("#data-table tbody");
+
+        // Clear previous results before fetching new ones
+        tbody.innerHTML = "";
+        loadBooks();
+    }
     //loads per click
     document.querySelector("#load-more-btn").addEventListener("click", loadBooks);
+
+    document.querySelector("#search-btn").addEventListener("click", loadBooksByFilter);
     //Loading without controll, so I commented it out
     // window.addEventListener("scroll", () => {
     //     //Measures the bototm of the page

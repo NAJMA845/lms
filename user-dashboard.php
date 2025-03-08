@@ -8,6 +8,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/include/sidebar.php");
 include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/models/book.php");
 include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/models/book_tran.php");
 include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/models/users.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/models/fines.php");
 
 $total_borrowed = getTotalBorrowedBooks($conn,$_SESSION['id']);
 $total_overdue = getTotalOverdueBooks($conn,$_SESSION['id']);
@@ -18,6 +19,7 @@ else
 
 
 $book_trans = getBookTranByLimit($conn,$_SESSION['id']);
+$total_fines = getTotalFineByUser($conn,$_SESSION['id']);
 if (!isset($book_trans->num_rows)) {
     $_SESSION['error'] = "Error: " . $conn->error;
 }
@@ -63,7 +65,7 @@ if (!isset($book_trans->num_rows)) {
                 <div class="card">
                     <div class="card-body text-center">
                         <h6 class="card-title text-uppercase">Total Fines</h6>
-                        <h1>Rs. 300</h1>
+                        <h1>Rs. <?php echo $total_fines;  ?></h1>
 <!--                        <a href="#" class="card-link link-underline-light text-center">Pay Now</a>-->
                     </div>
                 </div>

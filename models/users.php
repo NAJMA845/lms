@@ -64,9 +64,12 @@ function updateUserByGUID($conn, $param)
 }
 
 // Get all users
-function getUsers($conn)
+function getUsers($conn,$keyword)
 {
-    $sql = "SELECT * FROM users where is_default=0 ORDER BY id DESC";
+    if($keyword=='')
+        $sql = "SELECT * FROM users where is_default=0 ORDER BY id DESC";
+    else
+        $sql = "SELECT * FROM users where (name like '%$keyword%' or email like '%$keyword%' or phone_no like '%$keyword%' or nic_no like '%$keyword%') and is_default=0 ORDER BY id DESC";
     return $conn->query($sql);
 }
 

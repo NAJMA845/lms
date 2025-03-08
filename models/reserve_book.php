@@ -110,13 +110,21 @@ function getAllReservations($conn)
     return $result;
 }
 
-function getAllReservationsBylimit($conn)
+function getAllReservationsBylimit($conn,$keyword)
 {
-    $sql = "SELECT br.guid,b.title,b.isbn,b.author,reservation_date,br.member_id
-            FROM book_reservation br JOIN books b
-            ON br.book_guid=b.guid 
-            ORDER BY reservation_date
-            limit 100";
+    if($keyword=='')
+        $sql = "SELECT br.guid,b.title,b.isbn,b.author,reservation_date,br.member_id
+                FROM book_reservation br JOIN books b
+                ON br.book_guid=b.guid 
+                ORDER BY reservation_date
+                limit 100";
+    else
+        $sql = "SELECT br.guid,b.title,b.isbn,b.author,reservation_date,br.member_id
+                FROM book_reservation br JOIN books b
+                ON br.book_guid=b.guid 
+                where reservation_date='$keyword'
+                ORDER BY reservation_date
+                limit 100";
     $result = $conn->query($sql);
     return $result;
 }

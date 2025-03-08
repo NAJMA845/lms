@@ -2,7 +2,8 @@
 include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/config/config.php");
 include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/models/reserve_book.php");
 
-$reservations = getAllReservationsBylimit($conn);
+$keyword=isset($_GET['date'])?$_GET['date']:'';
+$reservations = getAllReservationsBylimit($conn,$keyword);
 if (!isset($reservations->num_rows)) {
     $_SESSION['error'] = "Error: " . $conn->error;
 }
@@ -22,6 +23,22 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/include/sidebar.php");
                 <div class="card">
                     <div class="card-header">
                         All Reservations
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <form method="get" action="">
+                                    <div class="col-md-4">
+                                        <label for="date" class="form-label">Date</label>
+                                        <input type="date" name="date" class="form-control">
+                                    </div>
+                                    <div class="col-md-4 d-flex align-items-end">
+                                        <button id="search-btn" class="btn btn-primary w-100">Search</button>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
