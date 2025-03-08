@@ -6,7 +6,6 @@ function storeUser($conn, $param)
 {
     $guid = generateGUID();
     extract($param);
-
     // Validation start
     if (empty($name)) {
         return array("error" => "Name is required");
@@ -23,8 +22,8 @@ function storeUser($conn, $param)
 
     $datetime = date("Y-m-d H:i:s");
     $pwd=md5($nic_no);
-    $sql = "INSERT INTO users (guid, name, nic_no, password, email, phone_no, address,is_admin,is_blocked, created_at)
-            VALUES ('$guid', '$name','$nic_no','$pwd', '$email', '$phone_no', '$address','$is_admin','$is_blocked', '$datetime')";
+    $sql = "INSERT INTO users (guid, name, nic_no, password, email, phone_no, address,is_member,is_admin,is_blocked, created_at)
+            VALUES ('$guid', '$name','$nic_no','$pwd', '$email', '$phone_no', '$address','$is_member','$is_admin','$is_blocked', '$datetime')";
     $result['success'] = $conn->query($sql);
     return $result;
 }
@@ -55,6 +54,7 @@ function updateUserByGUID($conn, $param)
                 phone_no = '$phone_no', 
                 address = '$address',
                 nic_no = '$nic_no',
+                is_member = '$is_member',
                 is_admin = '$is_admin',
                 is_blocked = '$is_blocked',
                 updated_at = '$datetime'
@@ -88,7 +88,7 @@ function deleteUserByGUID($conn, $param)
 
 function getActiveMembers($conn)
 {
-    $sql = "SELECT count(*) as active_members  FROM users WHERE is_member =1";
+    $sql = "SELECT count(*) as active_members  FROM users WHERE is_member =1 and subscription_active=1";
     $result = $conn->query($sql);
 
     if ($result) {

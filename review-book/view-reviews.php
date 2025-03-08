@@ -28,6 +28,33 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/include/sidebar.php");
                     <div class="card-header">
                         All Reviews
                     </div>
+
+                    <div class="card">
+
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="isbn" class="form-label">ISBN</label>
+                                    <input type="text" id="isbn" class="form-control" placeholder="Enter ISBN">
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="rating" class="form-label">Star Rating</label>
+                                    <select id="rating" class="form-select">
+                                        <option value="">All</option>
+                                        <option value="1">1 Star</option>
+                                        <option value="2">2 Stars</option>
+                                        <option value="3">3 Stars</option>
+                                        <option value="4">4 Stars</option>
+                                        <option value="5">5 Stars</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4 d-flex align-items-end">
+                                    <button id="search-btn" class="btn btn-primary w-100">Search</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="card-body">
                         <div class="table-responsive">
                             <table id="data-table" class="table table-responsive table-striped" style="width:100%">
@@ -138,8 +165,65 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/include/sidebar.php");
             });
     }
 
+    function loadReviewsByFilter() {
+        if (loading) return;
+        loading = true;
+
+        const isbn = document.querySelector("#isbn").value.trim();
+        const rating = document.querySelector("#rating").value;
+        const tbody = document.querySelector("#data-table tbody");
+
+        // Clear previous results before fetching new ones
+        tbody.innerHTML = "";
+        offset = 0; // Reset offset for new search
+        fetch(`../models/load_reviews_search.php?limit=${limit}&offset=${offset}&isbn=${isbn}&rating=${rating}`)
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.length > 0) {
+                    const tbody = document.querySelector("#data-table tbody");
+
+                    data.forEach((review, index) => {
+                        let ratingStars = '';
+                        let filledStars = review.rating; // The number of filled stars
+                        let emptyStars = 5 - review.rating; // The remaining empty stars
+
+                        // Generate the filled stars
+                        for (let i = 0; i < filledStars; i++) {
+                            ratingStars += '⭐';
+                        }
+
+                        // Generate the empty stars
+                        for (let i = 0; i < emptyStars; i++) {
+                            ratingStars += '☆';
+                        }
+                        const row = `
+                            <tr>
+                                <th scope="row">${offset + index + 1}</th>
+                                <td>${review.isbn}</td>
+                                <td>${ratingStars}</td>
+                                <td>${review.review}</td>
+                            </tr>
+                        `;
+                        tbody.innerHTML += row;
+                    });
+
+                    offset += limit; // Update the offset for the next load
+                    loading = false; // Allow new requests
+                } else {
+                    // No more data to load
+                    loading = false;
+                }
+            })
+            .catch((error) => {
+                console.error("Error loading books:", error);
+                loading = false;
+            });
+    }
+
     //loads per click
     document.querySelector("#load-more-btn").addEventListener("click", loadReviews);
+    //Search
+    document.querySelector("#search-btn").addEventListener("click", loadReviewsByFilter);
     //Loading without controll, so I commented it out
     // window.addEventListener("scroll", () => {
     //     //Measures the bototm of the page

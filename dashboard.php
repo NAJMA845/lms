@@ -8,6 +8,7 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/include/header.php");
 include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/include/topbar.php");
 include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/include/sidebar.php");
 include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/models/book.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/models/book_tran.php");
 include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/models/users.php");
 
 // Fetch total books
@@ -20,6 +21,7 @@ $total_borrowed = getTotalBorrowedBooks($conn);
 
 // Fetch total overdue books
 $total_overdue = getTotalOverdueBooks($conn);
+$book_trans=getBookTranByLimit($conn);
 ?>
 
 <!-- Main Content Start -->
@@ -36,7 +38,7 @@ $total_overdue = getTotalOverdueBooks($conn);
                     <div class="card-body text-center">
                         <h6 class="card-title text-uppercase">Total Books</h6>
                         <h1><?php echo $total_books; ?></h1>
-                        <a href="books.php" class="card-link link-underline-light text-center">View More</a>
+                        <a href="<?php echo ADMIN_BASE_URL ?>books/index.php" class="card-link link-underline-light text-center">View More</a>
                     </div>
                 </div>
             </div>
@@ -45,7 +47,7 @@ $total_overdue = getTotalOverdueBooks($conn);
                     <div class="card-body text-center">
                         <h6 class="card-title text-uppercase">Total Active Members</h6>
                         <h1><?php echo $total_members; ?></h1>
-                        <a href="members.php" class="card-link link-underline-light text-center">View More</a>
+                        <a href="<?php echo ADMIN_BASE_URL ?>users/index.php" class="card-link link-underline-light text-center">View More</a>
                     </div>
                 </div>
             </div>
@@ -54,7 +56,7 @@ $total_overdue = getTotalOverdueBooks($conn);
                     <div class="card-body text-center">
                         <h6 class="card-title text-uppercase">Total Books Borrowed</h6>
                         <h1><?php echo $total_borrowed; ?></h1>
-                        <a href="borrowed_books.php" class="card-link link-underline-light text-center">View More</a>
+                        <a href="<?php echo ADMIN_BASE_URL ?>lending/index.php?filter=borrowed" class="card-link link-underline-light text-center">View More</a>
                     </div>
                 </div>
             </div>
@@ -63,7 +65,7 @@ $total_overdue = getTotalOverdueBooks($conn);
                     <div class="card-body text-center">
                         <h6 class="card-title text-uppercase">Overdue Books</h6>
                         <h1><?php echo $total_overdue; ?></h1>
-                        <a href="overdue_books.php" class="card-link link-underline-light text-center">View More</a>
+                        <a href="<?php echo ADMIN_BASE_URL ?>lending/index.php?filter=overdue" class="card-link link-underline-light text-center">View More</a>
                     </div>
                 </div>
             </div>
@@ -84,14 +86,14 @@ $total_overdue = getTotalOverdueBooks($conn);
                             aria-selected="true">New Members</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link text-uppercase" 
-                            id="recent-loans-tab" 
-                            data-bs-toggle="tab" 
-                            data-bs-target="#recent-loans-tab-pane" 
-                            type="button" 
-                            role="tab" 
-                            aria-controls="recent-loans-tab-pane" 
-                            aria-selected="false">Recent Lendings</button>
+                        <button class="nav-link text-uppercase"
+                                id="recent-subs-tab"
+                                data-bs-toggle="tab"
+                                data-bs-target="#recent-subs-tab-pane"
+                                type="button"
+                                role="tab"
+                                aria-controls="recent-loans-tab-pane"
+                                aria-selected="false">Recent Lendings</button>
                     </li>
                 </ul>
 
@@ -129,6 +131,55 @@ $total_overdue = getTotalOverdueBooks($conn);
                                     </tr>";
                                 }
                                 ?>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- New lending Content -->
+                    <div class="tab-pane fade"
+                         id="recent-subs-tab-pane"
+                         role="tabpanel"
+                         aria-labelledby="recent-subs-tab">
+                        <table class="table">
+                            <thead class="table-dark">
+                            <th scope="col">#</th>
+                            <th scope="col">Copy ID</th>
+                            <th scope="col">Book Name</th>
+                            <th scope="col">Membership Number</th>
+                            <th scope="col">Loan Date</th>
+                            <th scope="col">Return Date</th>
+                            <th scope="col">Status</th>
+                            </thead>
+                            <tbody>
+                            <?php
+                            if ($book_trans->num_rows > 0) {
+                                $i = 1;
+                                while ($row = $book_trans->fetch_assoc()) {
+                                    ?>
+                                    <tr>
+                                        <th scope="row"><?php echo $i++ ?></th>
+                                        <td><?php echo $row['copy_id'] ?></td>
+                                        <td><?php echo $row['title'] ?></td>
+                                        <td><?php echo $row['member_id'] ?></td>
+                                        <td><?php echo $row['borrowed_date'] ?></td>
+                                        <td><?php echo $row['returned_date'] ?></td>
+                                        <?php
+                                        if($row['STATUS']=="Borrowed"){
+                                            echo '<td class="text-bg-info">Borrowed</td>';
+                                        }else if (($row['STATUS']=="Returned")){
+                                            echo '<td class="text-bg-success">Returned</td>';
+                                        }
+                                        else{
+                                            echo '<td class="text-bg-danger">Overdue</td>';
+                                        }
+                                        ?>
+
+                                    </tr>
+                                    <?php
+                                }
+                            } else {
+                                echo "<tr><td colspan='6'>No transaction found.</td></tr>";
+                            }
+                            ?>
                             </tbody>
                         </table>
                     </div>

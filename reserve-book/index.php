@@ -2,7 +2,7 @@
 include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/config/config.php");
 include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/models/reserve_book.php");
 
-$reservations = getAllReservations($conn);
+$reservations = getAllReservationsBylimit($conn);
 if (!isset($reservations->num_rows)) {
     $_SESSION['error'] = "Error: " . $conn->error;
 }

@@ -1,7 +1,13 @@
 <?php 
 include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/config/config.php");
 include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/models/book_tran.php");
-$book_trans = getBookTran($conn);
+if(isset($_GET['filter'])){
+    $book_trans = getBookTranByFilter($conn,$_GET['filter']);
+}
+else{
+    $book_trans = getBookTranByLimit($conn);
+}
+
 if (!isset($book_trans->num_rows)) {
     $_SESSION['error'] = "Error: " . $conn->error;
 }

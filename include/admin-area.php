@@ -169,10 +169,10 @@
                                     </div>
                                 </div>
                             </li>
-                            <a class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="<?php echo ADMIN_BASE_URL ?>reports/index.php">
-                                    <i class="fa-solid fa-file-contract me-2"></i>  Reports </a>
-                            </a>
+<!--                            <a class="nav-item">-->
+<!--                                <a class="nav-link active" aria-current="page" href="--><?php //echo ADMIN_BASE_URL ?><!--reports/index.php">-->
+<!--                                    <i class="fa-solid fa-file-contract me-2"></i>  Reports </a>-->
+<!--                            </a>-->
                             <li class="nav-item my-0">
                                 <hr/>
                             </li>
