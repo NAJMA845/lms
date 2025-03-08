@@ -115,18 +115,25 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/include/sidebar.php");
     let limit = 100; // Number of books to load per request
     let offset = 0; // Starting point
     let loading = false; // Prevent multiple simultaneous requests
+    const isbnInput = document.getElementById("isbn");
+    const loadMoreBtn = document.getElementById("load-more-btn");
 
+    isbnInput.addEventListener("input", toggleButton);
+
+    function toggleButton() {
+        if (isbnInput.value.trim() !== "") {
+            document.getElementById("load-more-btn").disabled = true;
+        } else {
+            document.getElementById("load-more-btn").disabled = false;
+        }
+    }
     // Function to fetch and append books
     function loadBooks() {
 
         let url=''
         if (loading) return;
         loading = true;
-        // if( keyword=='')
-        //     url=`../../models/load_books.php?limit=${limit}&offset=${offset}`
-        // else{
-        //
-        // }
+
         let isbn = document.querySelector("#isbn").value.trim();
         url=`../../models/load_books.php?limit=${limit}&offset=${offset}&keyword=${isbn}`
         fetch(url)
@@ -176,8 +183,10 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/include/sidebar.php");
     }
 
     function loadBooksByFilter(){
+        const isbn = document.querySelector("#isbn").value.trim();
         const tbody = document.querySelector("#data-table tbody");
 
+        if (isbn=='') return;
         // Clear previous results before fetching new ones
         tbody.innerHTML = "";
         loadBooks();

@@ -43,8 +43,8 @@ function storeBook($conn, $param)
     ## Validation end
 
     $datetime = date("Y-m-d H:i:s");
-    $sql = "INSERT INTO books (guid,title, author, publication_year, isbn, category_id, created_at,pdf_url)
-        VALUES ('$guid','$title', '$author', '$publication_year', '$isbn', $category_id, '$datetime','$pdf_name')";
+    $sql = "INSERT INTO books (guid,title, author, publication_year, isbn, category_id, created_at,pdf_url,status)
+        VALUES ('$guid','$title', '$author', '$publication_year', '$isbn', $category_id, '$datetime','$pdf_name','$is_available')";
         $result['success']=$conn->query($sql);
         $result['guid']=$guid;
 
@@ -122,6 +122,7 @@ function updateBookByGUID($conn, $param)
         publication_year='$publication_year', 
         isbn='$isbn', 
         category_id='$category_id', 
+        status='$is_available', 
         updated_at='$datetime'
     where guid='$guid'";
     }

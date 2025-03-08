@@ -97,6 +97,13 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/include/sidebar.php");
                                                             
                                                     </div>
                                                 </div>
+                                                <div class="col-md-6">
+                                                    <div class="mb-3 form-check">
+                                                        <input type="checkbox" name="is_available" id="is_available" class="form-check-input" value="">
+                                                        <label for="is_available" class="form-check-label">Is Available</label>
+                                                    </div>
+                                                </div>
+
                                                 <div class="col-md-12">
                                                     <div class="d-flex justify-content-between align-items-center">
                                                         <h5 class="mt-4">Book Copies</h5>

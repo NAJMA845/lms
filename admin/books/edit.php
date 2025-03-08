@@ -25,6 +25,7 @@ $isbn='';
 $author='';
 $publicationYear='';
 $category='';
+$isAvailable = 0;
 
 $guid=$_SERVER['QUERY_STRING'];
 $book = getBookByGUID($conn,$guid);
@@ -39,6 +40,7 @@ if ($book->num_rows > 0) {
         $author=$row['author'];
         $publicationYear=$row['publication_year'];
         $category= $row['category_id'];
+        $isAvailable = $row['status'];
     }
 }
 
@@ -108,6 +110,13 @@ $book_copies = getBookCopiesByGUID($conn,$guid);
                                                                 </option>
                                                             <?php } ?>
                                                         </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="mb-3 form-check">
+                                                        <input type="checkbox" name="is_available" id="is_available" class="form-check-input" value="1"
+                                                            <?php echo ($isAvailable == 1) ? 'checked' : ''; ?>>
+                                                        <label for="is_available" class="form-check-label">Is Available</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
