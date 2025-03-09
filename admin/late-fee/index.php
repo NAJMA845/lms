@@ -19,7 +19,7 @@ else
 $result = $conn->query($sql);
 ?>
 
-<!--main content start-->
+<!--main content start--------->
 <main class="mt-1 pt-3">
     <div class="container-fluid">
         <div class="row">
