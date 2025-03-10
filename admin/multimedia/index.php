@@ -14,8 +14,6 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/include/header.php");
 include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/include/topbar.php");
 include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/include/sidebar.php");
 ?>
-
-<?php include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/include/header.php"); ?>
 <main class="mt-1 pt-3">
     <div class="container-fluid">
         <h4 class="fw-bold text-uppercase">Multimedia Room Bookings</h4>
