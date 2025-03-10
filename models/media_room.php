@@ -1,88 +1,106 @@
 <?php
 include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/config/utility.php");
 
-//store book
+// Store booking
 function storeMultimedia($conn, $param)
 {
-    $guid=generateGUID();
+    $guid = generateGUID();
     extract($param);
-    ## Validation start
+
+    // Validation
     if (empty($nicNo)) {
-        $result = array("error" => "NIC No is required");
-        return $result;
-    } else if (empty($bookingDate)) {
-        $result = array("error" => "Booking date is required");
-        return $result;
-    } else if (empty($timeSlot)) {
-        $result = array("error" => "Timeslot is required");
-        return $result;
+        return array("error" => "NIC No is required");
     }
-    if(isBookingAlreadyExists($conn, $bookingDate, $timeSlot,''))
-    {
-        $result = array("error" => "Cannot book because the date and time are already booked by another person");
-        return $result;
+    if (empty($bookingDate)) {
+        return array("error" => "Booking date is required");
     }
-    else{
-        $datetime = date("Y-m-d H:i:s");
-        $sql = "INSERT INTO multimedia_booking (guid,nic_no,time_slot,booking_date)
-        VALUES ('$guid','$nicNo', '$timeSlot', '$bookingDate')";
-        $result['success']=$conn->query($sql);
-        return $result;
+    if (empty($timeSlot)) {
+        return array("error" => "Timeslot is required");
     }
+
+    // Check if the slot is already booked
+    if (isBookingAlreadyExists($conn, $bookingDate, $timeSlot, '')) {
+        return array("error" => "Cannot book because the date and time are already booked by another person");
+    }
+
+    // Insert booking
+    $sql = "INSERT INTO multimedia_booking (guid, nic_no, time_slot, booking_date) 
+            VALUES ('$guid', '$nicNo', '$timeSlot', '$bookingDate')";
+    $queryResult = $conn->query($sql);
+
+    return ($queryResult) ? array("success" => "Booking successful") : array("error" => "Failed to book");
 }
 
-//update book
+// Update booking
 function updateMultimediaByGUID($conn, $param)
 {
     extract($param);
 
-    if (empty($nicNo)) {
-        $result = array("error" => "NIC No is required");
-        return $result;
-    } else if (empty($BookingDate)) {
-        $result = array("error" => "Booking date is required");
-        return $result;
-    } else if (empty($timeSlot)) {
-        $result = array("error" => "Timeslot is required");
-        return $result;
+    // Validation
+    if (empty($guid)) {
+        return array("error" => "Booking ID is required");
     }
-    ## Validation end
-    $datetime = date("Y-m-d H:i:s");
-    $sql = "update multimedia_room 
-        set booking_date='$bookingDate',
-        nic_no='$nicNo', 
-        time_slot='$timeSlot', 
-    where guid='$guid'";
+    if (empty($nicNo)) {
+        return array("error" => "NIC No is required");
+    }
+    if (empty($bookingDate)) {
+        return array("error" => "Booking date is required");
+    }
+    if (empty($timeSlot)) {
+        return array("error" => "Timeslot is required");
+    }
 
-    $result['success'] = $conn->query($sql);
-    return $result;
+    // Check if the updated slot is already booked
+    if (isBookingAlreadyExists($conn, $bookingDate, $timeSlot, $guid)) {
+        return array("error" => "Cannot update because the date and time are already booked by another person");
+    }
+
+    // Update booking
+    $sql = "UPDATE multimedia_booking 
+            SET booking_date='$bookingDate', nic_no='$nicNo', time_slot='$timeSlot' 
+            WHERE guid='$guid'";
+
+    $queryResult = $conn->query($sql);
+    return ($queryResult) ? array("success" => "Booking updated successfully") : array("error" => "Failed to update booking");
 }
 
-//get all books
+// Delete booking
+function deleteMultimediaBooking($conn, $guid)
+{
+    if (empty($guid)) {
+        return array("error" => "Booking ID is required");
+    }
+
+    $sql = "DELETE FROM multimedia_booking WHERE guid='$guid'";
+    $queryResult = $conn->query($sql);
+
+    return ($queryResult) ? array("success" => "Booking deleted successfully") : array("error" => "Failed to delete booking");
+}
+
+// Get all bookings
 function getMultimediaBookings($conn)
 {
-    $sql = "select * from multimedia_booking order by booking_date";
-    $result = $conn->query($sql);
-    return $result;
+    $sql = "SELECT * FROM multimedia_booking ORDER BY booking_date";
+    return $conn->query($sql);
 }
-//get a book by GUID
-function getBookByGUID($conn,$guid)
-{
-    $sql = "select * from multimedia_booking where guid='$guid'";
-    $result = $conn->query($sql);
-    return $result;
-}
-function isBookingAlreadyExists($conn, $bookingDate, $timeSlot,$id)
-{
-    $sql = "select guid from multimedia_booking where booking_date = '$bookingDate' and time_slot='$timeSlot'";
 
-    if ($id!='') {
-        $sql .= " and guid != '$id'";
+// Get a booking by GUID
+function getBookByGUID($conn, $guid)
+{
+    $sql = "SELECT * FROM multimedia_booking WHERE guid='$guid'";
+    return $conn->query($sql);
+}
+
+// Check if a booking already exists
+function isBookingAlreadyExists($conn, $bookingDate, $timeSlot, $id)
+{
+    $sql = "SELECT guid FROM multimedia_booking WHERE booking_date = '$bookingDate' AND time_slot = '$timeSlot'";
+
+    if (!empty($id)) {
+        $sql .= " AND guid != '$id'";
     }
 
     $result = $conn->query($sql);
-    if ($result->num_rows > 1)
-        return true;
-
-    return false;
+    return ($result->num_rows > 0);
 }
+?>
