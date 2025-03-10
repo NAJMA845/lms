@@ -1,7 +1,7 @@
 <?php
 include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/config/utility.php");
 
-// Store booking
+// Store Multimedia
 function storeMultimedia($conn, $param)
 {
     $guid = generateGUID();
@@ -78,9 +78,15 @@ function deleteMultimediaBooking($conn, $guid)
 }
 
 // Get all bookings
-function getMultimediaBookings($conn)
+function getMultimediaBookings($conn,$keyword)
 {
-    $sql = "SELECT * FROM multimedia_booking ORDER BY booking_date";
+    if($keyword==''){
+        $sql = "SELECT * FROM multimedia_booking ORDER BY booking_date desc limit 100";
+    }
+    else{
+        $sql = "SELECT * FROM multimedia_booking where booking_date='$keyword' ORDER BY booking_date desc limit 100";
+    }
+
     return $conn->query($sql);
 }
 

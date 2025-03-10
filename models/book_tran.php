@@ -77,10 +77,9 @@ function getBookTran($conn,$user_id=null)
     return $result;
 }
 
-function getBookTranByLimit($conn,$user_id=null)
+function getBookTranByLimit($conn,$user_id='',$keyword='')
 {
-    if($user_id == null)
-        $sql = "SELECT 
+    $sql = "SELECT 
         copy_id, 
         title,
         member_id,
@@ -96,28 +95,16 @@ function getBookTranByLimit($conn,$user_id=null)
         left JOIN 
             book_copies bc ON bt.copy_id = bc.copy_no 
         left JOIN 
-            books bk ON bc.book_guid = bk.guid
-        order by borrowed_date desc
-        limit 100";
+            books bk ON bc.book_guid = bk.guid";
+    if($user_id == ''){
+        if($keyword!=''){
+            $sql .= " where borrowed_date='$keyword' or returned_date='$keyword' ";
+        }
+        $sql .= " order by borrowed_date desc limit 100";
+
+    }
     else
-        $sql = "SELECT 
-        copy_id, 
-        title,
-        member_id,
-        borrowed_date,
-         IFNULL(returned_date, '') AS returned_date,
-        CASE 
-            WHEN returned_date IS NOT NULL THEN 'Returned' 
-            WHEN returned_date IS NULL AND DATEDIFF(CURDATE(), borrowed_date) <= 14 THEN 'Borrowed'
-            WHEN returned_date IS NULL AND DATEDIFF(CURDATE(), borrowed_date) > 14 THEN 'Overdue'
-        END AS STATUS
-        FROM 
-            book_tran bt 
-        left JOIN 
-            book_copies bc ON bt.copy_id = bc.copy_no 
-        left JOIN 
-            books bk ON bc.book_guid = bk.guid
-        where member_id='$user_id'
+        $sql .= " where member_id='$user_id'
         order by borrowed_date desc 
         limit 100";
 
@@ -166,7 +153,7 @@ function getBookTranByFilter($conn,$filter)
             book_copies bc ON bt.copy_id = bc.copy_no 
         left JOIN 
             books bk ON bc.book_guid = bk.guid
-        having STATUS='Borrowed'
+        having STATUS='Borrowed' or STATUS='Overdue'
         order by borrowed_date desc
         limit 100";
 

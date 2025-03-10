@@ -41,8 +41,8 @@
                       <?php echo $_SESSION['user_email'] ?>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end">
-                      <li><a class="dropdown-item" href="#">My Profile</a></li>
-                      <li><a class="dropdown-item" href="#">Change Password</a></li>
+<!--                      <li><a class="dropdown-item" href="#">My Profile</a></li>-->
+                      <li><a class="dropdown-item" href="/lms/change-password.php">Change Password</a></li>
                       <li><hr class="dropdown-divider"></li>
                       <li><a class="dropdown-item"  href="javascript:void(0);" onclick="confirmLogout()">Log Out</a></li>
                     </ul>

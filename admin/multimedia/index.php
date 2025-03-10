@@ -2,8 +2,9 @@
 include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/config/config.php");
 include_once("../../models/media_room.php");
 
+$keyword=isset($_GET['date'])?$_GET['date']:'';
 // Fetch all bookings
-$bookings = getMultimediaBookings($conn);
+$bookings = getMultimediaBookings($conn,$keyword);
 
 // Handle success and error messages
 $successMessage = isset($_SESSION['success']) ? $_SESSION['success'] : "";
@@ -29,7 +30,22 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/include/sidebar.php");
         <div class="text-end mb-3">
             <a href="add.php" class="btn btn-primary">+ Add Booking</a>
         </div>
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <form method="get" action="">
+                        <div class="col-md-4">
+                            <label for="date" class="form-label">Date</label>
+                            <input type="date" name="date" class="form-control">
+                        </div>
+                        <div class="col-md-4 d-flex align-items-end">
+                            <button id="search-btn" class="btn btn-primary w-100">Search</button>
+                        </div>
+                    </form>
 
+                </div>
+            </div>
+        </div>
         <div class="card">
             <div class="card-body">
             <table id="data-table" class="table table-responsive table-striped" style="width:100%">
