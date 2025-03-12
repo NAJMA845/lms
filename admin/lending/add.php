@@ -124,11 +124,14 @@ include_once("../../include/footer.php");
                         if (result.status == "success") {
                             infoLabel.classList.remove("text-danger");
                             infoLabel.classList.add("text-success", "fw-bold");
+                            if(result.exceeded_days!=''){
+                                infoLabel.classList.add("text-danger", "fw-bold");
+                            }
                         } else {
                             infoLabel.classList.remove("text-success");
                             infoLabel.classList.add("text-danger", "fw-bold");
                         }
-                        infoLabel.innerHTML = result.info;
+                        infoLabel.innerHTML = result.info+" "+result.exceeded_days;
                     }
                 }
                 )

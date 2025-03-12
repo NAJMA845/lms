@@ -21,7 +21,7 @@ $total_borrowed = getTotalBorrowedBooks($conn);
 
 // Fetch total overdue books
 $total_overdue = getTotalOverdueBooks($conn);
-$book_trans=getBookTranByLimit($conn);
+$book_trans=getBookTranByLimit($conn,'','');
 ?>
 
 <!-- Main Content Start -->

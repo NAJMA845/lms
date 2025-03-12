@@ -101,4 +101,32 @@ function getActiveMembers($conn)
     //If result has issue, return 0
     return 0;
 }
+
+function changeUserPassword($conn, $user, $currentPassword, $newPassword){
+    $currentPwd = md5($currentPassword);
+    $newPwd = md5($newPassword);
+
+    // Check if the current password matches
+    $sql = "SELECT id FROM users WHERE id = ? AND password = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("is", $user, $currentPwd);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        // User exists, proceed with updating password
+        $sql = "UPDATE users SET password = ? WHERE id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("si", $newPwd, $user);
+
+        if ($stmt->execute()) {
+            return array("success" => "Password has been changed successfully!");
+        } else {
+            return array("error" => "Failed to update password. Please try again.");
+        }
+    } else {
+        return array("error" => "Invalid current password. Try again with a valid password.");
+    }
+}
+
 ?>

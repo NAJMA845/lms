@@ -1,11 +1,13 @@
 <?php 
 include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/config/config.php");
 include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/models/book_tran.php");
+
+$keyword=isset($_GET['date'])?$_GET['date']:'';
 if(isset($_GET['filter'])){
     $book_trans = getBookTranByFilter($conn,$_GET['filter']);
 }
 else{
-    $book_trans = getBookTranByLimit($conn);
+    $book_trans = getBookTranByLimit($conn,'',$keyword);
 }
 
 if (!isset($book_trans->num_rows)) {
@@ -30,6 +32,22 @@ include_once($_SERVER['DOCUMENT_ROOT'] . "/lms/include/sidebar.php");
                 <div class="card">
                     <div class="card-header">
                         All Books Loan
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <form method="get" action="">
+                                    <div class="col-md-4">
+                                        <label for="date" class="form-label">Date</label>
+                                        <input type="date" name="date" class="form-control">
+                                    </div>
+                                    <div class="col-md-4 d-flex align-items-end">
+                                        <button id="search-btn" class="btn btn-primary w-100">Search</button>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">

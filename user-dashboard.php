@@ -18,7 +18,7 @@ else
     $active_status="<h1 class='text-bg-danger'>Blocked</h1>";
 
 
-$book_trans = getBookTranByLimit($conn,$_SESSION['id']);
+$book_trans = getBookTranByLimit($conn,$_SESSION['id'],'');
 $total_fines = getTotalFineByUser($conn,$_SESSION['id']);
 if (!isset($book_trans->num_rows)) {
     $_SESSION['error'] = "Error: " . $conn->error;
